@@ -21,3 +21,5 @@
 Thumbs.db
 [Dd]esktop.ini
 $RECYCLE.BIN/
+app.db-shm
+app.db-wal

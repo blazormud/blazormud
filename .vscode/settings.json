@@ -5,7 +5,9 @@
     "**/bin": true,
     "**/obj": true,
     //"**/*.css": true,
-    "**/*.css.map": true
+    "**/*.css.map": true,
+    "**/app.db-shm": true,
+    "**/app.db-wal": true
   },
   "editor.rulers": [100, 120],
   "editor.occurrencesHighlight": false,
