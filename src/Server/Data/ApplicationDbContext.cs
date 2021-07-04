@@ -11,7 +11,7 @@ using Microsoft.Extensions.Options;
 
 namespace BlazorMUD.Server.Data
 {
-    public class ApplicationDbContext : ApiAuthorizationDbContext<ApplicationUser>
+    public class ApplicationDbContext : KeyApiAuthorizationDbContext<ApplicationUser, ApplicationRole, int>
     {
         public ApplicationDbContext(
             DbContextOptions options,
