@@ -1,4 +1,5 @@
 using System.Linq;
+using BlazorMUD.Core;
 using BlazorMUD.Server.Data;
 using BlazorMUD.Server.Hubs;
 using BlazorMUD.Server.Models;
@@ -100,7 +101,7 @@ namespace BlazorMUD.Server
             {
                 endpoints.MapRazorPages();
                 endpoints.MapControllers();
-                endpoints.MapHub<ChatHub>("/chathub");
+                endpoints.MapHub<ChatHub>(Constants.SignalR.ChatHub.Uri);
                 endpoints.MapFallbackToFile("index.html");
             });
 

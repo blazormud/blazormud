@@ -43,21 +43,45 @@ namespace BlazorMUD.Server.Data
         {
             if (userManager.Users.Any()) return;
 
-            var owner = new ApplicationUser { UserName = "owner", Email = "owner@localhost", EmailConfirmed = true };
-            var ownerResult = userManager.CreateAsync(owner, "owner").Result;
-            if (ownerResult.Succeeded) userManager.AddToRoleAsync(owner, "Owner").Wait();
+            InitializeUser(userManager,
+                username: "owner",
+                email: "owner@localhost",
+                password: "owner",
+                roles: new[] { "Owner" }
+            );
 
-            var admin = new ApplicationUser { UserName = "admin", Email = "admin@localhost", EmailConfirmed = true };
-            var adminResult = userManager.CreateAsync(admin, "admin").Result;
-            if (adminResult.Succeeded) userManager.AddToRoleAsync(admin, "Administrator").Wait();
+            InitializeUser(userManager,
+                username: "admin",
+                email: "admin@localhost",
+                password: "admin",
+                roles: new[] { "Administrator" }
+            );
 
-            var builder = new ApplicationUser { UserName = "builder", Email = "builder@localhost", EmailConfirmed = true };
-            var builderResult = userManager.CreateAsync(builder, "builder").Result;
-            if (builderResult.Succeeded) userManager.AddToRoleAsync(builder, "Builder").Wait();
+            InitializeUser(userManager,
+                username: "builder",
+                email: "builder@localhost",
+                password: "builder",
+                roles: new[] { "Builder" }
+            );
 
-            var player = new ApplicationUser { UserName = "player", Email = "player@localhost", EmailConfirmed = true };
-            var playerResult = userManager.CreateAsync(player, "player").Result;
-            if (playerResult.Succeeded) userManager.AddToRoleAsync(player, "Player").Wait();
+            InitializeUser(userManager,
+                username: "player",
+                email: "player@localhost",
+                password: "player",
+                roles: new[] { "Player" }
+            );
+
+            static void InitializeUser(
+                UserManager<ApplicationUser> userManager,
+                string username, string email, string password, string[] roles)
+            {
+                var user = new ApplicationUser { UserName = username, Email = email, EmailConfirmed = true };
+                var playerResult = userManager.CreateAsync(user, password).Result;
+                if (playerResult.Succeeded)
+                {
+                    foreach (var role in roles) userManager.AddToRoleAsync(user, role).Wait();
+                }
+            }
         }
 
         public static void InitializeAreas(ApplicationDbContext context)

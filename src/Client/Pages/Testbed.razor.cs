@@ -22,8 +22,7 @@ namespace BlazorMUD.Client.Pages
         {
             try
             {
-                //output = await Http.GetFromJsonAsync<string>("api/testbed/GetApplicationUser/ffc2d3f6-7389-41cc-9518-f2dd0da0b7f9");
-                output = await Http.GetFromJsonAsync<IEnumerable<AreaTemplate>>("Testing");
+                output = await Http.GetFromJsonAsync<IEnumerable<AreaTemplate>>("testing");
             }
             catch (AccessTokenNotAvailableException exception)
             {
