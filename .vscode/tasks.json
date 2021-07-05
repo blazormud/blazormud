@@ -20,6 +20,7 @@
       "args": [
         "watch",
         "run",
+        "--project",
         "${workspaceFolder}/src/Server/BlazorMUD.Server.csproj",
         "/property:GenerateFullPaths=true",
         "/consoleloggerparameters:NoSummary"
@@ -69,7 +70,7 @@
     },
     {
       "label": "watch-parallel",
-      "dependsOn": ["watch-sass", "watch-dotnet"],
+      "dependsOn": ["watch-sass", "watch-blazor"],
       "dependsOrder": "parallel",
       "group": "build",
       "problemMatcher": ["$msCompile"],
@@ -77,14 +78,22 @@
     },
     {
       "label": "watch",
-      "dependsOn": ["watch-sass", "watch-dotnet"],
+      "dependsOn": ["build-sass", "watch-parallel"],
       "dependsOrder": "sequence",
       "group": "build",
       "problemMatcher": ["$msCompile"],
       "isBackground": true
     },
     {
-      "label": "util-freeports",
+      "label": "build",
+      "dependsOn": ["build-sass", "build-blazor"],
+      "dependsOrder": "sequence",
+      "group": "build",
+      "problemMatcher": ["$msCompile"],
+      "isBackground": true
+    },
+    {
+      "label": "util-freeports-mac",
       "type": "shell",
       "command": "kill $(lsof -ti:5000,5001)",
       "group": "none",

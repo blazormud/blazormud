@@ -4,7 +4,7 @@
 
 # Sass-only
 # **/*.css
-# **/*.css.map
+**/*.css.map
 
 # VS Code
 **/.vscode/*

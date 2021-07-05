@@ -33,21 +33,21 @@ div#app > div.loader {
 
   & > div.container {
     max-width: 100%;
-    width: 500px;
+    width: 400px;
     min-width: 150px;
 
     & > div.card {
       background-color: #1b1b1b;
       border: 1px solid #282828;
       border-radius: 4px;
-      padding: 16px 24px;
+      padding: 20px 24px;
 
       & > div.messages {
         color: #666666;
         font-size: 14px;
         line-height: 14px;
         height: 14px;
-        margin-bottom: 32px;
+        margin: 24px 0;
 
         &:after {
           content: "";
@@ -57,7 +57,7 @@ div#app > div.loader {
     }
 
     & > div.copyright {
-      color: color.adjust($color-orange, $alpha: -0.5);
+      color: #282828;
       font-family: $font-mono;
       font-size: 10px;
       text-align: right;
@@ -66,103 +66,47 @@ div#app > div.loader {
   }
 }
 
-div#app > div.loader > div.container > div.card div.spinner {
-  display: flex;
-  border-radius: 100%;
-  position: relative;
-  margin: 0 auto;
+.indeterminate-progress-line,
+.indeterminate-progress-line-value {
+  height: 8px;
+  width: 100%;
+  border-radius: 2px;
+}
+.indeterminate-progress-line {
+  background-color: #333333;
+  // background-color: #282828;
+  // height: 8px;
+  // width: 100%;
+  overflow: hidden;
+}
+.indeterminate-progress-line-value {
+  background-color: #282828;
+  // background-color: #333333;
+  // width: 100%;
+  // height: 100%;
+  animation: indeterminate-progress 1s linear infinite;
+  transform-origin: 0% 50%;
+}
 
-  align-items: center;
-  justify-content: center;
-
-  &:before,
-  &:after {
-    content: "";
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    border-radius: 100%;
+@-webkit-keyframes indeterminate-progress {
+  0% {
+    transform: translateX(0) scaleX(0);
   }
-
-  &.spinner-1 {
-    width: 100px;
-    height: 100px;
-
-    &:before,
-    &:after {
-      border: 3px solid transparent;
-      border-top-color: $color-orange-400;
-    }
-
-    &:before {
-      z-index: 100;
-      @include animation(spin-ccw-x2 2s infinite);
-    }
-
-    &:after {
-      border: 10px solid #1b1b1b;
-    }
+  40% {
+    transform: translateX(0) scaleX(0.4);
   }
-
-  &.spinner-2 {
-    width: 80px;
-    height: 80px;
-
-    &:before,
-    &:after {
-      border: 3px solid transparent;
-      border-bottom-color: $color-orange;
-    }
-
-    &:before {
-      z-index: 100;
-      @include animation(spin-cw-x2 2s infinite);
-    }
-
-    &:after {
-      border: 10px solid #1b1b1b;
-    }
+  100% {
+    transform: translateX(100%) scaleX(0.5);
   }
-
-  &.spinner-3 {
-    width: 60px;
-    height: 60px;
-
-    &:before,
-    &:after {
-      border: 3px solid transparent;
-      border-top-color: $color-orange;
-    }
-
-    &:before {
-      z-index: 100;
-      @include animation(spin-ccw-x2 2s infinite);
-    }
-
-    &:after {
-      border: 10px solid #1b1b1b;
-    }
+}
+@keyframes indeterminate-progress {
+  0% {
+    transform: translateX(0) scaleX(0);
   }
-
-  &.spinner-4 {
-    width: 40px;
-    height: 40px;
-
-    &:before,
-    &:after {
-      border: 3px solid transparent;
-      border-bottom-color: $color-orange;
-    }
-
-    &:before {
-      z-index: 100;
-      @include animation(spin-cw-x2 2s infinite);
-    }
-
-    &:after {
-      border: 10px solid #1b1b1b;
-    }
+  40% {
+    transform: translateX(0) scaleX(0.4);
+  }
+  100% {
+    transform: translateX(100%) scaleX(0.5);
   }
 }

@@ -1,13 +1,18 @@
-svg.logo {
+svg#logo {
+  width: 100%;
   & > path.text {
     fill: #ffffff !important;
   }
 
-  & > path.accent {
-    fill: $color-orange-700 !important;
+  & > path.accent1 {
+    fill: rgb(255, 102, 0) !important;
   }
 
-  & > path.dyson {
-    fill: #666666 !important;
+  & > path.accent2 {
+    fill: rgb(255, 0, 255) !important;
+  }
+
+  & > path.accent3 {
+    fill: red !important; //rgb(102, 255, 0) !important;
   }
 }
