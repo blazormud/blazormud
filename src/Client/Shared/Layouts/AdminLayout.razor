@@ -1,5 +1,13 @@
 @inherits LayoutComponentBase
 @layout MainLayout
 
-<h1>Admin</h1>
-@Body
+<AuthorizeView Roles="Admin,Owner">
+  <Authorized>
+    <h1>Admin</h1>
+
+    @Body
+  </Authorized>
+  <NotAuthorized>
+    Unauthorized...
+  </NotAuthorized>
+</AuthorizeView>
