@@ -17,11 +17,12 @@ h6 {
 
 // Base styles
 
+html {
+  font-size: 62.5%; // Makes 1rem = 10px at normal scale
+}
+
 body {
   background-color: $color-body-background;
   color: $color-body-foreground;
-}
-
-h1 {
-  font-weight: 900;
+  font-size: 1.6rem;
 }

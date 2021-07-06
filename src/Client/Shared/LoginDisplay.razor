@@ -6,12 +6,24 @@
 
 <AuthorizeView>
     <Authorized>
-        <a href="authentication/profile">@context.User.Identity.Name</a>
-        <a @onclick="BeginSignOut">Logout</a>
+        <a href="authentication/profile">
+          <Icon MaterialIcon="account_circle"/>&thinsp;
+          @context.User.Identity.Name
+        </a>
+        <a @onclick="BeginSignOut">
+          <Icon MaterialIcon="logout"/>&thinsp;
+          Logout
+        </a>
     </Authorized>
     <NotAuthorized>
-        <a href="authentication/register">Register</a>
-        <a href="authentication/login">Login</a>
+        <a href="authentication/register">
+          <Icon MaterialIcon="app_registration"/>&thinsp;
+          Register
+        </a>
+        <a href="authentication/login">
+          <Icon MaterialIcon="login"/>&thinsp;
+          Login
+        </a>
     </NotAuthorized>
 </AuthorizeView>
 

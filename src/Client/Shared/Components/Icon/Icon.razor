@@ -1,0 +1,26 @@
+@if (string.IsNullOrEmpty(SizeInRem))
+{
+<div class="icon inline-text">
+@if (!string.IsNullOrEmpty(MaterialIcon))
+{
+  <span class="material-icons">@MaterialIcon</span>
+}
+else
+{
+  <span class="game-icons">@GameIconHex</span>
+}
+</div>
+}
+else
+{
+<div class="icon inline-block" style="font-size: @BlockSize;">
+@if (!string.IsNullOrEmpty(MaterialIcon))
+{
+  <span class="material-icons">@MaterialIcon</span>
+}
+else
+{
+  <span class="game-icons">@GameIconHex</span>
+}
+</div>
+}

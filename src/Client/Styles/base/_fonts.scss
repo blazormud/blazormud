@@ -9,3 +9,32 @@
 // Display font
 // font-family: 'Comfortaa', sans-serif;
 @import url("https://fonts.googleapis.com/css2?family=Comfortaa:wght@300;400;500;600;700&display=swap");
+
+// Material Icon font
+@import url("https://fonts.googleapis.com/icon?family=Material+Icons");
+// Override for default size
+.material-icons {
+  font-size: 2.4rem;
+  line-height: 2.4rem;
+}
+
+// Game Icons font
+@font-face {
+  font-family: "Game Icons";
+  src: url("../assets/game-icons/game-icons.eot");
+  src: url("../assets/game-icons/game-icons.eot?#iefix") format("eot"),
+    url("../assets/game-icons/game-icons.woff") format("woff"),
+    url("../assets/game-icons/game-icons.ttf") format("truetype");
+}
+.game-icons {
+  font-family: "Game Icons";
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  font-style: normal;
+  font-variant: normal;
+  font-weight: normal;
+  text-decoration: none;
+  text-transform: none;
+  font-size: 2.2rem;
+  line-height: 2.4rem;
+}
