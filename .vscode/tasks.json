@@ -2,7 +2,7 @@
   "version": "2.0.0",
   "tasks": [
     {
-      "label": "build",
+      "label": "build-blazor",
       "command": "dotnet",
       "type": "process",
       "args": [
@@ -14,7 +14,21 @@
       "problemMatcher": "$msCompile"
     },
     {
-      "label": "publish",
+      "label": "watch-blazor",
+      "command": "dotnet",
+      "type": "process",
+      "args": [
+        "watch",
+        "run",
+        "--project",
+        "${workspaceFolder}/src/Server/BlazorMUD.Server.csproj",
+        "/property:GenerateFullPaths=true",
+        "/consoleloggerparameters:NoSummary"
+      ],
+      "problemMatcher": "$msCompile"
+    },
+    {
+      "label": "publish-blazor",
       "command": "dotnet",
       "type": "process",
       "args": [
@@ -26,20 +40,60 @@
       "problemMatcher": "$msCompile"
     },
     {
-      "label": "watch",
-      "command": "dotnet",
+      "label": "build-sass",
+      "command": "sass",
       "type": "process",
       "args": [
-        "watch",
-        "run",
-        "${workspaceFolder}/src/Server/BlazorMUD.Server.csproj",
-        "/property:GenerateFullPaths=true",
-        "/consoleloggerparameters:NoSummary"
+        "--load-path=src/Client/Styles",
+        "src/Client/Styles:src/Client/wwwroot/css",
+        "src/Client/Pages:src/Client/Pages",
+        "src/Client/Shared:src/Client/Shared",
+        "--style=compressed",
+        "--update"
       ],
-      "problemMatcher": "$msCompile"
+      "group": "build"
     },
     {
-      "label": "freeports",
+      "label": "watch-sass",
+      "command": "sass",
+      "type": "process",
+      "args": [
+        "--load-path=src/Client/Styles",
+        "src/Client/Styles:src/Client/wwwroot/css",
+        "src/Client/Pages:src/Client/Pages",
+        "src/Client/Shared:src/Client/Shared",
+        "--style=compressed",
+        "--update",
+        "--watch"
+      ],
+      "group": "build"
+    },
+    {
+      "label": "watch-parallel",
+      "dependsOn": ["watch-sass", "watch-blazor"],
+      "dependsOrder": "parallel",
+      "group": "build",
+      "problemMatcher": ["$msCompile"],
+      "isBackground": true
+    },
+    {
+      "label": "watch",
+      "dependsOn": ["build-sass", "watch-parallel"],
+      "dependsOrder": "sequence",
+      "group": "build",
+      "problemMatcher": ["$msCompile"],
+      "isBackground": true
+    },
+    {
+      "label": "build",
+      "dependsOn": ["build-sass", "build-blazor"],
+      "dependsOrder": "sequence",
+      "group": "build",
+      "problemMatcher": ["$msCompile"],
+      "isBackground": true
+    },
+    {
+      "label": "util-freeports-mac",
       "type": "shell",
       "command": "kill $(lsof -ti:5000,5001)",
       "group": "none",

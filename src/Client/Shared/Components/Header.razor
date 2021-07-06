@@ -1,0 +1,27 @@
+<div class="header">
+  <a href=""><img src="assets/logo.svg" /></a>
+  <div class="menu">
+    <AuthorizeView Roles="Player,Builder,Admin,Owner">
+      <Authorized>
+        <NavLink class="nav-link" href="/chat" Match="NavLinkMatch.Prefix">Chat</NavLink>
+        <NavLink class="nav-link" href="/play" Match="NavLinkMatch.Prefix">Play</NavLink>
+      </Authorized>
+    </AuthorizeView>
+    <AuthorizeView Roles="Builder,Admin,Owner">
+      <Authorized>
+        <NavLink class="nav-link" href="/build" Match="NavLinkMatch.Prefix">Build</NavLink>
+      </Authorized>
+    </AuthorizeView>
+    <AuthorizeView Roles="Admin,Owner">
+      <Authorized>
+        <NavLink class="nav-link" href="/admin" Match="NavLinkMatch.Prefix">Admin</NavLink>
+      </Authorized>
+    </AuthorizeView>
+    <AuthorizeView>
+      <Authorized>
+        <div class="vertical-line"></div>
+      </Authorized>
+    </AuthorizeView>
+    <LoginDisplay/>
+  </div>
+</div>

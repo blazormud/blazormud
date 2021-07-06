@@ -4,7 +4,7 @@
     "**/.vs": true,
     "**/bin": true,
     "**/obj": true,
-    //"**/*.css": true,
+    "**/*.css": true,
     "**/*.css.map": true,
     "**/app.db-shm": true,
     "**/app.db-wal": true

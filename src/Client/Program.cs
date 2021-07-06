@@ -1,8 +1,9 @@
 using System;
-using System.Net.Http;
 using System.Collections.Generic;
-using System.Threading.Tasks;
+using System.Net.Http;
 using System.Text;
+using System.Threading.Tasks;
+using BlazorMUD.Client.Services;
 using Microsoft.AspNetCore.Components.WebAssembly.Authentication;
 using Microsoft.AspNetCore.Components.WebAssembly.Hosting;
 using Microsoft.Extensions.Configuration;
@@ -24,7 +25,8 @@ namespace BlazorMUD.Client
             // Supply HttpClient instances that include access tokens when making requests to the server project
             builder.Services.AddScoped(sp => sp.GetRequiredService<IHttpClientFactory>().CreateClient("BlazorMUD.ServerAPI"));
 
-            builder.Services.AddApiAuthorization();
+            builder.Services.AddApiAuthorization()
+                .AddAccountClaimsPrincipalFactory<CustomUserFactory>();
 
             await builder.Build().RunAsync();
         }

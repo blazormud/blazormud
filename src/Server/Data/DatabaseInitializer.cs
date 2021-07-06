@@ -32,7 +32,7 @@ namespace BlazorMUD.Server.Data
             var builder = new ApplicationRole { Name = "Builder" };
             _ = roleManager.CreateAsync(builder).Result;
 
-            var admin = new ApplicationRole { Name = "Administrator" };
+            var admin = new ApplicationRole { Name = "Admin" };
             _ = roleManager.CreateAsync(admin).Result;
 
             var owner = new ApplicationRole { Name = "Owner" };
@@ -54,7 +54,7 @@ namespace BlazorMUD.Server.Data
                 username: "admin",
                 email: "admin@localhost",
                 password: "admin",
-                roles: new[] { "Administrator" }
+                roles: new[] { "Admin" }
             );
 
             InitializeUser(userManager,

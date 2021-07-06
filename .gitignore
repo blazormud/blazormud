@@ -3,8 +3,8 @@
 [Oo]bj/
 
 # Sass-only
-# **/*.css
-# **/*.css.map
+**/*.css
+**/*.css.map
 
 # VS Code
 **/.vscode/*
