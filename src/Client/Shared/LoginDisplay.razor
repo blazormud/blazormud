@@ -6,14 +6,12 @@
 
 <AuthorizeView>
     <Authorized>
-        <div class="vertical-line"></div>
         <a href="authentication/profile">@context.User.Identity.Name</a>
-        <a @onclick="BeginSignOut">Sign out</a>
+        <a @onclick="BeginSignOut">Logout</a>
     </Authorized>
     <NotAuthorized>
-        <div class="vertical-line"></div>
         <a href="authentication/register">Register</a>
-        <a href="authentication/login">Sign in</a>
+        <a href="authentication/login">Login</a>
     </NotAuthorized>
 </AuthorizeView>
 

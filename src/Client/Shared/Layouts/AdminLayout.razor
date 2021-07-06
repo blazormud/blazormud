@@ -1,13 +1,28 @@
 @inherits LayoutComponentBase
 @layout MainLayout
 
-<AuthorizeView Roles="Admin,Owner">
-  <Authorized>
-    <h1>Admin</h1>
 
-    @Body
-  </Authorized>
-  <NotAuthorized>
-    Unauthorized...
-  </NotAuthorized>
-</AuthorizeView>
+<div class="page">
+  <nav class="page-menu">
+    <AuthorizeView Roles="Admin,Owner">
+      <Authorized>
+        <NavLink href="admin/" Match="NavLinkMatch.All">Index</NavLink>
+        <NavLink href="admin/counter" Match="NavLinkMatch.All">Counter</NavLink>
+        <NavLink href="admin/fetchdata" Match="NavLinkMatch.All">Fetch Data</NavLink>
+        <NavLink href="admin/error-test" Match="NavLinkMatch.All">Error Test</NavLink>
+        <NavLink href="admin/html-test" Match="NavLinkMatch.All">HTML Test</NavLink>
+        <NavLink href="admin/test" Match="NavLinkMatch.All">Test Bed</NavLink>
+      </Authorized>
+    </AuthorizeView>
+  </nav>
+  <article class="page-content">
+    <AuthorizeView Roles="Admin,Owner">
+      <Authorized>
+        @Body
+      </Authorized>
+      <NotAuthorized>
+        Unauthorized...
+      </NotAuthorized>
+    </AuthorizeView>
+  </article>
+</div>
