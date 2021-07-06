@@ -31,6 +31,6 @@ SECURITY.md             export-ignore
 SUPPORT.md              export-ignore
 
 # Liguist overrides
-src/Server/Areas/*      linguist-vendored
-src/Server/Pages/*      linguist-vendored
-src/Server/wwwroot/*    linguist-vendored
+src/Server/Areas/* linguist-vendored
+src/Server/Pages/* linguist-vendored
+src/Server/wwwroot/* linguist-vendored
