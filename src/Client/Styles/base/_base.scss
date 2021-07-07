@@ -17,11 +17,21 @@ h6 {
 
 // Base styles
 
+html {
+  font-size: 62.5%; // Makes 1rem = 10px at normal scale
+}
+
 body {
   background-color: $color-body-background;
   color: $color-body-foreground;
+  font-size: 1.6rem;
 }
 
-h1 {
-  font-weight: 900;
+a {
+  color: hsl(209, 100%, 50%);
+  text-decoration: none;
+
+  &:hover {
+    color: hsl(209, 100%, 60%);
+  }
 }

@@ -3,18 +3,30 @@
   <div class="menu">
     <AuthorizeView Roles="Player,Builder,Admin,Owner">
       <Authorized>
-        <NavLink class="nav-link" href="/chat" Match="NavLinkMatch.Prefix">Chat</NavLink>
-        <NavLink class="nav-link" href="/play" Match="NavLinkMatch.Prefix">Play</NavLink>
+        <NavLink class="nav-link" href="/chat" Match="NavLinkMatch.Prefix">
+          <Icon MaterialIcon="forum"/>&thinsp;
+          Chat
+        </NavLink>
+        <NavLink class="nav-link" href="/play" Match="NavLinkMatch.Prefix">
+          <Icon MaterialIcon="gamepad"/>&thinsp;
+          Play
+        </NavLink>
       </Authorized>
     </AuthorizeView>
     <AuthorizeView Roles="Builder,Admin,Owner">
       <Authorized>
-        <NavLink class="nav-link" href="/build" Match="NavLinkMatch.Prefix">Build</NavLink>
+        <NavLink class="nav-link" href="/build" Match="NavLinkMatch.Prefix">
+          <Icon MaterialIcon="construction"/>&thinsp;
+          Build
+        </NavLink>
       </Authorized>
     </AuthorizeView>
     <AuthorizeView Roles="Admin,Owner">
       <Authorized>
-        <NavLink class="nav-link" href="/admin" Match="NavLinkMatch.Prefix">Admin</NavLink>
+        <NavLink class="nav-link" href="/admin" Match="NavLinkMatch.Prefix">
+          <Icon MaterialIcon="settings"/>&thinsp;
+          Admin
+        </NavLink>
       </Authorized>
     </AuthorizeView>
     <AuthorizeView>

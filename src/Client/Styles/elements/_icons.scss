@@ -1,24 +1,50 @@
-.material-icons.md-10 {
-  font-size: 18px;
-}
-.material-icons.md-12 {
-  font-size: 18px;
-}
-.material-icons.md-14 {
-  font-size: 18px;
-}
-.material-icons.md-16 {
-  font-size: 18px;
-}
-.material-icons.md-18 {
-  font-size: 18px;
-}
-.material-icons.md-24 {
-  font-size: 24px;
-}
-.material-icons.md-36 {
-  font-size: 36px;
-}
-.material-icons.md-48 {
-  font-size: 48px;
+.icon {
+  display: inline-block;
+  display: inline-flex;
+  display: -webkit-inline-flex;
+  position: relative;
+
+  &.inline-text {
+    vertical-align: middle;
+    height: 1em;
+    width: 1.25em;
+
+    & .material-icons,
+    .game-icons {
+      position: absolute;
+      align-self: center;
+      margin-bottom: 0.15em;
+      margin-left: -0.15em;
+    }
+
+    & .material-icons {
+      font-size: 1.5em;
+    }
+
+    & .game-icons {
+      font-size: 1.375em;
+    }
+  }
+
+  &.inline-block {
+    height: 1em;
+    width: 1em;
+    background-color: #333333;
+
+    & .material-icons,
+    .game-icons {
+      position: absolute;
+      align-self: center;
+      justify-self: center;
+    }
+
+    & .material-icons {
+      font-size: 1.125em;
+      margin-left: -0.05em;
+    }
+
+    & .game-icons {
+      font-size: 1em;
+    }
+  }
 }
