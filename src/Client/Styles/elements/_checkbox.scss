@@ -1,0 +1,27 @@
+input[type="checkbox"]:before {
+  content: "";
+  display: inline-block;
+  width: 1.6rem;
+  height: 1.6rem;
+  background: black;
+  user-select: none;
+}
+input[type="checkbox"]:checked:before {
+  background: black;
+}
+
+input[type="checkbox"]:before {
+  background-image: url("../assets/checkbox.svg");
+}
+input[type="checkbox"]:checked:before {
+  background-image: url("../assets/checkbox-checked.svg");
+}
+input[type="checkbox"]:indeterminate:before {
+  background-image: url("../assets/checkbox-indeterminate.svg");
+}
+
+input[type="checkbox"] + label {
+  display: inline-block;
+  margin-left: 0.5rem;
+  vertical-align: -0.1rem;
+}
