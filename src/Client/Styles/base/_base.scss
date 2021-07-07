@@ -26,3 +26,12 @@ body {
   color: $color-body-foreground;
   font-size: 1.6rem;
 }
+
+a {
+  color: hsl(209, 100%, 50%);
+  text-decoration: none;
+
+  &:hover {
+    color: hsl(209, 100%, 60%);
+  }
+}
