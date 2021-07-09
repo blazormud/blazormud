@@ -13,6 +13,7 @@ h4,
 h5,
 h6 {
   margin: 0;
+  line-height: 1;
 }
 
 // Base styles
@@ -22,16 +23,24 @@ html {
 }
 
 body {
-  background-color: $color-body-background;
-  color: $color-body-foreground;
-  font-size: 1.6rem;
+  background-color: $background-color-body;
+  color: $color-body;
+  font-family: $font-family-normal;
+  font-size: $font-size-body;
+  font-weight: $font-weight-normal;
+  line-height: $line-height-body;
+  text-align: left;
 }
 
 a {
-  color: hsl(209, 100%, 50%);
+  color: $color-link;
   text-decoration: none;
 
   &:hover {
-    color: hsl(209, 100%, 60%);
+    color: $color-link-hover;
+  }
+
+  &:visited {
+    color: $color-link-visited;
   }
 }

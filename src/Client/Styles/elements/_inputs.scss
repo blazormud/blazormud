@@ -1,3 +1,4 @@
+input:not([type="checkbox"], [type="radio"], [type="submit"], [type="button"], [type="reset"], [type="file"]),
 input[type="email"],
 input[type="number"],
 input[type="password"],
@@ -6,11 +7,12 @@ input[type="tel"],
 input[type="text"],
 input[type="url"],
 textarea {
-  -webkit-appearance: none;
-  -moz-appearance: none;
   appearance: none;
+  -moz-appearance: none;
+  -webkit-appearance: none;
 }
 
+input:not([type="checkbox"], [type="radio"], [type="submit"], [type="button"], [type="reset"], [type="file"]),
 input[type="email"],
 input[type="number"],
 input[type="password"],
@@ -20,70 +22,39 @@ input[type="text"],
 input[type="url"],
 select,
 textarea {
+  @include box-shadow(none);
+  @include box-sizing(border-box);
+  background-color: $color-input-background;
+  border: 0.1rem solid $color-input-border;
+  border-radius: $border-radius-normal;
+  color: $color-input-foreground;
   min-height: 3rem;
   min-width: 30rem;
-  padding: 0.6rem 1rem;
-  border-radius: 0.3rem;
-  box-shadow: none;
-  box-sizing: border-box;
-  background-color: hsl(0, 0%, 10%);
-  border: 0.1rem solid hsl(0, 0%, 30%);
-  color: hsl(0, 0%, 90%);
+  padding: 0 1rem;
+  vertical-align: middle;
+
+  &::placeholder {
+    color: $color-input-foreground-placeholder;
+  }
+
+  &:focus {
+    border-color: $color-input-border-focus;
+    outline: 0;
+  }
 }
 
-input[type="email"]::placeholder,
-input[type="number"]::placeholder,
-input[type="password"]::placeholder,
-input[type="search"]::placeholder,
-input[type="tel"]::placeholder,
-input[type="text"]::placeholder,
-input[type="url"]::placeholder,
-select::placeholder,
-textarea::placeholder {
-  color: hsl(0, 0%, 40%);
+select[multiple],
+textarea {
+  padding-bottom: 0.6rem;
+  padding-top: 0.6rem;
+
+  &::-webkit-scrollbar-track {
+    border-bottom-right-radius: $border-radius-normal;
+    border-top-right-radius: $border-radius-normal;
+  }
 }
 
 textarea {
-  min-height: 65px;
-  padding-top: 6px;
-  padding-bottom: 6px;
-}
-
-::-webkit-resizer {
-  display: none;
-  background-color: hsl(0, 0%, 10%);
-}
-
-input[type="email"]:focus,
-input[type="number"]:focus,
-input[type="search"]:focus,
-input[type="text"]:focus,
-input[type="tel"]:focus,
-input[type="url"]:focus,
-input[type="password"]:focus,
-select:focus,
-textarea:focus {
-  border-color: hsl(0, 0%, 40%);
-  outline: 0;
-}
-
-label,
-legend {
-  display: block;
-  margin-bottom: 0.5rem;
-  font-weight: 400;
-}
-
-legend {
-  color: hsl(0, 0%, 60%);
-}
-
-fieldset {
-  padding: 1rem;
-  border: 0.1rem solid hsl(0, 0%, 10%);
-}
-
-input[type="checkbox"],
-input[type="radio"] {
-  display: inline;
+  min-height: 6.5rem;
+  resize: none;
 }

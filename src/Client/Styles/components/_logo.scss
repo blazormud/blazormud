@@ -1,7 +1,8 @@
 svg#logo {
   width: 100%;
+
   & > path.text {
-    fill: #ffffff !important;
+    fill: hsl(0, 0%, 100%) !important;
   }
 
   & > path.accent1 {
@@ -13,6 +14,6 @@ svg#logo {
   }
 
   & > path.accent3 {
-    fill: red !important; //rgb(102, 255, 0) !important;
+    fill: rgb(102, 255, 0) !important;
   }
 }

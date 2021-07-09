@@ -1,3 +1,7 @@
+input[type="radio"] {
+  display: inline;
+}
+
 input[type="radio"]:before {
   content: "";
   display: inline-block;

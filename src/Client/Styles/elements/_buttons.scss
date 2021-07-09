@@ -3,130 +3,78 @@ button,
 input[type="button"],
 input[type="reset"],
 input[type="submit"] {
+  @include box-sizing(border-box);
+  @include unselectable;
   align-content: center;
   align-items: center;
-  border-radius: 0.3rem;
-  box-sizing: border-box;
+  background-color: $color-button-normal-background;
+  border: $border-width-button solid $color-button-normal-border;
+  border-radius: $border-radius-normal;
+  color: $color-button-normal-foreground;
   cursor: pointer;
   display: inline-flex;
-  font-size: 1.2rem;
-  font-weight: 500;
-  height: 3rem;
-  letter-spacing: 0.1rem;
-  line-height: 1.2rem;
-  padding: 0.2rem 1.5rem 0 1.5rem;
+  font-size: $font-size-button;
+  font-weight: $font-weight-medium;
+  height: $height-button;
+  letter-spacing: $letter-spacing-button;
+  line-height: $line-height-button;
+  padding: $padding-top-button $padding-right-button $padding-bottom-button $padding-left-button;
   text-decoration: none;
-  text-transform: uppercase;
+  text-transform: $text-transform-button;
   white-space: nowrap;
+  vertical-align: middle;
+
+  &:hover,
+  &:focus {
+    background-color: $color-button-normal-background-hover;
+    border-color: $color-button-normal-border-hover;
+    color: $color-button-normal-foreground-hover;
+    outline: $outline-focus-button;
+  }
+
+  &:active {
+    background-color: $color-button-normal-background-active;
+    border-color: $color-button-normal-border-active;
+    color: $color-button-normal-foreground-active;
+  }
+
+  &:disabled,
+  &.disabled {
+    background-color: $color-button-normal-background-disabled;
+    border-color: $color-button-normal-border-disabled;
+    color: $color-button-normal-foreground-disabled;
+    cursor: not-allowed;
+  }
+
+  &.primary {
+    background-color: $color-button-primary-background;
+    border-color: $color-button-primary-border;
+    color: $color-button-primary-foreground;
+
+    &:hover,
+    &:focus {
+      background-color: $color-button-primary-background-hover;
+      border-color: $color-button-primary-border-hover;
+      color: $color-button-primary-foreground-hover;
+      outline: $outline-focus-button;
+    }
+
+    &:active {
+      background-color: $color-button-primary-background-active;
+      border-color: $color-button-primary-border-active;
+      color: $color-button-primary-foreground-active;
+    }
+
+    &:disabled,
+    &.disabled {
+      background-color: $color-button-primary-background-disabled;
+      border-color: $color-button-primary-border-disabled;
+      color: $color-button-primary-foreground-disabled;
+    }
+  }
 
   & .icon {
-    margin-right: 0.75em;
-    margin-top: 0.2em;
+    margin-right: $margin-right-button-icon;
+    margin-top: $margin-top-button-icon;
   }
-}
-
-// Normal button
-
-.button,
-button,
-input[type="button"],
-input[type="reset"],
-input[type="submit"] {
-  background-color: hsl(0, 0%, 20%);
-  border: 0.1rem solid hsl(0, 0%, 20%);
-  color: hsl(0, 0%, 80%);
-}
-
-.button:hover,
-button:hover,
-input[type="button"]:hover,
-input[type="reset"]:hover,
-input[type="submit"]:hover,
-.button:focus,
-button:focus,
-input[type="button"]:focus,
-input[type="reset"]:focus,
-input[type="submit"]:focus {
-  background-color: hsl(0, 0%, 30%);
-  border-color: hsl(0, 0%, 30%);
-  color: hsl(0, 0%, 90%);
-  outline: 0;
-}
-
-.button:active,
-button:active,
-input[type="button"]:active,
-input[type="reset"]:active,
-input[type="submit"]:active {
-  background-color: hsl(0, 0%, 10%);
-  border-color: hsl(0, 0%, 10%);
-  color: hsl(0, 0%, 70%);
-}
-
-.button:disabled,
-button:disabled,
-input[type="button"]:disabled,
-input[type="reset"]:disabled,
-input[type="submit"]:disabled,
-.button.disabled,
-button.disabled,
-input[type="button"].disabled,
-input[type="reset"].disabled,
-input[type="submit"].disabled {
-  background-color: hsl(0, 0%, 10%);
-  border-color: hsl(0, 0%, 10%);
-  color: hsl(0, 0%, 60%);
-  cursor: not-allowed;
-}
-
-// Primary button
-
-.button.primary,
-button.primary,
-input[type="button"].primary,
-input[type="reset"].primary,
-input[type="submit"].primary {
-  background-color: hsl(209, 100%, 50%);
-  border-color: hsl(209, 100%, 50%);
-  color: hsl(209, 100%, 80%);
-}
-
-.button.primary:hover,
-button.primary:hover,
-input[type="button"].primary:hover,
-input[type="reset"].primary:hover,
-input[type="submit"].primary:hover,
-.button.primary:focus,
-button.primary:focus,
-input[type="button"].primary:focus,
-input[type="reset"].primary:focus,
-input[type="submit"].primary:focus {
-  background-color: hsl(209, 100%, 60%);
-  border-color: hsl(209, 100%, 60%);
-  color: hsl(209, 100%, 90%);
-}
-
-.button.primary:active,
-button.primary:active,
-input[type="button"].primary:active,
-input[type="reset"].primary:active,
-input[type="submit"].primary:active {
-  background-color: hsl(209, 100%, 40%);
-  border-color: hsl(209, 100%, 40%);
-  color: hsl(209, 100%, 70%);
-}
-
-.button.primary:disabled,
-button.primary:disabled,
-input[type="button"].primary:disabled,
-input[type="reset"].primary:disabled,
-input[type="submit"].primary:disabled,
-.button.primary.disabled,
-button.primary.disabled,
-input[type="button"].primary.disabled,
-input[type="reset"].primary.disabled,
-input[type="submit"].primary.disabled {
-  background-color: hsl(209, 100%, 40%);
-  border-color: hsl(209, 100%, 40%);
-  color: hsl(209, 100%, 60%);
 }

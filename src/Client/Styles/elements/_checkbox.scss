@@ -1,13 +1,17 @@
+input[type="checkbox"] {
+  display: inline;
+}
+
 input[type="checkbox"]:before {
+  @include unselectable;
+  background: $background-color-checkbox-container;
   content: "";
   display: inline-block;
-  width: 1.6rem;
-  height: 1.6rem;
-  background: black;
-  user-select: none;
+  height: $height-checkbox;
+  width: $width-checkbox;
 }
 input[type="checkbox"]:checked:before {
-  background: black;
+  background: $background-color-checkbox-container;
 }
 
 input[type="checkbox"]:before {
@@ -22,6 +26,6 @@ input[type="checkbox"]:indeterminate:before {
 
 input[type="checkbox"] + label {
   display: inline-block;
-  margin-left: 0.5rem;
-  vertical-align: -0.1rem;
+  margin-left: $margin-left-checkbox-label;
+  vertical-align: $vertical-align-checkbox-label;
 }

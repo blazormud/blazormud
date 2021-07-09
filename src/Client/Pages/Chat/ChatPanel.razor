@@ -2,12 +2,10 @@
 
 <AuthorizeView Roles="Player,Builder,Admin,Owner">
   <Authorized>
-    <div class="form-group">
-      <label>
-          Message:
-          <input @bind="messageInput" size="50" />
-      </label>
-    </div>
+    <label for="chat-input">
+      Message:
+    </label>
+    <input id="chat-input" @bind="messageInput" size="50" />
     <button @onclick="Send" disabled="@(!IsConnected)">Send</button>
 
     <hr>
