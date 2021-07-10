@@ -1,0 +1,18 @@
+@inherits LayoutComponentBase
+@layout MainLayout
+
+
+<div class="page">
+  <nav class="page-menu">
+    <NavLink href="test/" Match="NavLinkMatch.All">Index</NavLink>
+    <NavLink href="test/counter" Match="NavLinkMatch.All">Counter</NavLink>
+    <NavLink href="test/fetchdata" Match="NavLinkMatch.All">Fetch Data</NavLink>
+    <NavLink href="test/error-test" Match="NavLinkMatch.All">Error Test</NavLink>
+    <NavLink href="test/html-test" Match="NavLinkMatch.All">HTML Test</NavLink>
+    <NavLink href="test/icon-test" Match="NavLinkMatch.All">Icon Test</NavLink>
+    <NavLink href="test/testbed" Match="NavLinkMatch.All">Test Bed</NavLink>
+  </nav>
+  <article class="page-content">
+    @Body
+  </article>
+</div>

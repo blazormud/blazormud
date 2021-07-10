@@ -4,9 +4,9 @@
 
 <div class="page">
   <nav class="page-menu">
-    <AuthorizeView Roles="Admin,Owner">
+    <AuthorizeView Roles="Builder,Admin,Owner">
       <Authorized>
-        <NavLink href="admin/" Match="NavLinkMatch.All">Index</NavLink>
+        <NavLink href="build/" Match="NavLinkMatch.All">Index</NavLink>
         @* <NavLink href="admin/counter" Match="NavLinkMatch.All">Counter</NavLink>
         <NavLink href="admin/fetchdata" Match="NavLinkMatch.All">Fetch Data</NavLink>
         <NavLink href="admin/error-test" Match="NavLinkMatch.All">Error Test</NavLink>
@@ -17,7 +17,7 @@
     </AuthorizeView>
   </nav>
   <article class="page-content">
-    <AuthorizeView Roles="Admin,Owner">
+    <AuthorizeView Roles="Builder,Admin,Owner">
       <Authorized>
         @Body
       </Authorized>

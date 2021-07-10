@@ -8,10 +8,10 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Components;
 using Microsoft.AspNetCore.Components.WebAssembly.Authentication;
 
-namespace BlazorMUD.Client.Pages.Admin
+namespace BlazorMUD.Client.Pages.Test
 {
     [Authorize]
-    public partial class Test
+    public partial class Testbed
     {
         [Inject]
         public HttpClient Http { get; set; }

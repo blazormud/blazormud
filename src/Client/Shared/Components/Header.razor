@@ -1,6 +1,10 @@
 <div class="header">
   <a href=""><img src="assets/logo.svg" /></a>
   <div class="menu">
+    <NavLink class="nav-link" href="/test" Match="NavLinkMatch.Prefix">
+      <Icon MaterialIcon="bug_report"/>&thinsp;
+      Test
+    </NavLink>
     <AuthorizeView Roles="Player,Builder,Admin,Owner">
       <Authorized>
         <NavLink class="nav-link" href="/chat" Match="NavLinkMatch.Prefix">
