@@ -1,41 +1,29 @@
-.sidebar {
-  background: #191c20;
-  font-family: sans-serif;
-  min-height: 100%;
-  padding: 0;
-  width: 247px;
-  z-index: z("sidebar");
+@mixin left-sidebar-link {
+  color: #d7d7d7;
+  display: flex;
+  align-items: center;
+  text-decoration: none;
+  text-transform: uppercase;
+  cursor: pointer;
+  font-size: 14px;
+  font-family: $font-family-display;
+  font-weight: $font-weight-bold;
+  line-height: 14px;
+  vertical-align: text-bottom;
+  padding: 8px 10px 4px 10px;
+  -webkit-user-select: none;
+  user-select: none;
+  border-radius: 4px;
+  background-color: hsl(0, 0%, 8%);
 
-  @include transition(width 0.25s ease, background 0.25s ease);
-
-  display: block;
-
-  .nav-header,
-  .nav-item {
-    @include flex-align(center);
-    @include display-flexbox;
-    @include unselectable;
-    padding: 0.8rem 1.188rem;
-    white-space: nowrap;
-    height: 46px;
+  &.active,
+  &:active {
+    background-color: hsl(0, 0%, 13%);
+    color: white;
   }
 
-  .nav-header {
-    font-weight: bold;
-    color: #ffffff;
-  }
-
-  .sidebar .nav-item {
-    color: #a3a3a3;
-  }
-
-  .nav-item:hover {
-    background: #121417;
-    color: #ffffff;
-  }
-
-  .nav-item.active {
-    background: #0b0c0e;
-    color: #ffffff;
+  &:hover {
+    background-color: hsl(0, 0%, 18%);
+    color: white;
   }
 }

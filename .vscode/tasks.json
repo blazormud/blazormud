@@ -98,6 +98,18 @@
       "command": "kill $(lsof -ti:5000,5001)",
       "group": "none",
       "problemMatcher": []
+    },
+    {
+      "label": "util-clean-css",
+      "type": "shell",
+      "group": "none",
+      "problemMatcher": [],
+      "windows": {
+        "command": ""
+      },
+      "osx": {
+        "command": "find -x . -name '*.css' -type f -delete;find -x . -name '*.css.map' -type f -delete"
+      }
     }
   ]
 }

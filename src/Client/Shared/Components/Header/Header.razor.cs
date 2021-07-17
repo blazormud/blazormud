@@ -1,4 +1,4 @@
-namespace BlazorMUD.Client.Shared
+namespace BlazorMUD.Client.Shared.Components.Header
 {
     public partial class Header
     {
