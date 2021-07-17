@@ -1,5 +1,7 @@
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
+
 namespace BlazorMUD.Core.Models
 {
     public class AreaTemplate
@@ -19,6 +21,7 @@ namespace BlazorMUD.Core.Models
         [Required(ErrorMessage = "A description is requried.")]
         public string Description { get; set; } = "An undescribed and unknown area.";
 
+        [InverseProperty(nameof(LinkTemplate.Source))]
         public IEnumerable<LinkTemplate> Links { get; set; }
 
         //public IEnumerable<ItemTemplate> Items { get; set; }

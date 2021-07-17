@@ -20,5 +20,9 @@ namespace BlazorMUD.Server.Data
         }
 
         public DbSet<AreaTemplate> AreaTemplates { get; set; }
+        public DbSet<AreaInstance> AreaInstances { get; set; }
+
+        public DbSet<LinkTemplate> LinkTemplates { get; set; }
+        public DbSet<LinkInstance> LinkInstances { get; set; }
     }
 }

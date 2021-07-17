@@ -3,14 +3,16 @@ using System;
 using BlazorMUD.Server.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace BlazorMUD.Server.Data.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20210717214832_AddAreasAndLinks")]
+    partial class AddAreasAndLinks
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -61,6 +63,9 @@ namespace BlazorMUD.Server.Data.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("INTEGER");
 
+                    b.Property<long>("DestinationId")
+                        .HasColumnType("INTEGER");
+
                     b.Property<long>("SourceId")
                         .HasColumnType("INTEGER");
 
@@ -68,6 +73,8 @@ namespace BlazorMUD.Server.Data.Migrations
                         .HasColumnType("INTEGER");
 
                     b.HasKey("Id");
+
+                    b.HasIndex("DestinationId");
 
                     b.HasIndex("SourceId");
 
@@ -408,6 +415,12 @@ namespace BlazorMUD.Server.Data.Migrations
 
             modelBuilder.Entity("BlazorMUD.Core.Models.LinkInstance", b =>
                 {
+                    b.HasOne("BlazorMUD.Core.Models.AreaInstance", "Destination")
+                        .WithMany()
+                        .HasForeignKey("DestinationId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
                     b.HasOne("BlazorMUD.Core.Models.AreaInstance", "Source")
                         .WithMany("Links")
                         .HasForeignKey("SourceId")
@@ -419,6 +432,8 @@ namespace BlazorMUD.Server.Data.Migrations
                         .HasForeignKey("TemplateId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
+
+                    b.Navigation("Destination");
 
                     b.Navigation("Source");
 

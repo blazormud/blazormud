@@ -4,6 +4,7 @@ using BlazorMUD.Core;
 using BlazorMUD.Server.Data;
 using BlazorMUD.Server.Hubs;
 using BlazorMUD.Server.Models;
+using BlazorMUD.Server.Services;
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
@@ -71,6 +72,7 @@ namespace BlazorMUD.Server
                 opts.MimeTypes = ResponseCompressionDefaults.MimeTypes.Concat(
                     new[] { "application/octet-stream" });
             });
+            services.AddDependencies();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -115,6 +117,17 @@ namespace BlazorMUD.Server
             });
 
             DatabaseInitializer.Initialize(context, roleManager, userManager);
+        }
+    }
+
+    public static class ServiceCollectionExtensions
+    {
+        public static IServiceCollection AddDependencies(this IServiceCollection services)
+        {
+            return services
+                .AddScoped<IAreaService, AreaService>()
+                .AddScoped<ILinkService, LinkService>()
+                .AddScoped<AreaFactory>();
         }
     }
 }

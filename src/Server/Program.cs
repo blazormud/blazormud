@@ -7,7 +7,9 @@ namespace BlazorMUD.Server
     {
         public static void Main(string[] args)
         {
-            CreateHostBuilder(args).Build().Run();
+            var host = CreateHostBuilder(args);
+
+            host.Build().Run();
         }
 
         public static IHostBuilder CreateHostBuilder(string[] args) =>

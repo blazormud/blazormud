@@ -20,6 +20,7 @@ namespace BlazorMUD.Server.Data
             InitializeRoles(roleManager);
             InitializeUsers(userManager);
             InitializeAreas(context);
+            InitializeLinks(context);
         }
 
         public static void InitializeRoles(RoleManager<ApplicationRole> roleManager)
@@ -97,6 +98,25 @@ namespace BlazorMUD.Server.Data
             foreach (var template in areaTemplates)
             {
                 context.AreaTemplates.Add(template);
+            }
+            context.SaveChanges();
+        }
+
+        public static void InitializeLinks(ApplicationDbContext context)
+        {
+            if (context.LinkTemplates.Any()) return;
+
+            var linkTemplates = new LinkTemplate[]
+            {
+                new LinkTemplate { SourceId = 1, DestinationId = 2 },
+                new LinkTemplate { SourceId = 2, DestinationId = 1 },
+                new LinkTemplate { SourceId = 2, DestinationId = 3 },
+                new LinkTemplate { SourceId = 3, DestinationId = 2 },
+                new LinkTemplate { SourceId = 3, DestinationId = 1 },
+            };
+            foreach (var template in linkTemplates)
+            {
+                context.LinkTemplates.Add(template);
             }
             context.SaveChanges();
         }

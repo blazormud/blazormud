@@ -18,11 +18,14 @@ namespace BlazorMUD.Client.Pages.Test
 
         private IEnumerable<AreaTemplate> output;
 
+        public AreaInstance Area { get; set; }
+
         protected override async Task OnInitializedAsync()
         {
             try
             {
                 output = await Http.GetFromJsonAsync<IEnumerable<AreaTemplate>>("testing");
+                Area = await Http.GetFromJsonAsync<AreaInstance>("area");
             }
             catch (AccessTokenNotAvailableException exception)
             {
