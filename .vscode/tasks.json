@@ -3,72 +3,82 @@
   "tasks": [
     {
       "label": "build-blazor",
-      "command": "dotnet",
       "type": "process",
-      "args": [
-        "build",
-        "${workspaceFolder}/src/Server/BlazorMUD.Server.csproj",
-        "/property:GenerateFullPaths=true",
-        "/consoleloggerparameters:NoSummary"
-      ],
-      "problemMatcher": "$msCompile"
+      "group": "build",
+      "problemMatcher": "$msCompile",
+      "windows": {
+        "command": "${workspaceFolder}/scripts/build-blazor.cmd"
+      },
+      "osx": {
+        "command": "${workspaceFolder}/scripts/build-blazor.sh"
+      },
+      "presentation": {
+        "reveal": "never",
+        "panel": "shared"
+      }
     },
     {
       "label": "watch-blazor",
-      "command": "dotnet",
       "type": "process",
-      "args": [
-        "watch",
-        "run",
-        "--project",
-        "${workspaceFolder}/src/Server/BlazorMUD.Server.csproj",
-        "/property:GenerateFullPaths=true",
-        "/consoleloggerparameters:NoSummary"
-      ],
-      "problemMatcher": "$msCompile"
+      "group": "build",
+      "problemMatcher": "$msCompile",
+      "windows": {
+        "command": "${workspaceFolder}/scripts/watch-blazor.cmd"
+      },
+      "osx": {
+        "command": "${workspaceFolder}/scripts/watch-blazor.sh"
+      },
+      "presentation": {
+        "panel": "dedicated",
+        "clear": true
+      }
     },
     {
       "label": "publish-blazor",
-      "command": "dotnet",
       "type": "process",
-      "args": [
-        "publish",
-        "${workspaceFolder}/src/Server/BlazorMUD.Server.csproj",
-        "/property:GenerateFullPaths=true",
-        "/consoleloggerparameters:NoSummary"
-      ],
-      "problemMatcher": "$msCompile"
+      "group": "build",
+      "problemMatcher": "$msCompile",
+      "windows": {
+        "command": "${workspaceFolder}/scripts/publish-blazor.cmd"
+      },
+      "osx": {
+        "command": "${workspaceFolder}/scripts/publish-blazor.sh"
+      },
+      "presentation": {
+        "panel": "shared"
+      }
     },
     {
       "label": "build-sass",
-      "command": "sass",
       "type": "process",
-      "args": [
-        "--load-path=src/Client/Styles",
-        "src/Client/Styles:src/Client/wwwroot/css",
-        // "src/Client/Styles:src/Server/wwwroot/css",
-        "src/Client/Pages:src/Client/Pages",
-        "src/Client/Shared:src/Client/Shared",
-        "--style=compressed",
-        "--update"
-      ],
-      "group": "build"
+      "group": "build",
+      "problemMatcher": [],
+      "windows": {
+        "command": "${workspaceFolder}/scripts/build-sass.cmd"
+      },
+      "osx": {
+        "command": "${workspaceFolder}/scripts/build-sass.sh"
+      },
+      "presentation": {
+        "reveal": "never",
+        "panel": "shared"
+      }
     },
     {
       "label": "watch-sass",
-      "command": "sass",
       "type": "process",
-      "args": [
-        "--load-path=src/Client/Styles",
-        "src/Client/Styles:src/Client/wwwroot/css",
-        // "src/Client/Styles:src/Server/wwwroot/css",
-        "src/Client/Pages:src/Client/Pages",
-        "src/Client/Shared:src/Client/Shared",
-        "--style=compressed",
-        "--update",
-        "--watch"
-      ],
-      "group": "build"
+      "group": "build",
+      "problemMatcher": [],
+      "windows": {
+        "command": "${workspaceFolder}/scripts/watch-sass.cmd"
+      },
+      "osx": {
+        "command": "${workspaceFolder}/scripts/watch-sass.sh"
+      },
+      "presentation": {
+        "panel": "dedicated",
+        "clear": true
+      }
     },
     {
       "label": "watch-parallel",
@@ -95,22 +105,35 @@
       "isBackground": true
     },
     {
-      "label": "util-freeports-mac",
-      "type": "shell",
-      "command": "kill $(lsof -ti:5000,5001)",
-      "group": "none",
-      "problemMatcher": []
-    },
-    {
-      "label": "util-clean-css",
-      "type": "shell",
+      "label": "util-free-ports",
+      "type": "process",
       "group": "none",
       "problemMatcher": [],
       "windows": {
         "command": ""
       },
       "osx": {
-        "command": "find -x . -name '*.css' -type f -delete;find -x . -name '*.css.map' -type f -delete"
+        "command": "${workspaceFolder}/scripts/free-ports.sh"
+      },
+      "presentation": {
+        "reveal": "never",
+        "panel": "shared"
+      }
+    },
+    {
+      "label": "util-clean-css",
+      "type": "process",
+      "group": "none",
+      "problemMatcher": [],
+      "windows": {
+        "command": "${workspaceFolder}/scripts/clean-css.cmd"
+      },
+      "osx": {
+        "command": "${workspaceFolder}/scripts/clean-css.sh"
+      },
+      "presentation": {
+        "reveal": "never",
+        "panel": "shared"
       }
     }
   ]
