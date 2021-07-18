@@ -46,6 +46,7 @@
       "args": [
         "--load-path=src/Client/Styles",
         "src/Client/Styles:src/Client/wwwroot/css",
+        // "src/Client/Styles:src/Server/wwwroot/css",
         "src/Client/Pages:src/Client/Pages",
         "src/Client/Shared:src/Client/Shared",
         "--style=compressed",
@@ -60,6 +61,7 @@
       "args": [
         "--load-path=src/Client/Styles",
         "src/Client/Styles:src/Client/wwwroot/css",
+        // "src/Client/Styles:src/Server/wwwroot/css",
         "src/Client/Pages:src/Client/Pages",
         "src/Client/Shared:src/Client/Shared",
         "--style=compressed",
