@@ -15,7 +15,7 @@ namespace BlazorMUD.Core.Models
         [InverseProperty(nameof(AreaTemplate.Region))]
         public IEnumerable<AreaTemplate> Areas { get; set; } = new List<AreaTemplate>();
 
-        [InverseProperty(nameof(LinkTemplate.Source))]
+        [InverseProperty(nameof(LinkTemplate.Region))]
         public IEnumerable<LinkTemplate> Links { get; set; } = new List<LinkTemplate>();
     }
 }

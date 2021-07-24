@@ -19,6 +19,7 @@ namespace BlazorMUD.Server.Data
 
             InitializeRoles(roleManager);
             InitializeUsers(userManager);
+            InitializeRegion(context);
             InitializeAreas(context);
             InitializeLinks(context);
         }
@@ -72,9 +73,9 @@ namespace BlazorMUD.Server.Data
 
             var areaTemplates = new AreaTemplate[]
             {
-                new AreaTemplate { Name = "Test Area 1", Title = "Test Area 1", Description = "This is a test area."},
-                new AreaTemplate { Name = "Test Area 2", Title = "Test Area 2", Description = "This is a test area."},
-                new AreaTemplate { Name = "Test Area 3", Title = "Test Area 3", Description = "This is a test area."},
+                new AreaTemplate { Name = "Test Area 1", Title = "Test Area 1", Description = "This is a test area.", RegionId = 1 },
+                new AreaTemplate { Name = "Test Area 2", Title = "Test Area 2", Description = "This is a test area.", RegionId = 1 },
+                new AreaTemplate { Name = "Test Area 3", Title = "Test Area 3", Description = "This is a test area.", RegionId = 1 },
             };
             foreach (var template in areaTemplates)
             {
@@ -90,11 +91,11 @@ namespace BlazorMUD.Server.Data
 
             var linkTemplates = new LinkTemplate[]
             {
-                new LinkTemplate { SourceId = 1, DestinationId = 2 },
-                new LinkTemplate { SourceId = 2, DestinationId = 1 },
-                new LinkTemplate { SourceId = 2, DestinationId = 3 },
-                new LinkTemplate { SourceId = 3, DestinationId = 2 },
-                new LinkTemplate { SourceId = 3, DestinationId = 1 },
+                new LinkTemplate { SourceId = 1, DestinationId = 2, RegionId = 1  },
+                new LinkTemplate { SourceId = 2, DestinationId = 1, RegionId = 1  },
+                new LinkTemplate { SourceId = 2, DestinationId = 3, RegionId = 1  },
+                new LinkTemplate { SourceId = 3, DestinationId = 2, RegionId = 1  },
+                new LinkTemplate { SourceId = 3, DestinationId = 1, RegionId = 1  },
             };
             foreach (var template in linkTemplates)
             {
