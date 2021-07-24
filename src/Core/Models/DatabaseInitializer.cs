@@ -19,9 +19,9 @@ namespace BlazorMUD.Server.Data
 
             InitializeRoles(roleManager);
             InitializeUsers(userManager);
-            InitializeRegion(context);
-            InitializeAreas(context);
-            InitializeLinks(context);
+            // InitializeRegion(context);
+            // InitializeAreas(context);
+            // InitializeLinks(context);
         }
 
         public static void InitializeRoles(RoleManager<ApplicationRole> roleManager)

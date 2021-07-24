@@ -1,8 +1,9 @@
 using System.IdentityModel.Tokens.Jwt;
 using System.Linq;
+using BlazorMUD.Core.Models;
+using BlazorMUD.Core.Models.Auth;
 using BlazorMUD.Server.Data;
 using BlazorMUD.Server.Hubs;
-using BlazorMUD.Server.Models;
 using BlazorMUD.Server.Services;
 using BlazorMUD.Shared;
 using Microsoft.AspNetCore.Authentication;
@@ -31,8 +32,11 @@ namespace BlazorMUD.Server
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddDbContext<ApplicationDbContext>(options =>
+            {
                 options.UseSqlite(
-                    Configuration.GetConnectionString("DefaultConnection")));
+                    Configuration.GetConnectionString("DefaultConnection"),
+                    opt => opt.MigrationsAssembly("BlazorMUD.Server"));
+            });
 
             services.AddDatabaseDeveloperPageExceptionFilter();
 
