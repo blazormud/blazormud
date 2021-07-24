@@ -27,62 +27,43 @@ namespace BlazorMUD.Server.Data
         {
             if (roleManager.Roles.Any()) return;
 
-            var player = new ApplicationRole { Name = "Player" };
-            _ = roleManager.CreateAsync(player).Result;
+            InitializeRole("Player");
+            InitializeRole("Builder");
+            InitializeRole("Admin");
+            InitializeRole("Owner");
 
-            var builder = new ApplicationRole { Name = "Builder" };
-            _ = roleManager.CreateAsync(builder).Result;
-
-            var admin = new ApplicationRole { Name = "Admin" };
-            _ = roleManager.CreateAsync(admin).Result;
-
-            var owner = new ApplicationRole { Name = "Owner" };
-            _ = roleManager.CreateAsync(owner).Result;
+            void InitializeRole(string role) =>
+                roleManager.CreateAsync(new ApplicationRole { Name = role }).Wait();
         }
 
         public static void InitializeUsers(UserManager<ApplicationUser> userManager)
         {
             if (userManager.Users.Any()) return;
 
-            InitializeUser(userManager,
-                username: "owner",
-                email: "owner@localhost",
-                password: "owner",
-                roles: new[] { "Owner" }
-            );
+            InitializeUser("owner", "Owner");
+            InitializeUser("admin", "Admin");
+            InitializeUser("builder1", "Builder");
+            InitializeUser("builder2", "Builder");
+            InitializeUser("player1", "Player");
+            InitializeUser("player2", "Player");
+            InitializeUser("player3", "Player");
 
-            InitializeUser(userManager,
-                username: "admin",
-                email: "admin@localhost",
-                password: "admin",
-                roles: new[] { "Admin" }
-            );
-
-            InitializeUser(userManager,
-                username: "builder",
-                email: "builder@localhost",
-                password: "builder",
-                roles: new[] { "Builder" }
-            );
-
-            InitializeUser(userManager,
-                username: "player",
-                email: "player@localhost",
-                password: "player",
-                roles: new[] { "Player" }
-            );
-
-            static void InitializeUser(
-                UserManager<ApplicationUser> userManager,
-                string username, string email, string password, string[] roles)
+            void InitializeUser(string username, string role)
             {
-                var user = new ApplicationUser { UserName = username, Email = email, EmailConfirmed = true };
-                var playerResult = userManager.CreateAsync(user, password).Result;
-                if (playerResult.Succeeded)
-                {
-                    foreach (var role in roles) userManager.AddToRoleAsync(user, role).Wait();
-                }
+                var user = new ApplicationUser
+                { UserName = username, Email = $"{username}@localhost", EmailConfirmed = true };
+                var userResult = userManager.CreateAsync(user, username).Result;
+                if (userResult.Succeeded) userManager.AddToRoleAsync(user, role).Wait();
             }
+        }
+
+        public static void InitializeRegion(ApplicationDbContext context)
+        {
+            if (context.Regions.Any()) return;
+
+            context.Regions.Add(new Region { Name = "Test Region A" });
+
+            context.SaveChanges();
         }
 
         public static void InitializeAreas(ApplicationDbContext context)
@@ -99,6 +80,7 @@ namespace BlazorMUD.Server.Data
             {
                 context.AreaTemplates.Add(template);
             }
+
             context.SaveChanges();
         }
 
@@ -118,7 +100,7 @@ namespace BlazorMUD.Server.Data
             {
                 context.LinkTemplates.Add(template);
             }
-            context.SaveChanges();
+
         }
     }
 }

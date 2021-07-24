@@ -19,6 +19,8 @@ namespace BlazorMUD.Server.Data
         {
         }
 
+        public DbSet<Region> Regions { get; set; }
+
         public DbSet<AreaTemplate> AreaTemplates { get; set; }
         public DbSet<AreaInstance> AreaInstances { get; set; }
 

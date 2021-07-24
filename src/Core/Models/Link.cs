@@ -4,6 +4,24 @@ using System.Text.Json.Serialization;
 
 namespace BlazorMUD.Core.Models
 {
+    public class LinkTemplate
+    {
+        [Key]
+        public long Id { get; set; }
+
+        [Required]
+        [ForeignKey(nameof(Source))]
+        public long SourceId { get; set; }
+        [JsonIgnore]
+        public AreaTemplate Source { get; set; }
+
+        [Required]
+        [ForeignKey(nameof(Destination))]
+        public long DestinationId { get; set; }
+        [JsonIgnore]
+        public AreaTemplate Destination { get; set; }
+    }
+
     public class LinkInstance
     {
         [Key]
@@ -19,22 +37,5 @@ namespace BlazorMUD.Core.Models
         public long SourceId { get; set; }
         [JsonIgnore]
         public AreaInstance Source { get; set; }
-
-        // [Required]
-        // [ForeignKey(nameof(Destination))]
-        // public long DestinationId { get; set; }
-        // public AreaInstance Destination { get; set; }
-
-        // [Required]
-        // [ForeignKey(nameof(Source))]
-        // public long SourceId { get; set; }
-        // [JsonIgnore]
-        // public AreaInstance Source { get; set; }
-
-        // [Required]
-        // [ForeignKey(nameof(Destination))]
-        // public long DestinationId { get; set; }
-        // [JsonIgnore]
-        // public AreaInstance Destination { get; set; }
     }
 }
