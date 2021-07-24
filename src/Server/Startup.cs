@@ -128,10 +128,11 @@ namespace BlazorMUD.Server
     {
         public static IServiceCollection AddDependencies(this IServiceCollection services)
         {
-            return services
-                .AddScoped<IAreaService, AreaService>()
-                .AddScoped<ILinkService, LinkService>()
-                .AddScoped<AreaFactory>();
+            return services;
+            // return services
+            //     .AddScoped<IAreaService, AreaService>()
+            //     .AddScoped<ILinkService, LinkService>()
+            //     .AddScoped<AreaFactory>();
         }
     }
 }

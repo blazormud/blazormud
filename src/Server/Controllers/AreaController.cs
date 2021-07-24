@@ -11,17 +11,17 @@ namespace BlazorMUD.Server.Controllers
     [Route("[controller]")]
     public class AreaController : ControllerBase
     {
-        private readonly AreaFactory _areaFactory;
+        // private readonly AreaFactory _areaFactory;
 
-        public AreaController(AreaFactory areaFactory)
-        {
-            _areaFactory = areaFactory;
-        }
+        // public AreaController(AreaFactory areaFactory)
+        // {
+        //     _areaFactory = areaFactory;
+        // }
 
-        [HttpGet] // api/area/id
-        public async Task<ActionResult<AreaInstance>> Get()
-        {
-            return await _areaFactory.GetAreaInstanceAsync(2L);
-        }
+        // [HttpGet] // api/area/id
+        // public async Task<ActionResult<AreaInstance>> Get()
+        // {
+        //     return await _areaFactory.GetAreaInstanceAsync(2L);
+        // }
     }
 }

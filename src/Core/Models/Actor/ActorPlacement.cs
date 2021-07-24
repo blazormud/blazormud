@@ -2,10 +2,11 @@ using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 using BlazorMUD.Core.Models.Area;
 using BlazorMUD.Core.Models.Region;
+using BlazorMUD.Core.Models.Vehicle;
 
-namespace BlazorMUD.Core.Models.Link
+namespace BlazorMUD.Core.Models.Actor
 {
-    public class LinkInstance : ILink
+    public class ActorPlacement
     {
         [Key]
         public long Id { get; set; }
@@ -16,17 +17,14 @@ namespace BlazorMUD.Core.Models.Link
 
         [ForeignKey("Template")]
         public long TemplateId { get; set; }
-        public LinkTemplate Template { get; set; }
+        public ActorTemplate Template { get; set; }
 
         [ForeignKey("ParentArea")]
-        public long ParentAreaId { get; set; }
+        public long? ParentAreaId { get; set; }
         public AreaTemplate ParentArea { get; set; }
 
-        [ForeignKey("DestinationArea")]
-        public long DestinationAreaId { get; set; }
-        public AreaTemplate DestinationArea { get; set; }
-
-        public LinkStaticFlags StaticFlags { get; set; }
-        public LinkDynamicFlags DynamicFlags { get; set; }
+        [ForeignKey("ParentVehiclePlacement")]
+        public long? ParentVehiclePlacementId { get; set; }
+        public VehiclePlacement ParentVehiclePlacement { get; set; }
     }
 }

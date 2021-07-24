@@ -5,7 +5,7 @@ using BlazorMUD.Core.Models.Region;
 
 namespace BlazorMUD.Core.Models.Link
 {
-    public class LinkInstance : ILink
+    public class LinkPlacement
     {
         [Key]
         public long Id { get; set; }
@@ -25,8 +25,5 @@ namespace BlazorMUD.Core.Models.Link
         [ForeignKey("DestinationArea")]
         public long DestinationAreaId { get; set; }
         public AreaTemplate DestinationArea { get; set; }
-
-        public LinkStaticFlags StaticFlags { get; set; }
-        public LinkDynamicFlags DynamicFlags { get; set; }
     }
 }

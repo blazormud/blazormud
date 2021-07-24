@@ -58,50 +58,50 @@ namespace BlazorMUD.Server.Data
             }
         }
 
-        public static void InitializeRegion(ApplicationDbContext context)
-        {
-            if (context.Regions.Any()) return;
+        // public static void InitializeRegion(ApplicationDbContext context)
+        // {
+        //     if (context.Regions.Any()) return;
 
-            context.Regions.Add(new RegionTemplate { Name = "Test Region A" });
+        //     context.Regions.Add(new RegionTemplate { Name = "Test Region A" });
 
-            context.SaveChanges();
-        }
+        //     context.SaveChanges();
+        // }
 
-        public static void InitializeAreas(ApplicationDbContext context)
-        {
-            if (context.AreaTemplates.Any()) return;
+        // public static void InitializeAreas(ApplicationDbContext context)
+        // {
+        //     if (context.AreaTemplates.Any()) return;
 
-            var areaTemplates = new AreaTemplate[]
-            {
-                new AreaTemplate { Name = "Test Area 1", Title = "Test Area 1", Description = "This is a test area." },
-                new AreaTemplate { Name = "Test Area 2", Title = "Test Area 2", Description = "This is a test area." },
-                new AreaTemplate { Name = "Test Area 3", Title = "Test Area 3", Description = "This is a test area." },
-            };
-            foreach (var template in areaTemplates)
-            {
-                context.AreaTemplates.Add(template);
-            }
+        //     var areaTemplates = new AreaTemplate[]
+        //     {
+        //         new AreaTemplate { Name = "Test Area 1", Title = "Test Area 1", Description = "This is a test area." },
+        //         new AreaTemplate { Name = "Test Area 2", Title = "Test Area 2", Description = "This is a test area." },
+        //         new AreaTemplate { Name = "Test Area 3", Title = "Test Area 3", Description = "This is a test area." },
+        //     };
+        //     foreach (var template in areaTemplates)
+        //     {
+        //         context.AreaTemplates.Add(template);
+        //     }
 
-            context.SaveChanges();
-        }
+        //     context.SaveChanges();
+        // }
 
-        public static void InitializeLinks(ApplicationDbContext context)
-        {
-            if (context.LinkTemplates.Any()) return;
+        // public static void InitializeLinks(ApplicationDbContext context)
+        // {
+        //     if (context.LinkTemplates.Any()) return;
 
-            var linkTemplates = new LinkTemplate[]
-            {
-                new LinkTemplate { SourceId = 1, DestinationId = 2 },
-                new LinkTemplate { SourceId = 2, DestinationId = 1 },
-                new LinkTemplate { SourceId = 2, DestinationId = 3 },
-                new LinkTemplate { SourceId = 3, DestinationId = 2 },
-                new LinkTemplate { SourceId = 3, DestinationId = 1 },
-            };
-            foreach (var template in linkTemplates)
-            {
-                context.LinkTemplates.Add(template);
-            }
+        //     var linkTemplates = new LinkTemplate[]
+        //     {
+        //         new LinkTemplate { SourceId = 1, DestinationId = 2 },
+        //         new LinkTemplate { SourceId = 2, DestinationId = 1 },
+        //         new LinkTemplate { SourceId = 2, DestinationId = 3 },
+        //         new LinkTemplate { SourceId = 3, DestinationId = 2 },
+        //         new LinkTemplate { SourceId = 3, DestinationId = 1 },
+        //     };
+        //     foreach (var template in linkTemplates)
+        //     {
+        //         context.LinkTemplates.Add(template);
+        //     }
 
-        }
+        // }
     }
 }

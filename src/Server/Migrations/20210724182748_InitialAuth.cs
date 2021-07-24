@@ -3,25 +3,10 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace BlazorMUD.Server.Migrations
 {
-    public partial class InitialSetup : Migration
+    public partial class InitialAuth : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
-            migrationBuilder.CreateTable(
-                name: "AreaTemplates",
-                columns: table => new
-                {
-                    Id = table.Column<long>(type: "INTEGER", nullable: false)
-                        .Annotation("Sqlite:Autoincrement", true),
-                    Name = table.Column<string>(type: "TEXT", nullable: false),
-                    Title = table.Column<string>(type: "TEXT", nullable: false),
-                    Description = table.Column<string>(type: "TEXT", nullable: false)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_AreaTemplates", x => x.Id);
-                });
-
             migrationBuilder.CreateTable(
                 name: "AspNetRoles",
                 columns: table => new
@@ -100,64 +85,6 @@ namespace BlazorMUD.Server.Migrations
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_PersistedGrants", x => x.Key);
-                });
-
-            migrationBuilder.CreateTable(
-                name: "Regions",
-                columns: table => new
-                {
-                    Id = table.Column<long>(type: "INTEGER", nullable: false)
-                        .Annotation("Sqlite:Autoincrement", true),
-                    Name = table.Column<string>(type: "TEXT", nullable: false)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_Regions", x => x.Id);
-                });
-
-            migrationBuilder.CreateTable(
-                name: "AreaInstances",
-                columns: table => new
-                {
-                    Id = table.Column<long>(type: "INTEGER", nullable: false)
-                        .Annotation("Sqlite:Autoincrement", true),
-                    TemplateId = table.Column<long>(type: "INTEGER", nullable: false)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_AreaInstances", x => x.Id);
-                    table.ForeignKey(
-                        name: "FK_AreaInstances_AreaTemplates_TemplateId",
-                        column: x => x.TemplateId,
-                        principalTable: "AreaTemplates",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
-                });
-
-            migrationBuilder.CreateTable(
-                name: "LinkTemplates",
-                columns: table => new
-                {
-                    Id = table.Column<long>(type: "INTEGER", nullable: false)
-                        .Annotation("Sqlite:Autoincrement", true),
-                    SourceId = table.Column<long>(type: "INTEGER", nullable: false),
-                    DestinationId = table.Column<long>(type: "INTEGER", nullable: false)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_LinkTemplates", x => x.Id);
-                    table.ForeignKey(
-                        name: "FK_LinkTemplates_AreaTemplates_DestinationId",
-                        column: x => x.DestinationId,
-                        principalTable: "AreaTemplates",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
-                    table.ForeignKey(
-                        name: "FK_LinkTemplates_AreaTemplates_SourceId",
-                        column: x => x.SourceId,
-                        principalTable: "AreaTemplates",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.CreateTable(
@@ -266,37 +193,6 @@ namespace BlazorMUD.Server.Migrations
                         onDelete: ReferentialAction.Cascade);
                 });
 
-            migrationBuilder.CreateTable(
-                name: "LinkInstances",
-                columns: table => new
-                {
-                    Id = table.Column<long>(type: "INTEGER", nullable: false)
-                        .Annotation("Sqlite:Autoincrement", true),
-                    TemplateId = table.Column<long>(type: "INTEGER", nullable: false),
-                    SourceId = table.Column<long>(type: "INTEGER", nullable: false)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_LinkInstances", x => x.Id);
-                    table.ForeignKey(
-                        name: "FK_LinkInstances_AreaInstances_SourceId",
-                        column: x => x.SourceId,
-                        principalTable: "AreaInstances",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
-                    table.ForeignKey(
-                        name: "FK_LinkInstances_LinkTemplates_TemplateId",
-                        column: x => x.TemplateId,
-                        principalTable: "LinkTemplates",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
-                });
-
-            migrationBuilder.CreateIndex(
-                name: "IX_AreaInstances_TemplateId",
-                table: "AreaInstances",
-                column: "TemplateId");
-
             migrationBuilder.CreateIndex(
                 name: "IX_AspNetRoleClaims_RoleId",
                 table: "AspNetRoleClaims",
@@ -346,26 +242,6 @@ namespace BlazorMUD.Server.Migrations
                 column: "Expiration");
 
             migrationBuilder.CreateIndex(
-                name: "IX_LinkInstances_SourceId",
-                table: "LinkInstances",
-                column: "SourceId");
-
-            migrationBuilder.CreateIndex(
-                name: "IX_LinkInstances_TemplateId",
-                table: "LinkInstances",
-                column: "TemplateId");
-
-            migrationBuilder.CreateIndex(
-                name: "IX_LinkTemplates_DestinationId",
-                table: "LinkTemplates",
-                column: "DestinationId");
-
-            migrationBuilder.CreateIndex(
-                name: "IX_LinkTemplates_SourceId",
-                table: "LinkTemplates",
-                column: "SourceId");
-
-            migrationBuilder.CreateIndex(
                 name: "IX_PersistedGrants_Expiration",
                 table: "PersistedGrants",
                 column: "Expiration");
@@ -402,28 +278,13 @@ namespace BlazorMUD.Server.Migrations
                 name: "DeviceCodes");
 
             migrationBuilder.DropTable(
-                name: "LinkInstances");
-
-            migrationBuilder.DropTable(
                 name: "PersistedGrants");
-
-            migrationBuilder.DropTable(
-                name: "Regions");
 
             migrationBuilder.DropTable(
                 name: "AspNetRoles");
 
             migrationBuilder.DropTable(
                 name: "AspNetUsers");
-
-            migrationBuilder.DropTable(
-                name: "AreaInstances");
-
-            migrationBuilder.DropTable(
-                name: "LinkTemplates");
-
-            migrationBuilder.DropTable(
-                name: "AreaTemplates");
         }
     }
 }

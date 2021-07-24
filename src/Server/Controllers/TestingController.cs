@@ -16,18 +16,18 @@ namespace BlazorMUD.Server.Controllers
     [Route("[controller]")]
     public class TestingController : ControllerBase
     {
-        private readonly ApplicationDbContext _context;
+        // private readonly ApplicationDbContext _context;
 
-        public TestingController(ApplicationDbContext context)
-        {
-            _context = context;
-        }
+        // public TestingController(ApplicationDbContext context)
+        // {
+        //     _context = context;
+        // }
 
-        [HttpGet]
-        public async Task<ActionResult<object>> Get()
-        {
-            return await _context.AreaTemplates.ToListAsync();
-        }
+        // [HttpGet]
+        // public async Task<ActionResult<object>> Get()
+        // {
+        //     return await _context.AreaTemplates.ToListAsync();
+        // }
 
         // // GET: api/testbed
         // [HttpGet]

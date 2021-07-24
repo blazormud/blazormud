@@ -9,53 +9,14 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace BlazorMUD.Server.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20210724152514_InitialSetup")]
-    partial class InitialSetup
+    [Migration("20210724182748_InitialAuth")]
+    partial class InitialAuth
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
                 .HasAnnotation("ProductVersion", "5.0.7");
-
-            modelBuilder.Entity("BlazorMUD.Core.Models.AreaInstance", b =>
-                {
-                    b.Property<long>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("INTEGER");
-
-                    b.Property<long>("TemplateId")
-                        .HasColumnType("INTEGER");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("TemplateId");
-
-                    b.ToTable("AreaInstances");
-                });
-
-            modelBuilder.Entity("BlazorMUD.Core.Models.AreaTemplate", b =>
-                {
-                    b.Property<long>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("INTEGER");
-
-                    b.Property<string>("Description")
-                        .IsRequired()
-                        .HasColumnType("TEXT");
-
-                    b.Property<string>("Name")
-                        .IsRequired()
-                        .HasColumnType("TEXT");
-
-                    b.Property<string>("Title")
-                        .IsRequired()
-                        .HasColumnType("TEXT");
-
-                    b.HasKey("Id");
-
-                    b.ToTable("AreaTemplates");
-                });
 
             modelBuilder.Entity("BlazorMUD.Core.Models.Auth.ApplicationRole", b =>
                 {
@@ -147,63 +108,6 @@ namespace BlazorMUD.Server.Migrations
                         .HasDatabaseName("UserNameIndex");
 
                     b.ToTable("AspNetUsers");
-                });
-
-            modelBuilder.Entity("BlazorMUD.Core.Models.LinkInstance", b =>
-                {
-                    b.Property<long>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("INTEGER");
-
-                    b.Property<long>("SourceId")
-                        .HasColumnType("INTEGER");
-
-                    b.Property<long>("TemplateId")
-                        .HasColumnType("INTEGER");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("SourceId");
-
-                    b.HasIndex("TemplateId");
-
-                    b.ToTable("LinkInstances");
-                });
-
-            modelBuilder.Entity("BlazorMUD.Core.Models.LinkTemplate", b =>
-                {
-                    b.Property<long>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("INTEGER");
-
-                    b.Property<long>("DestinationId")
-                        .HasColumnType("INTEGER");
-
-                    b.Property<long>("SourceId")
-                        .HasColumnType("INTEGER");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("DestinationId");
-
-                    b.HasIndex("SourceId");
-
-                    b.ToTable("LinkTemplates");
-                });
-
-            modelBuilder.Entity("BlazorMUD.Core.Models.RegionTemplate", b =>
-                {
-                    b.Property<long>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("INTEGER");
-
-                    b.Property<string>("Name")
-                        .IsRequired()
-                        .HasColumnType("TEXT");
-
-                    b.HasKey("Id");
-
-                    b.ToTable("Regions");
                 });
 
             modelBuilder.Entity("IdentityServer4.EntityFramework.Entities.DeviceFlowCodes", b =>
@@ -412,55 +316,6 @@ namespace BlazorMUD.Server.Migrations
                     b.ToTable("AspNetUserTokens");
                 });
 
-            modelBuilder.Entity("BlazorMUD.Core.Models.AreaInstance", b =>
-                {
-                    b.HasOne("BlazorMUD.Core.Models.AreaTemplate", "Template")
-                        .WithMany()
-                        .HasForeignKey("TemplateId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("Template");
-                });
-
-            modelBuilder.Entity("BlazorMUD.Core.Models.LinkInstance", b =>
-                {
-                    b.HasOne("BlazorMUD.Core.Models.AreaInstance", "Source")
-                        .WithMany("Links")
-                        .HasForeignKey("SourceId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.HasOne("BlazorMUD.Core.Models.LinkTemplate", "Template")
-                        .WithMany()
-                        .HasForeignKey("TemplateId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("Source");
-
-                    b.Navigation("Template");
-                });
-
-            modelBuilder.Entity("BlazorMUD.Core.Models.LinkTemplate", b =>
-                {
-                    b.HasOne("BlazorMUD.Core.Models.AreaTemplate", "Destination")
-                        .WithMany()
-                        .HasForeignKey("DestinationId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.HasOne("BlazorMUD.Core.Models.AreaTemplate", "Source")
-                        .WithMany("Links")
-                        .HasForeignKey("SourceId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("Destination");
-
-                    b.Navigation("Source");
-                });
-
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<int>", b =>
                 {
                     b.HasOne("BlazorMUD.Core.Models.Auth.ApplicationRole", null)
@@ -510,16 +365,6 @@ namespace BlazorMUD.Server.Migrations
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
-                });
-
-            modelBuilder.Entity("BlazorMUD.Core.Models.AreaInstance", b =>
-                {
-                    b.Navigation("Links");
-                });
-
-            modelBuilder.Entity("BlazorMUD.Core.Models.AreaTemplate", b =>
-                {
-                    b.Navigation("Links");
                 });
 #pragma warning restore 612, 618
         }
