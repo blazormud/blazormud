@@ -1,8 +1,8 @@
 using System.Text.Json;
 
-namespace BlazorMUD.Core.Extensions
+namespace BlazorMUD.Shared.Extensions
 {
-    public static class ObjectExtensions
+    public static class LoggerExtensions
     {
         public static string ToJsonLog(this object @this)
         {

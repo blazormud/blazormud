@@ -1,6 +1,6 @@
 using System;
 
-namespace BlazorMUD.Core.Extensions
+namespace BlazorMUD.Shared.Extensions
 {
     public static class StringExtensions
     {

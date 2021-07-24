@@ -1,4 +1,4 @@
-namespace BlazorMUD.Core.Enums
+namespace BlazorMUD.Core.Models.Shared
 {
     public enum ArticleType
     {

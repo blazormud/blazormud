@@ -1,8 +1,8 @@
 using System;
 using System.Threading.Tasks;
-using BlazorMUD.Core.Extensions;
 using BlazorMUD.Core.Models;
 using BlazorMUD.Server.Data;
+using BlazorMUD.Shared.Extensions;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
 
@@ -12,10 +12,10 @@ namespace BlazorMUD.Server.Services
 
     public class LinkService : ILinkService
     {
-        private readonly ApplicationDbContext _context;
+        private readonly Data.ApplicationDbContext _context;
         private readonly ILogger<LinkService> _logger;
 
-        public LinkService(ApplicationDbContext context, ILogger<LinkService> logger)
+        public LinkService(Data.ApplicationDbContext context, ILogger<LinkService> logger)
         {
             _context = context;
             _logger = logger;

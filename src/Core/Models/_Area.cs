@@ -24,10 +24,10 @@ namespace BlazorMUD.Core.Models
         [InverseProperty(nameof(LinkTemplate.Source))]
         public IEnumerable<LinkTemplate> Links { get; set; }
 
-        [Required]
-        [ForeignKey(nameof(Region))]
-        public long RegionId { get; set; }
-        public Region Region { get; set; }
+        // [Required]
+        // [ForeignKey(nameof(Region))]
+        // public long RegionId { get; set; }
+        // public Region Region { get; set; }
     }
 
     public class AreaInstance : IInstanceModel<AreaTemplate>

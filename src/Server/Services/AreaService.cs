@@ -1,8 +1,8 @@
 using System;
 using System.Threading.Tasks;
-using BlazorMUD.Core.Extensions;
 using BlazorMUD.Core.Models;
 using BlazorMUD.Server.Data;
+using BlazorMUD.Shared.Extensions;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
 
@@ -12,10 +12,10 @@ namespace BlazorMUD.Server.Services
 
     public class AreaService : IAreaService
     {
-        private readonly ApplicationDbContext _context;
+        private readonly Data.ApplicationDbContext _context;
         private readonly ILogger<AreaService> _logger;
 
-        public AreaService(ApplicationDbContext context, ILogger<AreaService> logger)
+        public AreaService(Data.ApplicationDbContext context, ILogger<AreaService> logger)
         {
             _context = context;
             _logger = logger;

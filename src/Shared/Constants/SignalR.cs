@@ -1,4 +1,4 @@
-namespace BlazorMUD.Core
+namespace BlazorMUD.Shared
 {
     public static partial class Constants
     {

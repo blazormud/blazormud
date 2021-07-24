@@ -1,6 +1,6 @@
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
-using BlazorMUD.Core.Enums;
+
 
 namespace BlazorMUD.Core.Models
 {
@@ -25,8 +25,8 @@ namespace BlazorMUD.Core.Models
         [Required(ErrorMessage = "A long name is requried.")]
         public string LongName { get; set; } = "unknown object";
 
-        // "a" or "an"
-        [Required(ErrorMessage = "An article is required.")]
-        public ArticleType Article { get; set; } = ArticleType.An;
+        // // "a" or "an"
+        // [Required(ErrorMessage = "An article is required.")]
+        // public ArticleType Article { get; set; } = ArticleType.An;
     }
 }

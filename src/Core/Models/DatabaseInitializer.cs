@@ -1,7 +1,7 @@
 using System;
 using System.Linq;
 using BlazorMUD.Core.Models;
-using BlazorMUD.Server.Models;
+using BlazorMUD.Core.Models.Auth;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 
@@ -19,9 +19,9 @@ namespace BlazorMUD.Server.Data
 
             InitializeRoles(roleManager);
             InitializeUsers(userManager);
-            // InitializeRegion(context);
-            // InitializeAreas(context);
-            // InitializeLinks(context);
+            InitializeRegion(context);
+            InitializeAreas(context);
+            InitializeLinks(context);
         }
 
         public static void InitializeRoles(RoleManager<ApplicationRole> roleManager)
@@ -91,11 +91,11 @@ namespace BlazorMUD.Server.Data
 
             var linkTemplates = new LinkTemplate[]
             {
-                new LinkTemplate { SourceId = 1, DestinationId = 2  },
-                new LinkTemplate { SourceId = 2, DestinationId = 1  },
-                new LinkTemplate { SourceId = 2, DestinationId = 3  },
-                new LinkTemplate { SourceId = 3, DestinationId = 2  },
-                new LinkTemplate { SourceId = 3, DestinationId = 1  },
+                new LinkTemplate { SourceId = 1, DestinationId = 2 },
+                new LinkTemplate { SourceId = 2, DestinationId = 1 },
+                new LinkTemplate { SourceId = 2, DestinationId = 3 },
+                new LinkTemplate { SourceId = 3, DestinationId = 2 },
+                new LinkTemplate { SourceId = 3, DestinationId = 1 },
             };
             foreach (var template in linkTemplates)
             {

@@ -1,6 +1,6 @@
 using System.Collections.Generic;
 
-namespace BlazorMUD.Core.Extensions
+namespace BlazorMUD.Shared.Extensions
 {
     public static class DictionaryExtensions
     {

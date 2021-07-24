@@ -95,6 +95,7 @@ class IVehicle {
 }
 class VehiclePersisted {
   OwnerId
+  AreaId
 }
 
 Region *-- Area
@@ -225,6 +226,7 @@ class IVehicle {
 }
 class VehiclePersisted {
   OwnerId
+  AreaId
 }
 
 Region *-- Area

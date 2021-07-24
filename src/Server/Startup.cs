@@ -1,10 +1,10 @@
 using System.IdentityModel.Tokens.Jwt;
 using System.Linq;
-using BlazorMUD.Core;
 using BlazorMUD.Server.Data;
 using BlazorMUD.Server.Hubs;
 using BlazorMUD.Server.Models;
 using BlazorMUD.Server.Services;
+using BlazorMUD.Shared;
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;

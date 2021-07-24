@@ -1,7 +1,7 @@
 using System.Security.Claims;
 using System.Threading.Tasks;
-using BlazorMUD.Core;
 using BlazorMUD.Server.Models;
+using BlazorMUD.Shared;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.SignalR;

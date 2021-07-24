@@ -20,11 +20,6 @@ namespace BlazorMUD.Core.Models
         public long DestinationId { get; set; }
         [JsonIgnore]
         public AreaTemplate Destination { get; set; }
-
-        [Required]
-        [ForeignKey(nameof(Region))]
-        public long RegionId { get; set; }
-        public Region Region { get; set; }
     }
 
     public class LinkInstance
