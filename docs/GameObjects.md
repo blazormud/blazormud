@@ -26,7 +26,6 @@ class ILink {
   Id
 }
 class LinkPersisted {
-  RegionId
   AreaId
 }
 
@@ -34,8 +33,8 @@ class ItemTemplate {
   RegionId
 }
 class ItemPlaced {
-  AreaId
   RegionId
+  AreaId
   TemplateId
 }
 class ItemInstance {
@@ -60,20 +59,21 @@ class ActorTemplate {
   RegionId
 }
 class ActorPlaced {
-  AreaId
   RegionId
+  AreaId
   TemplateId
 }
 class ActorInstance {
-  AreaId
   RegionId
+  AreaId?
+  VehicleId?
 }
 class IActor {
   <<interface>>
   Id
 }
 class ActorPersisted {
-  OwnerId
+  UserId
   AreaId?
   VehicleId?
 }
@@ -82,19 +82,19 @@ class VehicleTemplate {
   RegionId
 }
 class VehiclePlaced {
-  AreaId
   RegionId
+  AreaId
 }
 class VehicleInstance {
-  AreaId
   RegionId
+  AreaId
 }
 class IVehicle {
   <<interface>>
   Id
 }
 class VehiclePersisted {
-  OwnerId
+  UserId
   AreaId
 }
 
@@ -157,7 +157,6 @@ class ILink {
   Id
 }
 class LinkPersisted {
-  RegionId
   AreaId
 }
 
@@ -165,8 +164,8 @@ class ItemTemplate {
   RegionId
 }
 class ItemPlaced {
-  AreaId
   RegionId
+  AreaId
   TemplateId
 }
 class ItemInstance {
@@ -191,20 +190,21 @@ class ActorTemplate {
   RegionId
 }
 class ActorPlaced {
-  AreaId
   RegionId
+  AreaId
   TemplateId
 }
 class ActorInstance {
-  AreaId
   RegionId
+  AreaId?
+  VehicleId?
 }
 class IActor {
   <<interface>>
   Id
 }
 class ActorPersisted {
-  OwnerId
+  UserId
   AreaId?
   VehicleId?
 }
@@ -213,19 +213,19 @@ class VehicleTemplate {
   RegionId
 }
 class VehiclePlaced {
-  AreaId
   RegionId
+  AreaId
 }
 class VehicleInstance {
-  AreaId
   RegionId
+  AreaId
 }
 class IVehicle {
   <<interface>>
   Id
 }
 class VehiclePersisted {
-  OwnerId
+  UserId
   AreaId
 }
 
