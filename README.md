@@ -15,9 +15,9 @@ This project has just started and has a long way to go to be useful. Come back l
 
 - BlazorMUD.Client
   - The Blazor webassembly application that provides the interface the player.
-- BlazorMUD.Components
-  - A Razor component library containing all the reusable components in use by the Client.
+- BlazorMUD.Core
+  - Core functionality of BlazorMUD; used by BlazorMUD.Server.
 - BlazorMUD.Server
   - Manages the state of the game world. Provides REST endpoints, SignalR hubs, and database connections for the Client.
-- BlazorMUD.Core
-  - Required code for all other projects.
+- BlazorMUD.Shared
+  - Code shared between all projects.
