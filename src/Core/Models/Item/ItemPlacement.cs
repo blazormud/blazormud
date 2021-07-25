@@ -4,9 +4,41 @@ using BlazorMUD.Core.Models.Actor;
 using BlazorMUD.Core.Models.Area;
 using BlazorMUD.Core.Models.Region;
 using BlazorMUD.Core.Models.Vehicle;
+using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
 namespace BlazorMUD.Core.Models.Item
 {
+    public class ItemPlacementEntityTypeConfiguration : IEntityTypeConfiguration<ItemPlacement>
+    {
+        public void Configure(EntityTypeBuilder<ItemPlacement> builder)
+        {
+            builder
+                .HasOne(nameof(ItemPlacement.ParentArea))
+                .WithMany()
+                .HasForeignKey(nameof(ItemPlacement.ParentAreaId))
+                .OnDelete(DeleteBehavior.Cascade);
+
+            builder
+                .HasOne(nameof(ItemPlacement.ParentVehiclePlacement))
+                .WithMany()
+                .HasForeignKey(nameof(ItemPlacement.ParentVehiclePlacementId))
+                .OnDelete(DeleteBehavior.Cascade);
+
+            builder
+                .HasOne(nameof(ItemPlacement.ParentActorPlacement))
+                .WithMany()
+                .HasForeignKey(nameof(ItemPlacement.ParentActorPlacementId))
+                .OnDelete(DeleteBehavior.Cascade);
+
+            builder
+                .HasOne(nameof(ItemPlacement.ParentItemPlacement))
+                .WithMany()
+                .HasForeignKey(nameof(ItemPlacement.ParentItemPlacementId))
+                .OnDelete(DeleteBehavior.Cascade);
+        }
+    }
+
     public class ItemPlacement
     {
         [Key]

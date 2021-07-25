@@ -4,9 +4,41 @@ using BlazorMUD.Core.Models.Actor;
 using BlazorMUD.Core.Models.Area;
 using BlazorMUD.Core.Models.Region;
 using BlazorMUD.Core.Models.Vehicle;
+using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
 namespace BlazorMUD.Core.Models.Item
 {
+    public class ItemInstanceEntityTypeConfiguration : IEntityTypeConfiguration<ItemInstance>
+    {
+        public void Configure(EntityTypeBuilder<ItemInstance> builder)
+        {
+            builder
+                .HasOne(nameof(ItemInstance.ParentArea))
+                .WithMany()
+                .HasForeignKey(nameof(ItemInstance.ParentAreaId))
+                .OnDelete(DeleteBehavior.Cascade);
+
+            builder
+                .HasOne(nameof(ItemInstance.ParentVehicleInstance))
+                .WithMany()
+                .HasForeignKey(nameof(ItemInstance.ParentVehicleInstanceId))
+                .OnDelete(DeleteBehavior.Cascade);
+
+            builder
+                .HasOne(nameof(ItemInstance.ParentActorInstance))
+                .WithMany()
+                .HasForeignKey(nameof(ItemInstance.ParentActorInstanceId))
+                .OnDelete(DeleteBehavior.Cascade);
+
+            builder
+                .HasOne(nameof(ItemInstance.ParentItemInstance))
+                .WithMany()
+                .HasForeignKey(nameof(ItemInstance.ParentItemInstanceId))
+                .OnDelete(DeleteBehavior.Cascade);
+        }
+    }
+
     public class ItemInstance : IItem
     {
         [Key]

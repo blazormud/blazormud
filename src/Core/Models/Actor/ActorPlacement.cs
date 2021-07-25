@@ -3,9 +3,29 @@ using System.ComponentModel.DataAnnotations.Schema;
 using BlazorMUD.Core.Models.Area;
 using BlazorMUD.Core.Models.Region;
 using BlazorMUD.Core.Models.Vehicle;
+using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
 namespace BlazorMUD.Core.Models.Actor
 {
+    public class ActorPlacementEntityTypeConfiguration : IEntityTypeConfiguration<ActorPlacement>
+    {
+        public void Configure(EntityTypeBuilder<ActorPlacement> builder)
+        {
+            builder
+                .HasOne(nameof(ActorPlacement.ParentArea))
+                .WithMany()
+                .HasForeignKey(nameof(ActorPlacement.ParentAreaId))
+                .OnDelete(DeleteBehavior.Cascade);
+
+            builder
+                .HasOne(nameof(ActorPlacement.ParentVehiclePlacement))
+                .WithMany()
+                .HasForeignKey(nameof(ActorPlacement.ParentVehiclePlacementId))
+                .OnDelete(DeleteBehavior.Cascade);
+        }
+    }
+
     public class ActorPlacement
     {
         [Key]

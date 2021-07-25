@@ -2,9 +2,29 @@ using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 using BlazorMUD.Core.Models.Area;
 using BlazorMUD.Core.Models.Region;
+using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
 namespace BlazorMUD.Core.Models.Vehicle
 {
+    public class VehicleInstanceEntityTypeConfiguration : IEntityTypeConfiguration<VehicleInstance>
+    {
+        public void Configure(EntityTypeBuilder<VehicleInstance> builder)
+        {
+            builder
+                .HasOne(nameof(VehicleInstance.ParentArea))
+                .WithMany()
+                .HasForeignKey(nameof(VehicleInstance.ParentAreaId))
+                .OnDelete(DeleteBehavior.Cascade);
+
+            builder
+                .HasOne(nameof(VehicleInstance.ParentVehicleInstance))
+                .WithMany()
+                .HasForeignKey(nameof(VehicleInstance.ParentVehicleInstanceId))
+                .OnDelete(DeleteBehavior.Cascade);
+        }
+    }
+
     public class VehicleInstance : IVehicle
     {
         [Key]

@@ -3,9 +3,41 @@ using System.ComponentModel.DataAnnotations.Schema;
 using BlazorMUD.Core.Models.Actor;
 using BlazorMUD.Core.Models.Area;
 using BlazorMUD.Core.Models.Vehicle;
+using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
 namespace BlazorMUD.Core.Models.Item
 {
+    public class PersistedItemEntityTypeConfiguration : IEntityTypeConfiguration<PersistedItem>
+    {
+        public void Configure(EntityTypeBuilder<PersistedItem> builder)
+        {
+            builder
+                .HasOne(nameof(PersistedItem.ParentArea))
+                .WithMany()
+                .HasForeignKey(nameof(PersistedItem.ParentAreaId))
+                .OnDelete(DeleteBehavior.Cascade);
+
+            builder
+                .HasOne(nameof(PersistedItem.ParentPersistedVehicle))
+                .WithMany()
+                .HasForeignKey(nameof(PersistedItem.ParentPersistedVehicleId))
+                .OnDelete(DeleteBehavior.Cascade);
+
+            builder
+                .HasOne(nameof(PersistedItem.ParentPersistedActor))
+                .WithMany()
+                .HasForeignKey(nameof(PersistedItem.ParentPersistedActorId))
+                .OnDelete(DeleteBehavior.Cascade);
+
+            builder
+                .HasOne(nameof(PersistedItem.ParentPersistedItem))
+                .WithMany()
+                .HasForeignKey(nameof(PersistedItem.ParentPersistedItemId))
+                .OnDelete(DeleteBehavior.Cascade);
+        }
+    }
+
     public class PersistedItem : IItem
     {
         [Key]
