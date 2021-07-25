@@ -16,14 +16,14 @@ namespace BlazorMUD.Core.Models.Item
         public long RegionId { get; set; }
         public RegionTemplate Region { get; set; }
 
-        [InverseProperty(nameof(PlacedItem.Template))]
-        public IQueryable<PlacedItem> PlacedItems { get; set; } = null;
+        // [InverseProperty(nameof(PlacedItem.Template))]
+        // public IQueryable<PlacedItem> PlacedItems { get; set; } = null;
 
-        [InverseProperty(nameof(InstancedItem.Template))]
-        public IQueryable<InstancedItem> InstancedItems { get; set; } = null;
+        // [InverseProperty(nameof(InstancedItem.Template))]
+        // public IQueryable<InstancedItem> InstancedItems { get; set; } = null;
 
-        [InverseProperty(nameof(PersistedItem.Template))]
-        public IQueryable<PersistedItem> PersistedItems { get; set; } = null;
+        // [InverseProperty(nameof(PersistedItem.Template))]
+        // public IQueryable<PersistedItem> PersistedItems { get; set; } = null;
 
         #endregion Relationship Properties
 

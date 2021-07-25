@@ -16,14 +16,14 @@ namespace BlazorMUD.Core.Models.Link
         public long RegionId { get; set; }
         public RegionTemplate Region { get; set; }
 
-        [InverseProperty(nameof(PlacedLink.Template))]
-        public IQueryable<PlacedLink> PlacedLinks { get; set; } = null;
+        // [InverseProperty(nameof(PlacedLink.Template))]
+        // public IQueryable<PlacedLink> PlacedLinks { get; set; } = null;
 
-        [InverseProperty(nameof(InstancedLink.Template))]
-        public IQueryable<InstancedLink> InstancedLinks { get; set; } = null;
+        // [InverseProperty(nameof(InstancedLink.Template))]
+        // public IQueryable<InstancedLink> InstancedLinks { get; set; } = null;
 
-        [InverseProperty(nameof(PersistedLink.Template))]
-        public IQueryable<PersistedLink> PersistedLinks { get; set; } = null;
+        // [InverseProperty(nameof(PersistedLink.Template))]
+        // public IQueryable<PersistedLink> PersistedLinks { get; set; } = null;
 
         #endregion Relationship Properties
 

@@ -33,8 +33,8 @@ namespace BlazorMUD.Core.Models.Actor
         public long? ParentPersistedVehicleId { get; set; } = null;
         public PersistedVehicle ParentPersistedVehicle { get; set; } = null;
 
-        [InverseProperty(nameof(PersistedItem.ParentPersistedActor))]
-        public IQueryable<PersistedItem> PersistedItems { get; set; } = null;
+        // [InverseProperty(nameof(PersistedItem.ParentPersistedActor))]
+        // public IQueryable<PersistedItem> PersistedItems { get; set; } = null;
 
         #endregion Relationship Properties
 

@@ -41,8 +41,8 @@ namespace BlazorMUD.Core.Models.Item
         public long? ParentPlacedItemId { get; set; } = null;
         public PlacedItem ParentPlacedItem { get; set; } = null;
 
-        [InverseProperty(nameof(ParentPlacedItem))]
-        public IQueryable<PlacedItem> PlacedItems { get; set; } = null;
+        // [InverseProperty(nameof(ParentPlacedItem))]
+        // public IQueryable<PlacedItem> PlacedItems { get; set; } = null;
 
         #endregion Relationship Properties
 

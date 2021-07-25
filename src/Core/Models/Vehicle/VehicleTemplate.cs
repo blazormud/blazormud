@@ -16,14 +16,14 @@ namespace BlazorMUD.Core.Models.Vehicle
         public long RegionId { get; set; }
         public RegionTemplate Region { get; set; }
 
-        [InverseProperty(nameof(PlacedVehicle.Template))]
-        public IQueryable<PlacedVehicle> PlacedVehicles { get; set; } = null;
+        // [InverseProperty(nameof(PlacedVehicle.Template))]
+        // public IQueryable<PlacedVehicle> PlacedVehicles { get; set; } = null;
 
-        [InverseProperty(nameof(InstancedVehicle.Template))]
-        public IQueryable<InstancedVehicle> InstancedVehicles { get; set; } = null;
+        // [InverseProperty(nameof(InstancedVehicle.Template))]
+        // public IQueryable<InstancedVehicle> InstancedVehicles { get; set; } = null;
 
-        [InverseProperty(nameof(PersistedVehicle.Template))]
-        public IQueryable<PersistedVehicle> PersistedVehicles { get; set; } = null;
+        // [InverseProperty(nameof(PersistedVehicle.Template))]
+        // public IQueryable<PersistedVehicle> PersistedVehicles { get; set; } = null;
 
         #endregion Relationship Properties
 

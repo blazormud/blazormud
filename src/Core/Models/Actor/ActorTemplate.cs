@@ -16,11 +16,11 @@ namespace BlazorMUD.Core.Models.Actor
         public long RegionId { get; set; }
         public RegionTemplate Region { get; set; }
 
-        [InverseProperty(nameof(InstancedActor.Template))]
-        public IQueryable<InstancedActor> InstancedActors { get; set; }
+        // [InverseProperty(nameof(InstancedActor.Template))]
+        // public IQueryable<InstancedActor> InstancedActors { get; set; }
 
-        [InverseProperty(nameof(PlacedActor.Template))]
-        public IQueryable<PlacedActor> PlacedActors { get; set; }
+        // [InverseProperty(nameof(PlacedActor.Template))]
+        // public IQueryable<PlacedActor> PlacedActors { get; set; }
 
         #endregion Relationship Properties
 

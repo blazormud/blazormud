@@ -41,8 +41,8 @@ namespace BlazorMUD.Core.Models.Item
         public long? ParentInstancedItemId { get; set; } = null;
         public InstancedItem ParentInstancedItem { get; set; } = null;
 
-        [InverseProperty(nameof(ParentInstancedItem))]
-        public IQueryable<InstancedItem> InstancedItems { get; set; } = null;
+        // [InverseProperty(nameof(ParentInstancedItem))]
+        // public IQueryable<InstancedItem> InstancedItems { get; set; } = null;
 
         #endregion Relationship Properties
 

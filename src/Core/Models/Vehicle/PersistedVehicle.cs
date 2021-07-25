@@ -33,17 +33,17 @@ namespace BlazorMUD.Core.Models.Vehicle
         public long? ParentPersistedVehicleId { get; set; } = null;
         public PersistedVehicle ParentPersistedVehicle { get; set; } = null;
 
-        [InverseProperty(nameof(ParentPersistedVehicle))]
-        public IQueryable<PersistedVehicle> PersistedVehicles { get; set; } = null;
+        // [InverseProperty(nameof(ParentPersistedVehicle))]
+        // public IQueryable<PersistedVehicle> PersistedVehicles { get; set; } = null;
 
-        [InverseProperty(nameof(InstancedActor.ParentPersistedVehicle))]
-        public IQueryable<InstancedActor> InstancedActors { get; set; } = null;
+        // [InverseProperty(nameof(InstancedActor.ParentPersistedVehicle))]
+        // public IQueryable<InstancedActor> InstancedActors { get; set; } = null;
 
-        [InverseProperty(nameof(PersistedActor.ParentPersistedVehicle))]
-        public IQueryable<PersistedActor> PersistedActors { get; set; } = null;
+        // [InverseProperty(nameof(PersistedActor.ParentPersistedVehicle))]
+        // public IQueryable<PersistedActor> PersistedActors { get; set; } = null;
 
-        [InverseProperty(nameof(PersistedItem.ParentPersistedVehicle))]
-        public IQueryable<PersistedItem> PersistedItems { get; set; } = null;
+        // [InverseProperty(nameof(PersistedItem.ParentPersistedVehicle))]
+        // public IQueryable<PersistedItem> PersistedItems { get; set; } = null;
 
         #endregion Relationship Properties
 

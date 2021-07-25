@@ -36,8 +36,8 @@ namespace BlazorMUD.Core.Models.Item
         public long? ParentPersistedItemId { get; set; } = null;
         public PersistedItem ParentPersistedItem { get; set; } = null;
 
-        [InverseProperty(nameof(ParentPersistedItem))]
-        public IQueryable<PersistedItem> PersistedItems { get; set; } = null;
+        // [InverseProperty(nameof(ParentPersistedItem))]
+        // public IQueryable<PersistedItem> PersistedItems { get; set; } = null;
 
         #endregion Relationship Properties
 
