@@ -1,6 +1,8 @@
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
+using System.Linq;
 using BlazorMUD.Core.Models.Area;
+using BlazorMUD.Core.Models.Item;
 using BlazorMUD.Core.Models.Region;
 using BlazorMUD.Core.Models.Vehicle;
 using Microsoft.EntityFrameworkCore;
@@ -29,7 +31,10 @@ namespace BlazorMUD.Core.Models.Actor
 
         [ForeignKey(nameof(ParentPlacedVehicle))]
         public long? ParentPlacedVehicleId { get; set; } = null;
-        public VehiclePlacement ParentPlacedVehicle { get; set; } = null;
+        public PlacedVehicle ParentPlacedVehicle { get; set; } = null;
+
+        [InverseProperty(nameof(PlacedItem.ParentPlacedActor))]
+        public IQueryable<PlacedItem> PlacedItems { get; set; } = null;
 
         #endregion Relationship Properties
 

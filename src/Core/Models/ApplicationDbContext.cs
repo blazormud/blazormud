@@ -28,7 +28,7 @@ namespace BlazorMUD.Core.Models
         public DbSet<PersistedLink> PersistedLinks { get; set; }
 
         public DbSet<VehicleTemplate> VehicleTemplates { get; set; }
-        public DbSet<VehiclePlacement> PlacedVehicles { get; set; }
+        public DbSet<PlacedVehicle> PlacedVehicles { get; set; }
         public DbSet<InstancedVehicle> InstancedVehicles { get; set; }
         public DbSet<PersistedVehicle> PersistedVehicles { get; set; }
 

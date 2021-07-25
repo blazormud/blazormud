@@ -1,13 +1,16 @@
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
+using System.Linq;
+using BlazorMUD.Core.Models.Actor;
 using BlazorMUD.Core.Models.Area;
+using BlazorMUD.Core.Models.Item;
 using BlazorMUD.Core.Models.Region;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
 namespace BlazorMUD.Core.Models.Vehicle
 {
-    public class VehiclePlacement
+    public class PlacedVehicle
     {
         #region Relationship Properties
 
@@ -28,7 +31,16 @@ namespace BlazorMUD.Core.Models.Vehicle
 
         [ForeignKey(nameof(ParentPlacedVehicle))]
         public long? ParentPlacedVehicleId { get; set; } = null;
-        public VehiclePlacement ParentPlacedVehicle { get; set; } = null;
+        public PlacedVehicle ParentPlacedVehicle { get; set; } = null;
+
+        [InverseProperty(nameof(ParentPlacedVehicle))]
+        public IQueryable<PlacedVehicle> PlacedVehicles { get; set; } = null;
+
+        [InverseProperty(nameof(PlacedActor.ParentPlacedVehicle))]
+        public IQueryable<PlacedActor> PlacedActors { get; set; } = null;
+
+        [InverseProperty(nameof(PlacedItem.ParentPlacedVehicle))]
+        public IQueryable<PlacedItem> PlacedItems { get; set; } = null;
 
         #endregion Relationship Properties
 
@@ -37,20 +49,20 @@ namespace BlazorMUD.Core.Models.Vehicle
         public int Count { get; set; }
     }
 
-    public class VehiclePlacementEntityTypeConfiguration : IEntityTypeConfiguration<VehiclePlacement>
+    public class VehiclePlacementEntityTypeConfiguration : IEntityTypeConfiguration<PlacedVehicle>
     {
-        public void Configure(EntityTypeBuilder<VehiclePlacement> builder)
+        public void Configure(EntityTypeBuilder<PlacedVehicle> builder)
         {
             builder
-                .HasOne(nameof(VehiclePlacement.ParentArea))
+                .HasOne(nameof(PlacedVehicle.ParentArea))
                 .WithMany()
-                .HasForeignKey(nameof(VehiclePlacement.ParentAreaId))
+                .HasForeignKey(nameof(PlacedVehicle.ParentAreaId))
                 .OnDelete(DeleteBehavior.Cascade);
 
             builder
-                .HasOne(nameof(VehiclePlacement.ParentPlacedVehicle))
+                .HasOne(nameof(PlacedVehicle.ParentPlacedVehicle))
                 .WithMany()
-                .HasForeignKey(nameof(VehiclePlacement.ParentPlacedVehicleId))
+                .HasForeignKey(nameof(PlacedVehicle.ParentPlacedVehicleId))
                 .OnDelete(DeleteBehavior.Cascade);
         }
     }

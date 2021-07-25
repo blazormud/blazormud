@@ -1,5 +1,6 @@
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
+using System.Linq;
 using BlazorMUD.Core.Models.Region;
 
 namespace BlazorMUD.Core.Models.Item
@@ -14,6 +15,15 @@ namespace BlazorMUD.Core.Models.Item
         [ForeignKey(nameof(Region))]
         public long RegionId { get; set; }
         public RegionTemplate Region { get; set; }
+
+        [InverseProperty(nameof(PlacedItem.Template))]
+        public IQueryable<PlacedItem> PlacedItems { get; set; } = null;
+
+        [InverseProperty(nameof(InstancedItem.Template))]
+        public IQueryable<InstancedItem> InstancedItems { get; set; } = null;
+
+        [InverseProperty(nameof(PersistedItem.Template))]
+        public IQueryable<PersistedItem> PersistedItems { get; set; } = null;
 
         #endregion Relationship Properties
 

@@ -1,5 +1,6 @@
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
+using System.Linq;
 using BlazorMUD.Core.Models.Actor;
 using BlazorMUD.Core.Models.Area;
 using BlazorMUD.Core.Models.Region;
@@ -39,6 +40,9 @@ namespace BlazorMUD.Core.Models.Item
         [ForeignKey(nameof(ParentInstancedItem))]
         public long? ParentInstancedItemId { get; set; } = null;
         public InstancedItem ParentInstancedItem { get; set; } = null;
+
+        [InverseProperty(nameof(ParentInstancedItem))]
+        public IQueryable<InstancedItem> InstancedItems { get; set; } = null;
 
         #endregion Relationship Properties
 

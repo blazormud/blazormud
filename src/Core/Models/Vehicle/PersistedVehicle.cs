@@ -1,7 +1,10 @@
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
+using System.Linq;
+using BlazorMUD.Core.Models.Actor;
 using BlazorMUD.Core.Models.Area;
 using BlazorMUD.Core.Models.Auth;
+using BlazorMUD.Core.Models.Item;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
@@ -29,6 +32,18 @@ namespace BlazorMUD.Core.Models.Vehicle
         [ForeignKey(nameof(ParentPersistedVehicle))]
         public long? ParentPersistedVehicleId { get; set; } = null;
         public PersistedVehicle ParentPersistedVehicle { get; set; } = null;
+
+        [InverseProperty(nameof(ParentPersistedVehicle))]
+        public IQueryable<PersistedVehicle> PersistedVehicles { get; set; } = null;
+
+        [InverseProperty(nameof(InstancedActor.ParentPersistedVehicle))]
+        public IQueryable<InstancedActor> InstancedActors { get; set; } = null;
+
+        [InverseProperty(nameof(PersistedActor.ParentPersistedVehicle))]
+        public IQueryable<PersistedActor> PersistedActors { get; set; } = null;
+
+        [InverseProperty(nameof(PersistedItem.ParentPersistedVehicle))]
+        public IQueryable<PersistedItem> PersistedItems { get; set; } = null;
 
         #endregion Relationship Properties
 
