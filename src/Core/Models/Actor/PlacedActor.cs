@@ -4,7 +4,6 @@ using BlazorMUD.Core.Models.Item;
 using BlazorMUD.Core.Models.Region;
 using BlazorMUD.Core.Models.Vehicle;
 using Microsoft.EntityFrameworkCore;
-using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
 namespace BlazorMUD.Core.Models.Actor
 {
@@ -33,48 +32,52 @@ namespace BlazorMUD.Core.Models.Actor
         public ActorDynamicFlags DynamicFlags { get; set; } = ActorDynamicFlags.None;
 
         public int Count { get; set; } = 1;
-    }
 
-    public class PlacedActorEntityTypeKeyConfiguration : IEntityTypeConfiguration<PlacedActor>
-    {
-        public void Configure(EntityTypeBuilder<PlacedActor> builder)
+        #region OnModelCreating
+
+        internal static void OnModelCreatingKeys(ModelBuilder modelBuilder)
         {
-            builder.HasKey(nameof(PlacedActor.Id));
+            modelBuilder.Entity<PlacedActor>(builder =>
+            {
+                builder.HasKey(nameof(PlacedActor.Id));
 
-            builder
-                .HasOne(nameof(PlacedActor.Region))
-                .WithMany()
-                .HasForeignKey(nameof(PlacedActor.RegionId))
-                .OnDelete(DeleteBehavior.Cascade);
+                builder
+                    .HasOne(nameof(PlacedActor.Region))
+                    .WithMany()
+                    .HasForeignKey(nameof(PlacedActor.RegionId))
+                    .OnDelete(DeleteBehavior.Cascade);
 
-            builder
-                .HasOne(nameof(PlacedActor.Template))
-                .WithMany()
-                .HasForeignKey(nameof(PlacedActor.TemplateId))
-                .OnDelete(DeleteBehavior.Cascade);
+                builder
+                    .HasOne(nameof(PlacedActor.Template))
+                    .WithMany()
+                    .HasForeignKey(nameof(PlacedActor.TemplateId))
+                    .OnDelete(DeleteBehavior.Cascade);
 
-            builder
-                .HasOne(nameof(PlacedActor.ParentArea))
-                .WithMany()
-                .HasForeignKey(nameof(PlacedActor.ParentAreaId))
-                .OnDelete(DeleteBehavior.Cascade);
+                builder
+                    .HasOne(nameof(PlacedActor.ParentArea))
+                    .WithMany()
+                    .HasForeignKey(nameof(PlacedActor.ParentAreaId))
+                    .OnDelete(DeleteBehavior.Cascade);
 
-            builder
-                .HasOne(nameof(PlacedActor.ParentPlacedVehicle))
-                .WithMany()
-                .HasForeignKey(nameof(PlacedActor.ParentPlacedVehicleId))
-                .OnDelete(DeleteBehavior.Cascade);
+                builder
+                    .HasOne(nameof(PlacedActor.ParentPlacedVehicle))
+                    .WithMany()
+                    .HasForeignKey(nameof(PlacedActor.ParentPlacedVehicleId))
+                    .OnDelete(DeleteBehavior.Cascade);
+            });
         }
-    }
 
-    public class PlacedActorEntityTypeNavConfiguration : IEntityTypeConfiguration<PlacedActor>
-    {
-        public void Configure(EntityTypeBuilder<PlacedActor> builder)
+        internal static void OnModelCreatingNavigation(ModelBuilder modelBuilder)
         {
-            builder
-                .HasMany(nameof(PlacedActor.PlacedItems))
-                .WithOne(nameof(PlacedItem.ParentPlacedActor))
-                .HasForeignKey(nameof(PlacedItem.ParentPlacedActorId));
+            modelBuilder.Entity<PlacedActor>(builder =>
+            {
+                builder
+                    .HasMany(nameof(PlacedActor.PlacedItems))
+                    .WithOne(nameof(PlacedItem.ParentPlacedActor))
+                    .HasForeignKey(nameof(PlacedItem.ParentPlacedActorId));
+            });
         }
+
+        #endregion OnModelCreating
     }
 }

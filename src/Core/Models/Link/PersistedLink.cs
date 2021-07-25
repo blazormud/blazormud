@@ -1,6 +1,5 @@
 using BlazorMUD.Core.Models.Area;
 using Microsoft.EntityFrameworkCore;
-using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
 namespace BlazorMUD.Core.Models.Link
 {
@@ -20,36 +19,43 @@ namespace BlazorMUD.Core.Models.Link
 
         public LinkStaticFlags StaticFlags { get; set; } = LinkStaticFlags.None;
         public LinkDynamicFlags DynamicFlags { get; set; } = LinkDynamicFlags.None;
-    }
 
-    public class PersistedLinkEntityTypeKeyConfiguration : IEntityTypeConfiguration<PersistedLink>
-    {
-        public void Configure(EntityTypeBuilder<PersistedLink> builder)
+        #region OnModelCreating
+
+        internal static void OnModelCreatingKeys(ModelBuilder modelBuilder)
         {
-            builder.HasKey(nameof(PersistedLink.Id));
+            modelBuilder.Entity<PersistedLink>(builder =>
+            {
+                builder.HasKey(nameof(PersistedLink.Id));
 
-            builder
-                .HasOne(nameof(PersistedLink.Template))
-                .WithMany()
-                .HasForeignKey(nameof(PersistedLink.TemplateId))
-                .OnDelete(DeleteBehavior.Cascade);
+                builder
+                    .HasOne(nameof(PersistedLink.Template))
+                    .WithMany()
+                    .HasForeignKey(nameof(PersistedLink.TemplateId))
+                    .OnDelete(DeleteBehavior.Cascade);
 
-            builder
-                .HasOne(nameof(PersistedLink.ParentArea))
-                .WithMany()
-                .HasForeignKey(nameof(PersistedLink.ParentAreaId))
-                .OnDelete(DeleteBehavior.Cascade);
+                builder
+                    .HasOne(nameof(PersistedLink.ParentArea))
+                    .WithMany()
+                    .HasForeignKey(nameof(PersistedLink.ParentAreaId))
+                    .OnDelete(DeleteBehavior.Cascade);
 
-            builder
-                .HasOne(nameof(PersistedLink.DestinationArea))
-                .WithMany()
-                .HasForeignKey(nameof(PersistedLink.DestinationAreaId))
-                .OnDelete(DeleteBehavior.Cascade);
+                builder
+                    .HasOne(nameof(PersistedLink.DestinationArea))
+                    .WithMany()
+                    .HasForeignKey(nameof(PersistedLink.DestinationAreaId))
+                    .OnDelete(DeleteBehavior.Cascade);
+            });
         }
-    }
 
-    public class PersistedLinkEntityTypeNavConfiguration : IEntityTypeConfiguration<PersistedLink>
-    {
-        public void Configure(EntityTypeBuilder<PersistedLink> builder) { }
+        internal static void OnModelCreatingNavigation(ModelBuilder modelBuilder)
+        {
+            modelBuilder.Entity<PersistedLink>(builder =>
+            {
+
+            });
+        }
+
+        #endregion OnModelCreating
     }
 }

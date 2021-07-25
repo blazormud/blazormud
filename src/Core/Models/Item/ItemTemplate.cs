@@ -1,7 +1,6 @@
 using System.Linq;
 using BlazorMUD.Core.Models.Region;
 using Microsoft.EntityFrameworkCore;
-using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
 namespace BlazorMUD.Core.Models.Item
 {
@@ -21,40 +20,44 @@ namespace BlazorMUD.Core.Models.Item
         public ItemStaticFlags StaticFlags { get; set; } = ItemStaticFlags.None;
         public ItemDynamicFlags DynamicFlags { get; set; } = ItemDynamicFlags.None;
         public ItemWearFlags WearFlags { get; set; } = ItemWearFlags.None;
-    }
 
-    public class ItemTemplateEntityTypeKeyConfiguration : IEntityTypeConfiguration<ItemTemplate>
-    {
-        public void Configure(EntityTypeBuilder<ItemTemplate> builder)
+        #region OnModelCreating
+
+        internal static void OnModelCreatingKeys(ModelBuilder modelBuilder)
         {
-            builder.HasKey(nameof(ItemTemplate.Id));
+            modelBuilder.Entity<ItemTemplate>(builder =>
+            {
+                builder.HasKey(nameof(ItemTemplate.Id));
 
-            builder
-                .HasOne(nameof(ItemTemplate.Region))
-                .WithMany()
-                .HasForeignKey(nameof(ItemTemplate.RegionId))
-                .OnDelete(DeleteBehavior.Cascade);
+                builder
+                    .HasOne(nameof(ItemTemplate.Region))
+                    .WithMany()
+                    .HasForeignKey(nameof(ItemTemplate.RegionId))
+                    .OnDelete(DeleteBehavior.Cascade);
+            });
         }
-    }
 
-    public class ItemTemplateEntityTypeNavConfiguration : IEntityTypeConfiguration<ItemTemplate>
-    {
-        public void Configure(EntityTypeBuilder<ItemTemplate> builder)
+        internal static void OnModelCreatingNavigation(ModelBuilder modelBuilder)
         {
-            builder
-                .HasMany(nameof(ItemTemplate.PlacedItems))
-                .WithOne(nameof(PlacedItem.Template))
-                .HasForeignKey(nameof(PlacedItem.TemplateId));
+            modelBuilder.Entity<ItemTemplate>(builder =>
+            {
+                builder
+                    .HasMany(nameof(ItemTemplate.PlacedItems))
+                    .WithOne(nameof(PlacedItem.Template))
+                    .HasForeignKey(nameof(PlacedItem.TemplateId));
 
-            builder
-                .HasMany(nameof(ItemTemplate.InstancedItems))
-                .WithOne(nameof(InstancedItem.Template))
-                .HasForeignKey(nameof(InstancedItem.TemplateId));
+                builder
+                    .HasMany(nameof(ItemTemplate.InstancedItems))
+                    .WithOne(nameof(InstancedItem.Template))
+                    .HasForeignKey(nameof(InstancedItem.TemplateId));
 
-            builder
-                .HasMany(nameof(ItemTemplate.PersistedItems))
-                .WithOne(nameof(PersistedItem.Template))
-                .HasForeignKey(nameof(PersistedItem.TemplateId));
+                builder
+                    .HasMany(nameof(ItemTemplate.PersistedItems))
+                    .WithOne(nameof(PersistedItem.Template))
+                    .HasForeignKey(nameof(PersistedItem.TemplateId));
+            });
         }
+
+        #endregion OnModelCreating
     }
 }

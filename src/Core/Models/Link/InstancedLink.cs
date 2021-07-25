@@ -1,7 +1,6 @@
 using BlazorMUD.Core.Models.Area;
 using BlazorMUD.Core.Models.Region;
 using Microsoft.EntityFrameworkCore;
-using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
 namespace BlazorMUD.Core.Models.Link
 {
@@ -23,42 +22,49 @@ namespace BlazorMUD.Core.Models.Link
 
         public LinkStaticFlags StaticFlags { get; set; } = LinkStaticFlags.None;
         public LinkDynamicFlags DynamicFlags { get; set; } = LinkDynamicFlags.None;
-    }
 
-    public class InstancedLinkEntityTypeKeyConfiguration : IEntityTypeConfiguration<InstancedLink>
-    {
-        public void Configure(EntityTypeBuilder<InstancedLink> builder)
+        #region OnModelCreating
+
+        internal static void OnModelCreatingKeys(ModelBuilder modelBuilder)
         {
-            builder.HasKey(nameof(InstancedLink.Id));
+            modelBuilder.Entity<InstancedLink>(builder =>
+            {
+                builder.HasKey(nameof(InstancedLink.Id));
 
-            builder
-                .HasOne(nameof(InstancedLink.Region))
-                .WithMany()
-                .HasForeignKey(nameof(InstancedLink.RegionId))
-                .OnDelete(DeleteBehavior.Cascade);
+                builder
+                    .HasOne(nameof(InstancedLink.Region))
+                    .WithMany()
+                    .HasForeignKey(nameof(InstancedLink.RegionId))
+                    .OnDelete(DeleteBehavior.Cascade);
 
-            builder
-                .HasOne(nameof(InstancedLink.Template))
-                .WithMany()
-                .HasForeignKey(nameof(InstancedLink.TemplateId))
-                .OnDelete(DeleteBehavior.Cascade);
+                builder
+                    .HasOne(nameof(InstancedLink.Template))
+                    .WithMany()
+                    .HasForeignKey(nameof(InstancedLink.TemplateId))
+                    .OnDelete(DeleteBehavior.Cascade);
 
-            builder
-                .HasOne(nameof(InstancedLink.ParentArea))
-                .WithMany()
-                .HasForeignKey(nameof(InstancedLink.ParentAreaId))
-                .OnDelete(DeleteBehavior.Cascade);
+                builder
+                    .HasOne(nameof(InstancedLink.ParentArea))
+                    .WithMany()
+                    .HasForeignKey(nameof(InstancedLink.ParentAreaId))
+                    .OnDelete(DeleteBehavior.Cascade);
 
-            builder
-                .HasOne(nameof(InstancedLink.DestinationArea))
-                .WithMany()
-                .HasForeignKey(nameof(InstancedLink.DestinationAreaId))
-                .OnDelete(DeleteBehavior.Cascade);
+                builder
+                    .HasOne(nameof(InstancedLink.DestinationArea))
+                    .WithMany()
+                    .HasForeignKey(nameof(InstancedLink.DestinationAreaId))
+                    .OnDelete(DeleteBehavior.Cascade);
+            });
         }
-    }
 
-    public class InstancedLinkEntityTypeNavConfiguration : IEntityTypeConfiguration<InstancedLink>
-    {
-        public void Configure(EntityTypeBuilder<InstancedLink> builder) { }
+        internal static void OnModelCreatingNavigation(ModelBuilder modelBuilder)
+        {
+            modelBuilder.Entity<InstancedLink>(builder =>
+            {
+
+            });
+        }
+
+        #endregion OnModelCreating
     }
 }

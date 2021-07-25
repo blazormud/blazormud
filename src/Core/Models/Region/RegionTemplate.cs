@@ -5,7 +5,6 @@ using BlazorMUD.Core.Models.Item;
 using BlazorMUD.Core.Models.Link;
 using BlazorMUD.Core.Models.Vehicle;
 using Microsoft.EntityFrameworkCore;
-using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
 namespace BlazorMUD.Core.Models.Region
 {
@@ -29,84 +28,88 @@ namespace BlazorMUD.Core.Models.Region
         public IQueryable<InstancedItem> InstancedItems { get; set; } = null;
 
         #endregion Relationship Properties
-    }
 
-    public class RegionTemplateEntityTypeKeyConfiguration : IEntityTypeConfiguration<RegionTemplate>
-    {
-        public void Configure(EntityTypeBuilder<RegionTemplate> builder)
+        #region OnModelCreating
+
+        internal static void OnModelCreatingKeys(ModelBuilder modelBuilder)
         {
-            builder.HasKey(nameof(RegionTemplate.Id));
+            modelBuilder.Entity<RegionTemplate>(builder =>
+            {
+                builder.HasKey(nameof(RegionTemplate.Id));
+            });
         }
-    }
 
-    public class RegionTemplateEntityTypeNavConfiguration : IEntityTypeConfiguration<RegionTemplate>
-    {
-        public void Configure(EntityTypeBuilder<RegionTemplate> builder)
+        internal static void OnModelCreatingNavigation(ModelBuilder modelBuilder)
         {
-            builder
-                .HasMany(nameof(RegionTemplate.Areas))
-                .WithOne(nameof(AreaTemplate.Region))
-                .HasForeignKey(nameof(AreaTemplate.RegionId));
+            modelBuilder.Entity<RegionTemplate>(builder =>
+            {
+                builder
+                    .HasMany(nameof(RegionTemplate.Areas))
+                    .WithOne(nameof(AreaTemplate.Region))
+                    .HasForeignKey(nameof(AreaTemplate.RegionId));
 
-            builder
-                .HasMany(nameof(RegionTemplate.LinkTemplates))
-                .WithOne(nameof(LinkTemplate.Region))
-                .HasForeignKey(nameof(LinkTemplate.RegionId));
+                builder
+                    .HasMany(nameof(RegionTemplate.LinkTemplates))
+                    .WithOne(nameof(LinkTemplate.Region))
+                    .HasForeignKey(nameof(LinkTemplate.RegionId));
 
-            builder
-                .HasMany(nameof(RegionTemplate.PlacedLinks))
-                .WithOne(nameof(PlacedLink.Region))
-                .HasForeignKey(nameof(PlacedLink.RegionId));
+                builder
+                    .HasMany(nameof(RegionTemplate.PlacedLinks))
+                    .WithOne(nameof(PlacedLink.Region))
+                    .HasForeignKey(nameof(PlacedLink.RegionId));
 
-            builder
-                .HasMany(nameof(RegionTemplate.InstancedLinks))
-                .WithOne(nameof(InstancedLink.Region))
-                .HasForeignKey(nameof(InstancedLink.RegionId));
+                builder
+                    .HasMany(nameof(RegionTemplate.InstancedLinks))
+                    .WithOne(nameof(InstancedLink.Region))
+                    .HasForeignKey(nameof(InstancedLink.RegionId));
 
-            builder
-                .HasMany(nameof(RegionTemplate.VehicleTemplates))
-                .WithOne(nameof(VehicleTemplate.Region))
-                .HasForeignKey(nameof(VehicleTemplate.RegionId));
+                builder
+                    .HasMany(nameof(RegionTemplate.VehicleTemplates))
+                    .WithOne(nameof(VehicleTemplate.Region))
+                    .HasForeignKey(nameof(VehicleTemplate.RegionId));
 
-            builder
-                .HasMany(nameof(RegionTemplate.PlacedVehicles))
-                .WithOne(nameof(PlacedVehicle.Region))
-                .HasForeignKey(nameof(PlacedVehicle.RegionId));
+                builder
+                    .HasMany(nameof(RegionTemplate.PlacedVehicles))
+                    .WithOne(nameof(PlacedVehicle.Region))
+                    .HasForeignKey(nameof(PlacedVehicle.RegionId));
 
-            builder
-                .HasMany(nameof(RegionTemplate.InstancedVehicles))
-                .WithOne(nameof(InstancedVehicle.Region))
-                .HasForeignKey(nameof(InstancedVehicle.RegionId));
+                builder
+                    .HasMany(nameof(RegionTemplate.InstancedVehicles))
+                    .WithOne(nameof(InstancedVehicle.Region))
+                    .HasForeignKey(nameof(InstancedVehicle.RegionId));
 
-            builder
-                .HasMany(nameof(RegionTemplate.ActorTemplates))
-                .WithOne(nameof(ActorTemplate.Region))
-                .HasForeignKey(nameof(ActorTemplate.RegionId));
+                builder
+                    .HasMany(nameof(RegionTemplate.ActorTemplates))
+                    .WithOne(nameof(ActorTemplate.Region))
+                    .HasForeignKey(nameof(ActorTemplate.RegionId));
 
-            builder
-                .HasMany(nameof(RegionTemplate.PlacedActors))
-                .WithOne(nameof(PlacedActor.Region))
-                .HasForeignKey(nameof(PlacedActor.RegionId));
+                builder
+                    .HasMany(nameof(RegionTemplate.PlacedActors))
+                    .WithOne(nameof(PlacedActor.Region))
+                    .HasForeignKey(nameof(PlacedActor.RegionId));
 
-            builder
-                .HasMany(nameof(RegionTemplate.InstancedActors))
-                .WithOne(nameof(InstancedActor.Region))
-                .HasForeignKey(nameof(InstancedActor.RegionId));
+                builder
+                    .HasMany(nameof(RegionTemplate.InstancedActors))
+                    .WithOne(nameof(InstancedActor.Region))
+                    .HasForeignKey(nameof(InstancedActor.RegionId));
 
-            builder
-                .HasMany(nameof(RegionTemplate.ItemTemplates))
-                .WithOne(nameof(ItemTemplate.Region))
-                .HasForeignKey(nameof(ItemTemplate.RegionId));
+                builder
+                    .HasMany(nameof(RegionTemplate.ItemTemplates))
+                    .WithOne(nameof(ItemTemplate.Region))
+                    .HasForeignKey(nameof(ItemTemplate.RegionId));
 
-            builder
-                .HasMany(nameof(RegionTemplate.PlacedItems))
-                .WithOne(nameof(PlacedItem.Region))
-                .HasForeignKey(nameof(PlacedItem.RegionId));
+                builder
+                    .HasMany(nameof(RegionTemplate.PlacedItems))
+                    .WithOne(nameof(PlacedItem.Region))
+                    .HasForeignKey(nameof(PlacedItem.RegionId));
 
-            builder
-                .HasMany(nameof(RegionTemplate.InstancedItems))
-                .WithOne(nameof(InstancedItem.Region))
-                .HasForeignKey(nameof(InstancedItem.RegionId));
+                builder
+                    .HasMany(nameof(RegionTemplate.InstancedItems))
+                    .WithOne(nameof(InstancedItem.Region))
+                    .HasForeignKey(nameof(InstancedItem.RegionId));
+            });
         }
+
+        #endregion OnModelCreating
     }
 }

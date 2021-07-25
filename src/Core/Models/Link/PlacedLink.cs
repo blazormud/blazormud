@@ -1,9 +1,6 @@
-using System.ComponentModel.DataAnnotations;
-using System.ComponentModel.DataAnnotations.Schema;
 using BlazorMUD.Core.Models.Area;
 using BlazorMUD.Core.Models.Region;
 using Microsoft.EntityFrameworkCore;
-using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
 namespace BlazorMUD.Core.Models.Link
 {
@@ -24,42 +21,49 @@ namespace BlazorMUD.Core.Models.Link
         #endregion Relationship Properties
 
         public LinkDynamicFlags DynamicFlags { get; set; } = LinkDynamicFlags.None;
-    }
 
-    public class PlacedLinkEntityTypeKeyConfiguration : IEntityTypeConfiguration<PlacedLink>
-    {
-        public void Configure(EntityTypeBuilder<PlacedLink> builder)
+        #region OnModelCreating
+
+        internal static void OnModelCreatingKeys(ModelBuilder modelBuilder)
         {
-            builder.HasKey(nameof(PlacedLink.Id));
+            modelBuilder.Entity<PlacedLink>(builder =>
+            {
+                builder.HasKey(nameof(PlacedLink.Id));
 
-            builder
-                .HasOne(nameof(PlacedLink.Region))
-                .WithMany()
-                .HasForeignKey(nameof(PlacedLink.RegionId))
-                .OnDelete(DeleteBehavior.Cascade);
+                builder
+                    .HasOne(nameof(PlacedLink.Region))
+                    .WithMany()
+                    .HasForeignKey(nameof(PlacedLink.RegionId))
+                    .OnDelete(DeleteBehavior.Cascade);
 
-            builder
-                .HasOne(nameof(PlacedLink.Template))
-                .WithMany()
-                .HasForeignKey(nameof(PlacedLink.TemplateId))
-                .OnDelete(DeleteBehavior.Cascade);
+                builder
+                    .HasOne(nameof(PlacedLink.Template))
+                    .WithMany()
+                    .HasForeignKey(nameof(PlacedLink.TemplateId))
+                    .OnDelete(DeleteBehavior.Cascade);
 
-            builder
-                .HasOne(nameof(PlacedLink.ParentArea))
-                .WithMany()
-                .HasForeignKey(nameof(PlacedLink.ParentAreaId))
-                .OnDelete(DeleteBehavior.Cascade);
+                builder
+                    .HasOne(nameof(PlacedLink.ParentArea))
+                    .WithMany()
+                    .HasForeignKey(nameof(PlacedLink.ParentAreaId))
+                    .OnDelete(DeleteBehavior.Cascade);
 
-            builder
-                .HasOne(nameof(PlacedLink.DestinationArea))
-                .WithMany()
-                .HasForeignKey(nameof(PlacedLink.DestinationAreaId))
-                .OnDelete(DeleteBehavior.Cascade);
+                builder
+                    .HasOne(nameof(PlacedLink.DestinationArea))
+                    .WithMany()
+                    .HasForeignKey(nameof(PlacedLink.DestinationAreaId))
+                    .OnDelete(DeleteBehavior.Cascade);
+            });
         }
-    }
 
-    public class PlacedLinkEntityTypeNavConfiguration : IEntityTypeConfiguration<PlacedLink>
-    {
-        public void Configure(EntityTypeBuilder<PlacedLink> builder) { }
+        internal static void OnModelCreatingNavigation(ModelBuilder modelBuilder)
+        {
+            modelBuilder.Entity<PlacedLink>(builder =>
+            {
+
+            });
+        }
+
+        #endregion OnModelCreating
     }
 }

@@ -1,7 +1,6 @@
 using System.Linq;
 using BlazorMUD.Core.Models.Region;
 using Microsoft.EntityFrameworkCore;
-using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
 namespace BlazorMUD.Core.Models.Link
 {
@@ -20,40 +19,44 @@ namespace BlazorMUD.Core.Models.Link
 
         public LinkStaticFlags StaticFlags { get; set; } = LinkStaticFlags.None;
         public LinkDynamicFlags DynamicFlags { get; set; } = LinkDynamicFlags.None;
-    }
 
-    public class LinkTemplateEntityTypeKeyConfiguration : IEntityTypeConfiguration<LinkTemplate>
-    {
-        public void Configure(EntityTypeBuilder<LinkTemplate> builder)
+        #region OnModelCreating
+
+        internal static void OnModelCreatingKeys(ModelBuilder modelBuilder)
         {
-            builder.HasKey(nameof(LinkTemplate.Id));
+            modelBuilder.Entity<LinkTemplate>(builder =>
+            {
+                builder.HasKey(nameof(LinkTemplate.Id));
 
-            builder
-                .HasOne(nameof(LinkTemplate.Region))
-                .WithMany()
-                .HasForeignKey(nameof(LinkTemplate.RegionId))
-                .OnDelete(DeleteBehavior.Cascade);
+                builder
+                    .HasOne(nameof(LinkTemplate.Region))
+                    .WithMany()
+                    .HasForeignKey(nameof(LinkTemplate.RegionId))
+                    .OnDelete(DeleteBehavior.Cascade);
+            });
         }
-    }
 
-    public class LinkTemplateEntityTypeNavConfiguration : IEntityTypeConfiguration<LinkTemplate>
-    {
-        public void Configure(EntityTypeBuilder<LinkTemplate> builder)
+        internal static void OnModelCreatingNavigation(ModelBuilder modelBuilder)
         {
-            builder
-                .HasMany(nameof(LinkTemplate.PlacedLinks))
-                .WithOne(nameof(PlacedLink.Template))
-                .HasForeignKey(nameof(PlacedLink.TemplateId));
+            modelBuilder.Entity<LinkTemplate>(builder =>
+            {
+                builder
+                    .HasMany(nameof(LinkTemplate.PlacedLinks))
+                    .WithOne(nameof(PlacedLink.Template))
+                    .HasForeignKey(nameof(PlacedLink.TemplateId));
 
-            builder
-                .HasMany(nameof(LinkTemplate.InstancedLinks))
-                .WithOne(nameof(InstancedLink.Template))
-                .HasForeignKey(nameof(InstancedLink.TemplateId));
+                builder
+                    .HasMany(nameof(LinkTemplate.InstancedLinks))
+                    .WithOne(nameof(InstancedLink.Template))
+                    .HasForeignKey(nameof(InstancedLink.TemplateId));
 
-            builder
-                .HasMany(nameof(LinkTemplate.PersistedLinks))
-                .WithOne(nameof(PersistedLink.Template))
-                .HasForeignKey(nameof(PersistedLink.TemplateId));
+                builder
+                    .HasMany(nameof(LinkTemplate.PersistedLinks))
+                    .WithOne(nameof(PersistedLink.Template))
+                    .HasForeignKey(nameof(PersistedLink.TemplateId));
+            });
         }
+
+        #endregion OnModelCreating
     }
 }

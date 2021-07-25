@@ -1,7 +1,6 @@
 using System.Linq;
 using BlazorMUD.Core.Models.Region;
 using Microsoft.EntityFrameworkCore;
-using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
 namespace BlazorMUD.Core.Models.Actor
 {
@@ -19,35 +18,39 @@ namespace BlazorMUD.Core.Models.Actor
 
         public ActorStaticFlags StaticFlags { get; set; } = ActorStaticFlags.None;
         public ActorDynamicFlags DynamicFlags { get; set; } = ActorDynamicFlags.None;
-    }
 
-    public class ActorTemplateEntityTypeKeyConfiguration : IEntityTypeConfiguration<ActorTemplate>
-    {
-        public void Configure(EntityTypeBuilder<ActorTemplate> builder)
+        #region OnModelCreating
+
+        internal static void OnModelCreatingKeys(ModelBuilder modelBuilder)
         {
-            builder.HasKey(nameof(ActorTemplate.Id));
+            modelBuilder.Entity<ActorTemplate>(builder =>
+            {
+                builder.HasKey(nameof(ActorTemplate.Id));
 
-            builder
-                .HasOne(nameof(ActorTemplate.Region))
-                .WithMany()
-                .HasForeignKey(nameof(ActorTemplate.RegionId))
-                .OnDelete(DeleteBehavior.Cascade);
+                builder
+                    .HasOne(nameof(ActorTemplate.Region))
+                    .WithMany()
+                    .HasForeignKey(nameof(ActorTemplate.RegionId))
+                    .OnDelete(DeleteBehavior.Cascade);
+            });
         }
-    }
 
-    public class ActorTemplateEntityTypeNavConfiguration : IEntityTypeConfiguration<ActorTemplate>
-    {
-        public void Configure(EntityTypeBuilder<ActorTemplate> builder)
+        internal static void OnModelCreatingNavigation(ModelBuilder modelBuilder)
         {
-            builder
-                .HasMany(nameof(ActorTemplate.InstancedActors))
-                .WithOne(nameof(InstancedActor.Template))
-                .HasForeignKey(nameof(InstancedActor.TemplateId));
+            modelBuilder.Entity<ActorTemplate>(builder =>
+            {
+                builder
+                    .HasMany(nameof(ActorTemplate.InstancedActors))
+                    .WithOne(nameof(InstancedActor.Template))
+                    .HasForeignKey(nameof(InstancedActor.TemplateId));
 
-            builder
-                .HasMany(nameof(ActorTemplate.PlacedActors))
-                .WithOne(nameof(PlacedActor.Template))
-                .HasForeignKey(nameof(PlacedActor.TemplateId));
+                builder
+                    .HasMany(nameof(ActorTemplate.PlacedActors))
+                    .WithOne(nameof(PlacedActor.Template))
+                    .HasForeignKey(nameof(PlacedActor.TemplateId));
+            });
         }
+
+        #endregion OnModelCreating
     }
 }

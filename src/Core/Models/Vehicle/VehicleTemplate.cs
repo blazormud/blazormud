@@ -1,7 +1,6 @@
 using System.Linq;
 using BlazorMUD.Core.Models.Region;
 using Microsoft.EntityFrameworkCore;
-using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
 namespace BlazorMUD.Core.Models.Vehicle
 {
@@ -20,40 +19,44 @@ namespace BlazorMUD.Core.Models.Vehicle
 
         public VehicleStaticFlags StaticFlags { get; set; } = VehicleStaticFlags.None;
         public VehicleDynamicFlags DynamicFlags { get; set; } = VehicleDynamicFlags.None;
-    }
 
-    public class VehicleTemplateEntityTypeKeyConfiguration : IEntityTypeConfiguration<VehicleTemplate>
-    {
-        public void Configure(EntityTypeBuilder<VehicleTemplate> builder)
+        #region OnModelCreating
+
+        internal static void OnModelCreatingKeys(ModelBuilder modelBuilder)
         {
-            builder.HasKey(nameof(VehicleTemplate.Id));
+            modelBuilder.Entity<VehicleTemplate>(builder =>
+            {
+                builder.HasKey(nameof(VehicleTemplate.Id));
 
-            builder
-                .HasOne(nameof(VehicleTemplate.Region))
-                .WithMany()
-                .HasForeignKey(nameof(VehicleTemplate.RegionId))
-                .OnDelete(DeleteBehavior.Cascade);
+                builder
+                    .HasOne(nameof(VehicleTemplate.Region))
+                    .WithMany()
+                    .HasForeignKey(nameof(VehicleTemplate.RegionId))
+                    .OnDelete(DeleteBehavior.Cascade);
+            });
         }
-    }
 
-    public class VehicleTemplateEntityTypeNavConfiguration : IEntityTypeConfiguration<VehicleTemplate>
-    {
-        public void Configure(EntityTypeBuilder<VehicleTemplate> builder)
+        internal static void OnModelCreatingNavigation(ModelBuilder modelBuilder)
         {
-            builder
-                .HasMany(nameof(VehicleTemplate.PlacedVehicles))
-                .WithOne(nameof(PlacedVehicle.Template))
-                .HasForeignKey(nameof(PlacedVehicle.TemplateId));
+            modelBuilder.Entity<VehicleTemplate>(builder =>
+            {
+                builder
+                    .HasMany(nameof(VehicleTemplate.PlacedVehicles))
+                    .WithOne(nameof(PlacedVehicle.Template))
+                    .HasForeignKey(nameof(PlacedVehicle.TemplateId));
 
-            builder
-                .HasMany(nameof(VehicleTemplate.InstancedVehicles))
-                .WithOne(nameof(InstancedVehicle.Template))
-                .HasForeignKey(nameof(InstancedVehicle.TemplateId));
+                builder
+                    .HasMany(nameof(VehicleTemplate.InstancedVehicles))
+                    .WithOne(nameof(InstancedVehicle.Template))
+                    .HasForeignKey(nameof(InstancedVehicle.TemplateId));
 
-            builder
-                .HasMany(nameof(VehicleTemplate.PersistedVehicles))
-                .WithOne(nameof(PersistedVehicle.Template))
-                .HasForeignKey(nameof(PersistedVehicle.TemplateId));
+                builder
+                    .HasMany(nameof(VehicleTemplate.PersistedVehicles))
+                    .WithOne(nameof(PersistedVehicle.Template))
+                    .HasForeignKey(nameof(PersistedVehicle.TemplateId));
+            });
         }
+
+        #endregion OnModelCreating
     }
 }

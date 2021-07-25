@@ -5,7 +5,6 @@ using BlazorMUD.Core.Models.Link;
 using BlazorMUD.Core.Models.Region;
 using BlazorMUD.Core.Models.Vehicle;
 using Microsoft.EntityFrameworkCore;
-using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
 namespace BlazorMUD.Core.Models.Area
 {
@@ -35,100 +34,104 @@ namespace BlazorMUD.Core.Models.Area
         #endregion Relationship Properties
 
         public AreaFlags Flags { get; set; } = AreaFlags.None;
-    }
 
-    public class AreaTemplateEntityTypeKeyConfiguration : IEntityTypeConfiguration<AreaTemplate>
-    {
-        public void Configure(EntityTypeBuilder<AreaTemplate> builder)
+        #region OnModelCreating
+
+        internal static void OnModelCreatingKeys(ModelBuilder modelBuilder)
         {
-            builder.HasKey(nameof(AreaTemplate.Id));
+            modelBuilder.Entity<AreaTemplate>(builder =>
+            {
+                builder.HasKey(nameof(AreaTemplate.Id));
 
-            builder
-                .HasOne(nameof(AreaTemplate.Region))
-                .WithMany()
-                .HasForeignKey(nameof(AreaTemplate.RegionId))
-                .OnDelete(DeleteBehavior.Cascade);
+                builder
+                    .HasOne(nameof(AreaTemplate.Region))
+                    .WithMany()
+                    .HasForeignKey(nameof(AreaTemplate.RegionId))
+                    .OnDelete(DeleteBehavior.Cascade);
+            });
         }
-    }
 
-    public class AreaTemplateEntityTypeNavConfiguration : IEntityTypeConfiguration<AreaTemplate>
-    {
-        public void Configure(EntityTypeBuilder<AreaTemplate> builder)
+        internal static void OnModelCreatingNavigation(ModelBuilder modelBuilder)
         {
-            builder
-                .HasMany(nameof(AreaTemplate.PlacedLinks))
-                .WithOne(nameof(PlacedLink.ParentArea))
-                .HasForeignKey(nameof(PlacedLink.ParentAreaId));
+            modelBuilder.Entity<AreaTemplate>(builder =>
+            {
+                builder
+                    .HasMany(nameof(AreaTemplate.PlacedLinks))
+                    .WithOne(nameof(PlacedLink.ParentArea))
+                    .HasForeignKey(nameof(PlacedLink.ParentAreaId));
 
-            builder
-                .HasMany(nameof(AreaTemplate.DestinationPlacedLinks))
-                .WithOne(nameof(PlacedLink.DestinationArea))
-                .HasForeignKey(nameof(PlacedLink.DestinationAreaId));
+                builder
+                    .HasMany(nameof(AreaTemplate.DestinationPlacedLinks))
+                    .WithOne(nameof(PlacedLink.DestinationArea))
+                    .HasForeignKey(nameof(PlacedLink.DestinationAreaId));
 
-            builder
-                .HasMany(nameof(AreaTemplate.InstancedLinks))
-                .WithOne(nameof(InstancedLink.ParentArea))
-                .HasForeignKey(nameof(InstancedLink.ParentAreaId));
+                builder
+                    .HasMany(nameof(AreaTemplate.InstancedLinks))
+                    .WithOne(nameof(InstancedLink.ParentArea))
+                    .HasForeignKey(nameof(InstancedLink.ParentAreaId));
 
-            builder
-                .HasMany(nameof(AreaTemplate.DestinationInstancedLinks))
-                .WithOne(nameof(InstancedLink.DestinationArea))
-                .HasForeignKey(nameof(InstancedLink.DestinationAreaId));
+                builder
+                    .HasMany(nameof(AreaTemplate.DestinationInstancedLinks))
+                    .WithOne(nameof(InstancedLink.DestinationArea))
+                    .HasForeignKey(nameof(InstancedLink.DestinationAreaId));
 
-            builder
-                .HasMany(nameof(AreaTemplate.PersistedLinks))
-                .WithOne(nameof(PersistedLink.ParentArea))
-                .HasForeignKey(nameof(PersistedLink.ParentAreaId));
+                builder
+                    .HasMany(nameof(AreaTemplate.PersistedLinks))
+                    .WithOne(nameof(PersistedLink.ParentArea))
+                    .HasForeignKey(nameof(PersistedLink.ParentAreaId));
 
-            builder
-                .HasMany(nameof(AreaTemplate.DestinationPersistedLinks))
-                .WithOne(nameof(PersistedLink.DestinationArea))
-                .HasForeignKey(nameof(PersistedLink.DestinationAreaId));
+                builder
+                    .HasMany(nameof(AreaTemplate.DestinationPersistedLinks))
+                    .WithOne(nameof(PersistedLink.DestinationArea))
+                    .HasForeignKey(nameof(PersistedLink.DestinationAreaId));
 
-            builder
-                .HasMany(nameof(AreaTemplate.PlacedVehicles))
-                .WithOne(nameof(PlacedVehicle.ParentArea))
-                .HasForeignKey(nameof(PlacedVehicle.ParentAreaId));
+                builder
+                    .HasMany(nameof(AreaTemplate.PlacedVehicles))
+                    .WithOne(nameof(PlacedVehicle.ParentArea))
+                    .HasForeignKey(nameof(PlacedVehicle.ParentAreaId));
 
-            builder
-                .HasMany(nameof(AreaTemplate.InstancedVehicles))
-                .WithOne(nameof(InstancedVehicle.ParentArea))
-                .HasForeignKey(nameof(InstancedVehicle.ParentAreaId));
+                builder
+                    .HasMany(nameof(AreaTemplate.InstancedVehicles))
+                    .WithOne(nameof(InstancedVehicle.ParentArea))
+                    .HasForeignKey(nameof(InstancedVehicle.ParentAreaId));
 
-            builder
-                .HasMany(nameof(AreaTemplate.PersistedVehicles))
-                .WithOne(nameof(PersistedVehicle.ParentArea))
-                .HasForeignKey(nameof(PersistedVehicle.ParentAreaId));
+                builder
+                    .HasMany(nameof(AreaTemplate.PersistedVehicles))
+                    .WithOne(nameof(PersistedVehicle.ParentArea))
+                    .HasForeignKey(nameof(PersistedVehicle.ParentAreaId));
 
-            builder
-                .HasMany(nameof(AreaTemplate.PlacedActors))
-                .WithOne(nameof(PlacedActor.ParentArea))
-                .HasForeignKey(nameof(PlacedActor.ParentAreaId));
+                builder
+                    .HasMany(nameof(AreaTemplate.PlacedActors))
+                    .WithOne(nameof(PlacedActor.ParentArea))
+                    .HasForeignKey(nameof(PlacedActor.ParentAreaId));
 
-            builder
-                .HasMany(nameof(AreaTemplate.InstancedActors))
-                .WithOne(nameof(InstancedActor.ParentArea))
-                .HasForeignKey(nameof(InstancedActor.ParentAreaId));
+                builder
+                    .HasMany(nameof(AreaTemplate.InstancedActors))
+                    .WithOne(nameof(InstancedActor.ParentArea))
+                    .HasForeignKey(nameof(InstancedActor.ParentAreaId));
 
-            builder
-                .HasMany(nameof(AreaTemplate.PersistedActors))
-                .WithOne(nameof(PersistedActor.ParentArea))
-                .HasForeignKey(nameof(PersistedActor.ParentAreaId));
+                builder
+                    .HasMany(nameof(AreaTemplate.PersistedActors))
+                    .WithOne(nameof(PersistedActor.ParentArea))
+                    .HasForeignKey(nameof(PersistedActor.ParentAreaId));
 
-            builder
-                .HasMany(nameof(AreaTemplate.PlacedItems))
-                .WithOne(nameof(PlacedItem.ParentArea))
-                .HasForeignKey(nameof(PlacedItem.ParentAreaId));
+                builder
+                    .HasMany(nameof(AreaTemplate.PlacedItems))
+                    .WithOne(nameof(PlacedItem.ParentArea))
+                    .HasForeignKey(nameof(PlacedItem.ParentAreaId));
 
-            builder
-                .HasMany(nameof(AreaTemplate.InstancedItems))
-                .WithOne(nameof(InstancedItem.ParentArea))
-                .HasForeignKey(nameof(InstancedItem.ParentAreaId));
+                builder
+                    .HasMany(nameof(AreaTemplate.InstancedItems))
+                    .WithOne(nameof(InstancedItem.ParentArea))
+                    .HasForeignKey(nameof(InstancedItem.ParentAreaId));
 
-            builder
-                .HasMany(nameof(AreaTemplate.PersistedItems))
-                .WithOne(nameof(PersistedItem.ParentArea))
-                .HasForeignKey(nameof(PersistedItem.ParentAreaId));
+                builder
+                    .HasMany(nameof(AreaTemplate.PersistedItems))
+                    .WithOne(nameof(PersistedItem.ParentArea))
+                    .HasForeignKey(nameof(PersistedItem.ParentAreaId));
+            });
         }
+
+        #endregion OnModelCreating
     }
 }

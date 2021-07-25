@@ -46,57 +46,57 @@ namespace BlazorMUD.Core.Models
         {
             base.OnModelCreating(modelBuilder);
 
-            // ! Keys and ForeignKeys need to be defined prior to defining navigation properties.
+            // ! All keys need to be defined prior to defining inverse navigation properties.
 
             // Keys
 
-            new RegionTemplateEntityTypeKeyConfiguration().Configure(modelBuilder.Entity<RegionTemplate>());
-            new AreaTemplateEntityTypeKeyConfiguration().Configure(modelBuilder.Entity<AreaTemplate>());
+            RegionTemplate.OnModelCreatingKeys(modelBuilder);
+            AreaTemplate.OnModelCreatingKeys(modelBuilder);
 
-            new LinkTemplateEntityTypeKeyConfiguration().Configure(modelBuilder.Entity<LinkTemplate>());
-            new PlacedLinkEntityTypeKeyConfiguration().Configure(modelBuilder.Entity<PlacedLink>());
-            new InstancedLinkEntityTypeKeyConfiguration().Configure(modelBuilder.Entity<InstancedLink>());
-            new PersistedLinkEntityTypeKeyConfiguration().Configure(modelBuilder.Entity<PersistedLink>());
+            LinkTemplate.OnModelCreatingKeys(modelBuilder);
+            PlacedLink.OnModelCreatingKeys(modelBuilder);
+            InstancedLink.OnModelCreatingKeys(modelBuilder);
+            PersistedLink.OnModelCreatingKeys(modelBuilder);
 
-            new VehicleTemplateEntityTypeKeyConfiguration().Configure(modelBuilder.Entity<VehicleTemplate>());
-            new PlacedVehicleEntityTypeKeyConfiguration().Configure(modelBuilder.Entity<PlacedVehicle>());
-            new InstancedVehicleEntityTypeKeyConfiguration().Configure(modelBuilder.Entity<InstancedVehicle>());
-            new PersistedVehicleEntityTypeKeyConfiguration().Configure(modelBuilder.Entity<PersistedVehicle>());
+            VehicleTemplate.OnModelCreatingKeys(modelBuilder);
+            PlacedVehicle.OnModelCreatingKeys(modelBuilder);
+            InstancedVehicle.OnModelCreatingKeys(modelBuilder);
+            PersistedVehicle.OnModelCreatingKeys(modelBuilder);
 
-            new ActorTemplateEntityTypeKeyConfiguration().Configure(modelBuilder.Entity<ActorTemplate>());
-            new PlacedActorEntityTypeKeyConfiguration().Configure(modelBuilder.Entity<PlacedActor>());
-            new InstancedActorEntityTypeKeyConfiguration().Configure(modelBuilder.Entity<InstancedActor>());
-            new PersistedActorEntityTypeKeyConfiguration().Configure(modelBuilder.Entity<PersistedActor>());
+            ActorTemplate.OnModelCreatingKeys(modelBuilder);
+            PlacedActor.OnModelCreatingKeys(modelBuilder);
+            InstancedActor.OnModelCreatingKeys(modelBuilder);
+            PersistedActor.OnModelCreatingKeys(modelBuilder);
 
-            new ItemTemplateEntityTypeKeyConfiguration().Configure(modelBuilder.Entity<ItemTemplate>());
-            new PlacedItemEntityTypeKeyConfiguration().Configure(modelBuilder.Entity<PlacedItem>());
-            new InstancedItemEntityTypeKeyConfiguration().Configure(modelBuilder.Entity<InstancedItem>());
-            new PersistedItemEntityTypeKeyConfiguration().Configure(modelBuilder.Entity<PersistedItem>());
+            ItemTemplate.OnModelCreatingKeys(modelBuilder);
+            PlacedItem.OnModelCreatingKeys(modelBuilder);
+            InstancedItem.OnModelCreatingKeys(modelBuilder);
+            PersistedItem.OnModelCreatingKeys(modelBuilder);
 
             // Navigation
 
-            new RegionTemplateEntityTypeNavConfiguration().Configure(modelBuilder.Entity<RegionTemplate>());
-            new AreaTemplateEntityTypeNavConfiguration().Configure(modelBuilder.Entity<AreaTemplate>());
+            RegionTemplate.OnModelCreatingNavigation(modelBuilder);
+            AreaTemplate.OnModelCreatingNavigation(modelBuilder);
 
-            new LinkTemplateEntityTypeNavConfiguration().Configure(modelBuilder.Entity<LinkTemplate>());
-            new PlacedLinkEntityTypeNavConfiguration().Configure(modelBuilder.Entity<PlacedLink>());
-            new InstancedLinkEntityTypeNavConfiguration().Configure(modelBuilder.Entity<InstancedLink>());
-            new PersistedLinkEntityTypeNavConfiguration().Configure(modelBuilder.Entity<PersistedLink>());
+            LinkTemplate.OnModelCreatingNavigation(modelBuilder);
+            PlacedLink.OnModelCreatingNavigation(modelBuilder);
+            InstancedLink.OnModelCreatingNavigation(modelBuilder);
+            PersistedLink.OnModelCreatingNavigation(modelBuilder);
 
-            new VehicleTemplateEntityTypeNavConfiguration().Configure(modelBuilder.Entity<VehicleTemplate>());
-            new PlacedVehicleEntityTypeNavConfiguration().Configure(modelBuilder.Entity<PlacedVehicle>());
-            new InstancedVehicleEntityTypeNavConfiguration().Configure(modelBuilder.Entity<InstancedVehicle>());
-            new PersistedVehicleEntityTypeNavConfiguration().Configure(modelBuilder.Entity<PersistedVehicle>());
+            VehicleTemplate.OnModelCreatingNavigation(modelBuilder);
+            PlacedVehicle.OnModelCreatingNavigation(modelBuilder);
+            InstancedVehicle.OnModelCreatingNavigation(modelBuilder);
+            PersistedVehicle.OnModelCreatingNavigation(modelBuilder);
 
-            new ActorTemplateEntityTypeNavConfiguration().Configure(modelBuilder.Entity<ActorTemplate>());
-            new PlacedActorEntityTypeNavConfiguration().Configure(modelBuilder.Entity<PlacedActor>());
-            new InstancedActorEntityTypeNavConfiguration().Configure(modelBuilder.Entity<InstancedActor>());
-            new PersistedActorEntityTypeNavConfiguration().Configure(modelBuilder.Entity<PersistedActor>());
+            ActorTemplate.OnModelCreatingNavigation(modelBuilder);
+            PlacedActor.OnModelCreatingNavigation(modelBuilder);
+            InstancedActor.OnModelCreatingNavigation(modelBuilder);
+            PersistedActor.OnModelCreatingNavigation(modelBuilder);
 
-            new ItemTemplateEntityTypeNavConfiguration().Configure(modelBuilder.Entity<ItemTemplate>());
-            new PlacedItemEntityTypeNavConfiguration().Configure(modelBuilder.Entity<PlacedItem>());
-            new InstancedItemEntityTypeNavConfiguration().Configure(modelBuilder.Entity<InstancedItem>());
-            new PersistedItemEntityTypeNavConfiguration().Configure(modelBuilder.Entity<PersistedItem>());
+            ItemTemplate.OnModelCreatingNavigation(modelBuilder);
+            PlacedItem.OnModelCreatingNavigation(modelBuilder);
+            InstancedItem.OnModelCreatingNavigation(modelBuilder);
+            PersistedItem.OnModelCreatingNavigation(modelBuilder);
         }
     }
 }

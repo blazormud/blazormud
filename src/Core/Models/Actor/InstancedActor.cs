@@ -4,7 +4,6 @@ using BlazorMUD.Core.Models.Item;
 using BlazorMUD.Core.Models.Region;
 using BlazorMUD.Core.Models.Vehicle;
 using Microsoft.EntityFrameworkCore;
-using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
 namespace BlazorMUD.Core.Models.Actor
 {
@@ -35,54 +34,58 @@ namespace BlazorMUD.Core.Models.Actor
 
         public ActorStaticFlags StaticFlags { get; set; } = ActorStaticFlags.None;
         public ActorDynamicFlags DynamicFlags { get; set; } = ActorDynamicFlags.None;
-    }
 
-    public class InstancedActorEntityTypeKeyConfiguration : IEntityTypeConfiguration<InstancedActor>
-    {
-        public void Configure(EntityTypeBuilder<InstancedActor> builder)
+        #region OnModelCreating
+
+        internal static void OnModelCreatingKeys(ModelBuilder modelBuilder)
         {
-            builder.HasKey(nameof(InstancedActor.Id));
+            modelBuilder.Entity<InstancedActor>(builder =>
+            {
+                builder.HasKey(nameof(InstancedActor.Id));
 
-            builder
-                .HasOne(nameof(InstancedActor.Region))
-                .WithMany()
-                .HasForeignKey(nameof(InstancedActor.RegionId))
-                .OnDelete(DeleteBehavior.Cascade);
+                builder
+                    .HasOne(nameof(InstancedActor.Region))
+                    .WithMany()
+                    .HasForeignKey(nameof(InstancedActor.RegionId))
+                    .OnDelete(DeleteBehavior.Cascade);
 
-            builder
-                .HasOne(nameof(InstancedActor.Template))
-                .WithMany()
-                .HasForeignKey(nameof(InstancedActor.TemplateId))
-                .OnDelete(DeleteBehavior.Cascade);
+                builder
+                    .HasOne(nameof(InstancedActor.Template))
+                    .WithMany()
+                    .HasForeignKey(nameof(InstancedActor.TemplateId))
+                    .OnDelete(DeleteBehavior.Cascade);
 
-            builder
-                .HasOne(nameof(InstancedActor.ParentArea))
-                .WithMany()
-                .HasForeignKey(nameof(InstancedActor.ParentAreaId))
-                .OnDelete(DeleteBehavior.Cascade);
+                builder
+                    .HasOne(nameof(InstancedActor.ParentArea))
+                    .WithMany()
+                    .HasForeignKey(nameof(InstancedActor.ParentAreaId))
+                    .OnDelete(DeleteBehavior.Cascade);
 
-            builder
-                .HasOne(nameof(InstancedActor.ParentInstancedVehicle))
-                .WithMany()
-                .HasForeignKey(nameof(InstancedActor.ParentInstancedVehicleId))
-                .OnDelete(DeleteBehavior.Cascade);
+                builder
+                    .HasOne(nameof(InstancedActor.ParentInstancedVehicle))
+                    .WithMany()
+                    .HasForeignKey(nameof(InstancedActor.ParentInstancedVehicleId))
+                    .OnDelete(DeleteBehavior.Cascade);
 
-            builder
-                .HasOne(nameof(InstancedActor.ParentPersistedVehicle))
-                .WithMany()
-                .HasForeignKey(nameof(InstancedActor.ParentPersistedVehicleId))
-                .OnDelete(DeleteBehavior.Cascade);
+                builder
+                    .HasOne(nameof(InstancedActor.ParentPersistedVehicle))
+                    .WithMany()
+                    .HasForeignKey(nameof(InstancedActor.ParentPersistedVehicleId))
+                    .OnDelete(DeleteBehavior.Cascade);
+            });
         }
-    }
 
-    public class InstancedActorEntityTypeNavConfiguration : IEntityTypeConfiguration<InstancedActor>
-    {
-        public void Configure(EntityTypeBuilder<InstancedActor> builder)
+        internal static void OnModelCreatingNavigation(ModelBuilder modelBuilder)
         {
-            builder
-                .HasMany(nameof(InstancedActor.InstancedItems))
-                .WithOne(nameof(InstancedItem.ParentInstancedActor))
-                .HasForeignKey(nameof(InstancedItem.ParentInstancedActorId));
+            modelBuilder.Entity<InstancedActor>(builder =>
+            {
+                builder
+                    .HasMany(nameof(InstancedActor.InstancedItems))
+                    .WithOne(nameof(InstancedItem.ParentInstancedActor))
+                    .HasForeignKey(nameof(InstancedItem.ParentInstancedActorId));
+            });
         }
+
+        #endregion OnModelCreating
     }
 }

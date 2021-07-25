@@ -4,7 +4,6 @@ using BlazorMUD.Core.Models.Area;
 using BlazorMUD.Core.Models.Auth;
 using BlazorMUD.Core.Models.Item;
 using Microsoft.EntityFrameworkCore;
-using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
 namespace BlazorMUD.Core.Models.Vehicle
 {
@@ -30,63 +29,67 @@ namespace BlazorMUD.Core.Models.Vehicle
 
         public VehicleStaticFlags StaticFlags { get; set; } = VehicleStaticFlags.None;
         public VehicleDynamicFlags DynamicFlags { get; set; } = VehicleDynamicFlags.None;
-    }
 
-    public class PersistedVehicleEntityTypeKeyConfiguration : IEntityTypeConfiguration<PersistedVehicle>
-    {
-        public void Configure(EntityTypeBuilder<PersistedVehicle> builder)
+        #region OnModelCreating
+
+        internal static void OnModelCreatingKeys(ModelBuilder modelBuilder)
         {
-            builder.HasKey(nameof(PersistedVehicle.Id));
+            modelBuilder.Entity<PersistedVehicle>(builder =>
+            {
+                builder.HasKey(nameof(PersistedVehicle.Id));
 
-            builder
-                .HasOne(nameof(PersistedVehicle.Owner))
-                .WithMany()
-                .HasForeignKey(nameof(PersistedVehicle.OwnerId))
-                .OnDelete(DeleteBehavior.Cascade);
+                builder
+                    .HasOne(nameof(PersistedVehicle.Owner))
+                    .WithMany()
+                    .HasForeignKey(nameof(PersistedVehicle.OwnerId))
+                    .OnDelete(DeleteBehavior.Cascade);
 
-            builder
-                .HasOne(nameof(PersistedVehicle.Template))
-                .WithMany()
-                .HasForeignKey(nameof(PersistedVehicle.TemplateId))
-                .OnDelete(DeleteBehavior.Cascade);
+                builder
+                    .HasOne(nameof(PersistedVehicle.Template))
+                    .WithMany()
+                    .HasForeignKey(nameof(PersistedVehicle.TemplateId))
+                    .OnDelete(DeleteBehavior.Cascade);
 
-            builder
-                .HasOne(nameof(PersistedVehicle.ParentArea))
-                .WithMany()
-                .HasForeignKey(nameof(PersistedVehicle.ParentAreaId))
-                .OnDelete(DeleteBehavior.Cascade);
+                builder
+                    .HasOne(nameof(PersistedVehicle.ParentArea))
+                    .WithMany()
+                    .HasForeignKey(nameof(PersistedVehicle.ParentAreaId))
+                    .OnDelete(DeleteBehavior.Cascade);
 
-            builder
-                .HasOne(nameof(PersistedVehicle.ParentPersistedVehicle))
-                .WithMany()
-                .HasForeignKey(nameof(PersistedVehicle.ParentPersistedVehicleId))
-                .OnDelete(DeleteBehavior.Cascade);
+                builder
+                    .HasOne(nameof(PersistedVehicle.ParentPersistedVehicle))
+                    .WithMany()
+                    .HasForeignKey(nameof(PersistedVehicle.ParentPersistedVehicleId))
+                    .OnDelete(DeleteBehavior.Cascade);
+            });
         }
-    }
 
-    public class PersistedVehicleEntityTypeNavConfiguration : IEntityTypeConfiguration<PersistedVehicle>
-    {
-        public void Configure(EntityTypeBuilder<PersistedVehicle> builder)
+        internal static void OnModelCreatingNavigation(ModelBuilder modelBuilder)
         {
-            builder
-                .HasMany(nameof(PersistedVehicle.PersistedVehicles))
-                .WithOne(nameof(PersistedVehicle.ParentPersistedVehicle))
-                .HasForeignKey(nameof(PersistedVehicle.ParentPersistedVehicleId));
+            modelBuilder.Entity<PersistedVehicle>(builder =>
+            {
+                builder
+                    .HasMany(nameof(PersistedVehicle.PersistedVehicles))
+                    .WithOne(nameof(PersistedVehicle.ParentPersistedVehicle))
+                    .HasForeignKey(nameof(PersistedVehicle.ParentPersistedVehicleId));
 
-            builder
-                .HasMany(nameof(PersistedVehicle.InstancedActors))
-                .WithOne(nameof(InstancedActor.ParentPersistedVehicle))
-                .HasForeignKey(nameof(InstancedActor.ParentPersistedVehicleId));
+                builder
+                    .HasMany(nameof(PersistedVehicle.InstancedActors))
+                    .WithOne(nameof(InstancedActor.ParentPersistedVehicle))
+                    .HasForeignKey(nameof(InstancedActor.ParentPersistedVehicleId));
 
-            builder
-                .HasMany(nameof(PersistedVehicle.PersistedActors))
-                .WithOne(nameof(PersistedActor.ParentPersistedVehicle))
-                .HasForeignKey(nameof(PersistedActor.ParentPersistedVehicleId));
+                builder
+                    .HasMany(nameof(PersistedVehicle.PersistedActors))
+                    .WithOne(nameof(PersistedActor.ParentPersistedVehicle))
+                    .HasForeignKey(nameof(PersistedActor.ParentPersistedVehicleId));
 
-            builder
-                .HasMany(nameof(PersistedVehicle.PersistedItems))
-                .WithOne(nameof(PersistedItem.ParentPersistedVehicle))
-                .HasForeignKey(nameof(PersistedItem.ParentPersistedVehicleId));
+                builder
+                    .HasMany(nameof(PersistedVehicle.PersistedItems))
+                    .WithOne(nameof(PersistedItem.ParentPersistedVehicle))
+                    .HasForeignKey(nameof(PersistedItem.ParentPersistedVehicleId));
+            });
         }
+
+        #endregion OnModelCreating
     }
 }
