@@ -21,7 +21,7 @@ namespace BlazorMUD.Core.Models.Vehicle
         public int OwnerId { get; set; }
         public ApplicationUser Owner { get; set; }
 
-        [ForeignKey(nameof(Owner))]
+        [ForeignKey(nameof(Template))]
         public long TemplateId { get; set; }
         public VehicleTemplate Template { get; set; }
 
