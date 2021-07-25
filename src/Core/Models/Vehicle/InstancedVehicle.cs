@@ -1,5 +1,3 @@
-using System.ComponentModel.DataAnnotations;
-using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
 using BlazorMUD.Core.Models.Actor;
 using BlazorMUD.Core.Models.Area;
@@ -14,36 +12,19 @@ namespace BlazorMUD.Core.Models.Vehicle
     {
         #region Relationship Properties
 
-        [Key]
         public long Id { get; set; }
-
-        [ForeignKey(nameof(Region))]
         public long RegionId { get; set; }
         public RegionTemplate Region { get; set; }
-
-        [ForeignKey(nameof(Template))]
         public long TemplateId { get; set; }
         public VehicleTemplate Template { get; set; }
-
-        [ForeignKey(nameof(ParentArea))]
         public long? ParentAreaId { get; set; } = null;
         public AreaTemplate ParentArea { get; set; } = null;
-
-        [ForeignKey(nameof(ParentInstancedVehicle))]
         public long? ParentInstancedVehicleId { get; set; } = null;
         public InstancedVehicle ParentInstancedVehicle { get; set; } = null;
-
-        // [InverseProperty(nameof(ParentInstancedVehicle))]
-        // public IQueryable<InstancedVehicle> InstancedVehicles { get; set; } = null;
-
-        // [InverseProperty(nameof(InstancedActor.ParentInstancedVehicle))]
-        // public IQueryable<InstancedActor> InstancedActors { get; set; } = null;
-
-        // [InverseProperty(nameof(PersistedActor.ParentInstancedVehicle))]
-        // public IQueryable<PersistedActor> PersistedActors { get; set; } = null;
-
-        // [InverseProperty(nameof(InstancedItem.ParentInstancedVehicle))]
-        // public IQueryable<InstancedItem> InstancedItems { get; set; } = null;
+        public IQueryable<InstancedVehicle> InstancedVehicles { get; set; } = null;
+        public IQueryable<InstancedActor> InstancedActors { get; set; } = null;
+        public IQueryable<PersistedActor> PersistedActors { get; set; } = null;
+        public IQueryable<InstancedItem> InstancedItems { get; set; } = null;
 
         #endregion Relationship Properties
 
@@ -51,10 +32,24 @@ namespace BlazorMUD.Core.Models.Vehicle
         public VehicleDynamicFlags DynamicFlags { get; set; } = VehicleDynamicFlags.None;
     }
 
-    public class InstancedVehicleEntityTypeConfiguration : IEntityTypeConfiguration<InstancedVehicle>
+    public class InstancedVehicleEntityTypeKeyConfiguration : IEntityTypeConfiguration<InstancedVehicle>
     {
         public void Configure(EntityTypeBuilder<InstancedVehicle> builder)
         {
+            builder.HasKey(nameof(InstancedVehicle.Id));
+
+            builder
+                .HasOne(nameof(InstancedVehicle.Region))
+                .WithMany()
+                .HasForeignKey(nameof(InstancedVehicle.RegionId))
+                .OnDelete(DeleteBehavior.Cascade);
+
+            builder
+                .HasOne(nameof(InstancedVehicle.Template))
+                .WithMany()
+                .HasForeignKey(nameof(InstancedVehicle.TemplateId))
+                .OnDelete(DeleteBehavior.Cascade);
+
             builder
                 .HasOne(nameof(InstancedVehicle.ParentArea))
                 .WithMany()
@@ -66,6 +61,32 @@ namespace BlazorMUD.Core.Models.Vehicle
                 .WithMany()
                 .HasForeignKey(nameof(InstancedVehicle.ParentInstancedVehicleId))
                 .OnDelete(DeleteBehavior.Cascade);
+        }
+    }
+
+    public class InstancedVehicleEntityTypeNavConfiguration : IEntityTypeConfiguration<InstancedVehicle>
+    {
+        public void Configure(EntityTypeBuilder<InstancedVehicle> builder)
+        {
+            builder
+                .HasMany(nameof(InstancedVehicle.InstancedVehicles))
+                .WithOne(nameof(InstancedVehicle.ParentInstancedVehicle))
+                .HasForeignKey(nameof(InstancedVehicle.ParentInstancedVehicleId));
+
+            builder
+                .HasMany(nameof(InstancedVehicle.InstancedActors))
+                .WithOne(nameof(InstancedActor.ParentInstancedVehicle))
+                .HasForeignKey(nameof(InstancedActor.ParentInstancedVehicleId));
+
+            builder
+                .HasMany(nameof(InstancedVehicle.PersistedActors))
+                .WithOne(nameof(PersistedActor.ParentInstancedVehicle))
+                .HasForeignKey(nameof(PersistedActor.ParentInstancedVehicleId));
+
+            builder
+                .HasMany(nameof(InstancedVehicle.InstancedItems))
+                .WithOne(nameof(InstancedItem.ParentInstancedVehicle))
+                .HasForeignKey(nameof(InstancedItem.ParentInstancedVehicleId));
         }
     }
 }

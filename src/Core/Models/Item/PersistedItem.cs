@@ -1,5 +1,3 @@
-using System.ComponentModel.DataAnnotations;
-using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
 using BlazorMUD.Core.Models.Actor;
 using BlazorMUD.Core.Models.Area;
@@ -13,31 +11,18 @@ namespace BlazorMUD.Core.Models.Item
     {
         #region Relationship Properties
 
-        [Key]
         public long Id { get; set; }
-
-        [ForeignKey(nameof(Template))]
         public long TemplateId { get; set; }
         public ItemTemplate Template { get; set; }
-
-        [ForeignKey(nameof(ParentArea))]
         public long? ParentAreaId { get; set; } = null;
         public AreaTemplate ParentArea { get; set; } = null;
-
-        [ForeignKey(nameof(ParentPersistedVehicle))]
         public long? ParentPersistedVehicleId { get; set; } = null;
         public PersistedVehicle ParentPersistedVehicle { get; set; } = null;
-
-        [ForeignKey(nameof(ParentPersistedActor))]
         public long? ParentPersistedActorId { get; set; } = null;
         public PersistedActor ParentPersistedActor { get; set; } = null;
-
-        [ForeignKey(nameof(ParentPersistedItem))]
         public long? ParentPersistedItemId { get; set; } = null;
         public PersistedItem ParentPersistedItem { get; set; } = null;
-
-        // [InverseProperty(nameof(ParentPersistedItem))]
-        // public IQueryable<PersistedItem> PersistedItems { get; set; } = null;
+        public IQueryable<PersistedItem> PersistedItems { get; set; } = null;
 
         #endregion Relationship Properties
 
@@ -46,10 +31,18 @@ namespace BlazorMUD.Core.Models.Item
         public ItemWearFlags WearFlags { get; set; } = ItemWearFlags.None;
     }
 
-    public class PersistedItemEntityTypeConfiguration : IEntityTypeConfiguration<PersistedItem>
+    public class PersistedItemEntityTypeKeyConfiguration : IEntityTypeConfiguration<PersistedItem>
     {
         public void Configure(EntityTypeBuilder<PersistedItem> builder)
         {
+            builder.HasKey(nameof(PersistedItem.Id));
+
+            builder
+                .HasOne(nameof(PersistedItem.Template))
+                .WithMany()
+                .HasForeignKey(nameof(PersistedItem.TemplateId))
+                .OnDelete(DeleteBehavior.Cascade);
+
             builder
                 .HasOne(nameof(PersistedItem.ParentArea))
                 .WithMany()
@@ -73,6 +66,17 @@ namespace BlazorMUD.Core.Models.Item
                 .WithMany()
                 .HasForeignKey(nameof(PersistedItem.ParentPersistedItemId))
                 .OnDelete(DeleteBehavior.Cascade);
+        }
+    }
+
+    public class PersistedItemEntityTypeNavConfiguration : IEntityTypeConfiguration<PersistedItem>
+    {
+        public void Configure(EntityTypeBuilder<PersistedItem> builder)
+        {
+            builder
+                .HasMany(nameof(PersistedItem.PersistedItems))
+                .WithOne(nameof(PersistedItem.ParentPersistedItem))
+                .HasForeignKey(nameof(PersistedItem.ParentPersistedItemId));
         }
     }
 }

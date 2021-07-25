@@ -1,5 +1,3 @@
-using System.ComponentModel.DataAnnotations;
-using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
 using BlazorMUD.Core.Models.Actor;
 using BlazorMUD.Core.Models.Area;
@@ -14,35 +12,20 @@ namespace BlazorMUD.Core.Models.Item
     {
         #region Relationship Properties
 
-        [Key]
         public long Id { get; set; }
-
-        [ForeignKey(nameof(Region))]
         public long RegionId { get; set; }
         public RegionTemplate Region { get; set; }
-
-        [ForeignKey(nameof(Template))]
         public long TemplateId { get; set; }
         public ItemTemplate Template { get; set; }
-
-        [ForeignKey(nameof(ParentArea))]
         public long? ParentAreaId { get; set; } = null;
         public AreaTemplate ParentArea { get; set; } = null;
-
-        [ForeignKey(nameof(ParentInstancedVehicle))]
         public long? ParentInstancedVehicleId { get; set; } = null;
         public InstancedVehicle ParentInstancedVehicle { get; set; } = null;
-
-        [ForeignKey(nameof(ParentInstancedActor))]
         public long? ParentInstancedActorId { get; set; } = null;
         public InstancedActor ParentInstancedActor { get; set; } = null;
-
-        [ForeignKey(nameof(ParentInstancedItem))]
         public long? ParentInstancedItemId { get; set; } = null;
         public InstancedItem ParentInstancedItem { get; set; } = null;
-
-        // [InverseProperty(nameof(ParentInstancedItem))]
-        // public IQueryable<InstancedItem> InstancedItems { get; set; } = null;
+        public IQueryable<InstancedItem> InstancedItems { get; set; } = null;
 
         #endregion Relationship Properties
 
@@ -51,10 +34,24 @@ namespace BlazorMUD.Core.Models.Item
         public ItemWearFlags WearFlags { get; set; } = ItemWearFlags.None;
     }
 
-    public class InstancedItemEntityTypeConfiguration : IEntityTypeConfiguration<InstancedItem>
+    public class InstancedItemEntityTypeKeyConfiguration : IEntityTypeConfiguration<InstancedItem>
     {
         public void Configure(EntityTypeBuilder<InstancedItem> builder)
         {
+            builder.HasKey(nameof(InstancedItem.Id));
+
+            builder
+                .HasOne(nameof(InstancedItem.Region))
+                .WithMany()
+                .HasForeignKey(nameof(InstancedItem.RegionId))
+                .OnDelete(DeleteBehavior.Cascade);
+
+            builder
+                .HasOne(nameof(InstancedItem.Template))
+                .WithMany()
+                .HasForeignKey(nameof(InstancedItem.TemplateId))
+                .OnDelete(DeleteBehavior.Cascade);
+
             builder
                 .HasOne(nameof(InstancedItem.ParentArea))
                 .WithMany()
@@ -78,6 +75,17 @@ namespace BlazorMUD.Core.Models.Item
                 .WithMany()
                 .HasForeignKey(nameof(InstancedItem.ParentInstancedItemId))
                 .OnDelete(DeleteBehavior.Cascade);
+        }
+    }
+
+    public class InstancedItemEntityTypeNavConfiguration : IEntityTypeConfiguration<InstancedItem>
+    {
+        public void Configure(EntityTypeBuilder<InstancedItem> builder)
+        {
+            builder
+                .HasMany(nameof(InstancedItem.InstancedItems))
+                .WithOne(nameof(InstancedItem.ParentInstancedItem))
+                .HasForeignKey(nameof(InstancedItem.ParentInstancedItemId));
         }
     }
 }

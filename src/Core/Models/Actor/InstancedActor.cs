@@ -1,5 +1,3 @@
-using System.ComponentModel.DataAnnotations;
-using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
 using BlazorMUD.Core.Models.Area;
 using BlazorMUD.Core.Models.Item;
@@ -14,31 +12,24 @@ namespace BlazorMUD.Core.Models.Actor
     {
         #region Relationship Properties
 
-        [Key]
         public long Id { get; set; }
 
-        [ForeignKey(nameof(Region))]
         public long RegionId { get; set; }
         public RegionTemplate Region { get; set; }
 
-        [ForeignKey(nameof(Template))]
         public long TemplateId { get; set; }
         public ActorTemplate Template { get; set; }
 
-        [ForeignKey(nameof(ParentArea))]
         public long? ParentAreaId { get; set; } = null;
         public AreaTemplate ParentArea { get; set; } = null;
 
-        [ForeignKey(nameof(ParentInstancedVehicle))]
         public long? ParentInstancedVehicleId { get; set; } = null;
         public InstancedVehicle ParentInstancedVehicle { get; set; } = null;
 
-        [ForeignKey(nameof(ParentPersistedVehicle))]
         public long? ParentPersistedVehicleId { get; set; } = null;
         public PersistedVehicle ParentPersistedVehicle { get; set; } = null;
 
-        // [InverseProperty(nameof(InstancedItem.ParentInstancedActor))]
-        // public IQueryable<InstancedItem> InstancedItems { get; set; } = null;
+        public IQueryable<InstancedItem> InstancedItems { get; set; } = null;
 
         #endregion Relationship Properties
 
@@ -46,10 +37,24 @@ namespace BlazorMUD.Core.Models.Actor
         public ActorDynamicFlags DynamicFlags { get; set; } = ActorDynamicFlags.None;
     }
 
-    public class InstancedActorEntityTypeConfiguration : IEntityTypeConfiguration<InstancedActor>
+    public class InstancedActorEntityTypeKeyConfiguration : IEntityTypeConfiguration<InstancedActor>
     {
         public void Configure(EntityTypeBuilder<InstancedActor> builder)
         {
+            builder.HasKey(nameof(InstancedActor.Id));
+
+            builder
+                .HasOne(nameof(InstancedActor.Region))
+                .WithMany()
+                .HasForeignKey(nameof(InstancedActor.RegionId))
+                .OnDelete(DeleteBehavior.Cascade);
+
+            builder
+                .HasOne(nameof(InstancedActor.Template))
+                .WithMany()
+                .HasForeignKey(nameof(InstancedActor.TemplateId))
+                .OnDelete(DeleteBehavior.Cascade);
+
             builder
                 .HasOne(nameof(InstancedActor.ParentArea))
                 .WithMany()
@@ -57,16 +62,27 @@ namespace BlazorMUD.Core.Models.Actor
                 .OnDelete(DeleteBehavior.Cascade);
 
             builder
-                .HasOne(nameof(InstancedActor.ParentPersistedVehicle))
-                .WithMany()
-                .HasForeignKey(nameof(InstancedActor.ParentPersistedVehicleId))
-                .OnDelete(DeleteBehavior.Cascade);
-
-            builder
                 .HasOne(nameof(InstancedActor.ParentInstancedVehicle))
                 .WithMany()
                 .HasForeignKey(nameof(InstancedActor.ParentInstancedVehicleId))
                 .OnDelete(DeleteBehavior.Cascade);
+
+            builder
+                .HasOne(nameof(InstancedActor.ParentPersistedVehicle))
+                .WithMany()
+                .HasForeignKey(nameof(InstancedActor.ParentPersistedVehicleId))
+                .OnDelete(DeleteBehavior.Cascade);
+        }
+    }
+
+    public class InstancedActorEntityTypeNavConfiguration : IEntityTypeConfiguration<InstancedActor>
+    {
+        public void Configure(EntityTypeBuilder<InstancedActor> builder)
+        {
+            builder
+                .HasMany(nameof(InstancedActor.InstancedItems))
+                .WithOne(nameof(InstancedItem.ParentInstancedActor))
+                .HasForeignKey(nameof(InstancedItem.ParentInstancedActorId));
         }
     }
 }

@@ -1,7 +1,7 @@
-using System.ComponentModel.DataAnnotations;
-using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
 using BlazorMUD.Core.Models.Region;
+using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
 namespace BlazorMUD.Core.Models.Link
 {
@@ -9,25 +9,51 @@ namespace BlazorMUD.Core.Models.Link
     {
         #region Relationship Properties
 
-        [Key]
         public long Id { get; set; }
-
-        [ForeignKey(nameof(Region))]
         public long RegionId { get; set; }
         public RegionTemplate Region { get; set; }
-
-        // [InverseProperty(nameof(PlacedLink.Template))]
-        // public IQueryable<PlacedLink> PlacedLinks { get; set; } = null;
-
-        // [InverseProperty(nameof(InstancedLink.Template))]
-        // public IQueryable<InstancedLink> InstancedLinks { get; set; } = null;
-
-        // [InverseProperty(nameof(PersistedLink.Template))]
-        // public IQueryable<PersistedLink> PersistedLinks { get; set; } = null;
+        public IQueryable<PlacedLink> PlacedLinks { get; set; } = null;
+        public IQueryable<InstancedLink> InstancedLinks { get; set; } = null;
+        public IQueryable<PersistedLink> PersistedLinks { get; set; } = null;
 
         #endregion Relationship Properties
 
         public LinkStaticFlags StaticFlags { get; set; } = LinkStaticFlags.None;
         public LinkDynamicFlags DynamicFlags { get; set; } = LinkDynamicFlags.None;
+    }
+
+    public class LinkTemplateEntityTypeKeyConfiguration : IEntityTypeConfiguration<LinkTemplate>
+    {
+        public void Configure(EntityTypeBuilder<LinkTemplate> builder)
+        {
+            builder.HasKey(nameof(LinkTemplate.Id));
+
+            builder
+                .HasOne(nameof(LinkTemplate.Region))
+                .WithMany()
+                .HasForeignKey(nameof(LinkTemplate.RegionId))
+                .OnDelete(DeleteBehavior.Cascade);
+        }
+    }
+
+    public class LinkTemplateEntityTypeNavConfiguration : IEntityTypeConfiguration<LinkTemplate>
+    {
+        public void Configure(EntityTypeBuilder<LinkTemplate> builder)
+        {
+            builder
+                .HasMany(nameof(LinkTemplate.PlacedLinks))
+                .WithOne(nameof(PlacedLink.Template))
+                .HasForeignKey(nameof(PlacedLink.TemplateId));
+
+            builder
+                .HasMany(nameof(LinkTemplate.InstancedLinks))
+                .WithOne(nameof(InstancedLink.Template))
+                .HasForeignKey(nameof(InstancedLink.TemplateId));
+
+            builder
+                .HasMany(nameof(LinkTemplate.PersistedLinks))
+                .WithOne(nameof(PersistedLink.Template))
+                .HasForeignKey(nameof(PersistedLink.TemplateId));
+        }
     }
 }

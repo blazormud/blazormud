@@ -1,5 +1,3 @@
-using System.ComponentModel.DataAnnotations;
-using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
 using BlazorMUD.Core.Models.Actor;
 using BlazorMUD.Core.Models.Area;
@@ -14,45 +12,43 @@ namespace BlazorMUD.Core.Models.Vehicle
     {
         #region Relationship Properties
 
-        [Key]
         public long Id { get; set; }
-
-        [ForeignKey(nameof(Region))]
         public long RegionId { get; set; }
         public RegionTemplate Region { get; set; }
-
-        [ForeignKey(nameof(Template))]
         public long TemplateId { get; set; }
         public VehicleTemplate Template { get; set; }
-
-        [ForeignKey(nameof(ParentArea))]
         public long? ParentAreaId { get; set; } = null;
         public AreaTemplate ParentArea { get; set; } = null;
-
-        [ForeignKey(nameof(ParentPlacedVehicle))]
         public long? ParentPlacedVehicleId { get; set; } = null;
         public PlacedVehicle ParentPlacedVehicle { get; set; } = null;
-
-        // [InverseProperty(nameof(ParentPlacedVehicle))]
-        // public IQueryable<PlacedVehicle> PlacedVehicles { get; set; } = null;
-
-        // [InverseProperty(nameof(PlacedActor.ParentPlacedVehicle))]
-        // public IQueryable<PlacedActor> PlacedActors { get; set; } = null;
-
-        // [InverseProperty(nameof(PlacedItem.ParentPlacedVehicle))]
-        // public IQueryable<PlacedItem> PlacedItems { get; set; } = null;
+        public IQueryable<PlacedVehicle> PlacedVehicles { get; set; } = null;
+        public IQueryable<PlacedActor> PlacedActors { get; set; } = null;
+        public IQueryable<PlacedItem> PlacedItems { get; set; } = null;
 
         #endregion Relationship Properties
 
         public VehicleDynamicFlags DynamicFlags { get; set; } = VehicleDynamicFlags.None;
-
         public int Count { get; set; }
     }
 
-    public class VehiclePlacementEntityTypeConfiguration : IEntityTypeConfiguration<PlacedVehicle>
+    public class PlacedVehicleEntityTypeKeyConfiguration : IEntityTypeConfiguration<PlacedVehicle>
     {
         public void Configure(EntityTypeBuilder<PlacedVehicle> builder)
         {
+            builder.HasKey(nameof(PlacedVehicle.Id));
+
+            builder
+                .HasOne(nameof(PlacedVehicle.Region))
+                .WithMany()
+                .HasForeignKey(nameof(PlacedVehicle.RegionId))
+                .OnDelete(DeleteBehavior.Cascade);
+
+            builder
+                .HasOne(nameof(PlacedVehicle.Template))
+                .WithMany()
+                .HasForeignKey(nameof(PlacedVehicle.TemplateId))
+                .OnDelete(DeleteBehavior.Cascade);
+
             builder
                 .HasOne(nameof(PlacedVehicle.ParentArea))
                 .WithMany()
@@ -64,6 +60,27 @@ namespace BlazorMUD.Core.Models.Vehicle
                 .WithMany()
                 .HasForeignKey(nameof(PlacedVehicle.ParentPlacedVehicleId))
                 .OnDelete(DeleteBehavior.Cascade);
+        }
+    }
+
+    public class PlacedVehicleEntityTypeNavConfiguration : IEntityTypeConfiguration<PlacedVehicle>
+    {
+        public void Configure(EntityTypeBuilder<PlacedVehicle> builder)
+        {
+            builder
+                .HasMany(nameof(PlacedVehicle.PlacedVehicles))
+                .WithOne(nameof(PlacedVehicle.ParentPlacedVehicle))
+                .HasForeignKey(nameof(PlacedVehicle.ParentPlacedVehicleId));
+
+            builder
+                .HasMany(nameof(PlacedVehicle.PlacedActors))
+                .WithOne(nameof(PlacedActor.ParentPlacedVehicle))
+                .HasForeignKey(nameof(PlacedActor.ParentPlacedVehicleId));
+
+            builder
+                .HasMany(nameof(PlacedVehicle.PlacedItems))
+                .WithOne(nameof(PlacedItem.ParentPlacedVehicle))
+                .HasForeignKey(nameof(PlacedItem.ParentPlacedVehicleId));
         }
     }
 }

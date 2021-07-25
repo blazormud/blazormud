@@ -1,5 +1,3 @@
-using System.ComponentModel.DataAnnotations;
-using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
 using BlazorMUD.Core.Models.Actor;
 using BlazorMUD.Core.Models.Area;
@@ -14,47 +12,45 @@ namespace BlazorMUD.Core.Models.Item
     {
         #region Relationship Properties
 
-        [Key]
         public long Id { get; set; }
-
-        [ForeignKey(nameof(Region))]
         public long RegionId { get; set; }
         public RegionTemplate Region { get; set; }
-
-        [ForeignKey(nameof(Template))]
         public long TemplateId { get; set; }
         public ItemTemplate Template { get; set; }
-
-        [ForeignKey(nameof(ParentArea))]
         public long? ParentAreaId { get; set; } = null;
         public AreaTemplate ParentArea { get; set; } = null;
-
-        [ForeignKey(nameof(ParentPlacedVehicle))]
         public long? ParentPlacedVehicleId { get; set; } = null;
         public PlacedVehicle ParentPlacedVehicle { get; set; } = null;
-
-        [ForeignKey(nameof(ParentPlacedActor))]
         public long? ParentPlacedActorId { get; set; } = null;
         public PlacedActor ParentPlacedActor { get; set; } = null;
-
-        [ForeignKey(nameof(ParentPlacedItem))]
         public long? ParentPlacedItemId { get; set; } = null;
         public PlacedItem ParentPlacedItem { get; set; } = null;
-
-        // [InverseProperty(nameof(ParentPlacedItem))]
-        // public IQueryable<PlacedItem> PlacedItems { get; set; } = null;
+        public IQueryable<PlacedItem> PlacedItems { get; set; } = null;
 
         #endregion Relationship Properties
 
         public ItemDynamicFlags DynamicFlags { get; set; } = ItemDynamicFlags.None;
-
         public int Count { get; set; }
     }
 
-    public class PlacedItemEntityTypeConfiguration : IEntityTypeConfiguration<PlacedItem>
+    public class PlacedItemEntityTypeKeyConfiguration : IEntityTypeConfiguration<PlacedItem>
     {
         public void Configure(EntityTypeBuilder<PlacedItem> builder)
         {
+            builder.HasKey(nameof(PlacedItem.Id));
+
+            builder
+                .HasOne(nameof(PlacedItem.Region))
+                .WithMany()
+                .HasForeignKey(nameof(PlacedItem.RegionId))
+                .OnDelete(DeleteBehavior.Cascade);
+
+            builder
+                .HasOne(nameof(PlacedItem.Template))
+                .WithMany()
+                .HasForeignKey(nameof(PlacedItem.TemplateId))
+                .OnDelete(DeleteBehavior.Cascade);
+
             builder
                 .HasOne(nameof(PlacedItem.ParentArea))
                 .WithMany()
@@ -78,6 +74,17 @@ namespace BlazorMUD.Core.Models.Item
                 .WithMany()
                 .HasForeignKey(nameof(PlacedItem.ParentPlacedItemId))
                 .OnDelete(DeleteBehavior.Cascade);
+        }
+    }
+
+    public class PlacedItemEntityTypeNavConfiguration : IEntityTypeConfiguration<PlacedItem>
+    {
+        public void Configure(EntityTypeBuilder<PlacedItem> builder)
+        {
+            builder
+                .HasMany(nameof(PlacedItem.PlacedItems))
+                .WithOne(nameof(PlacedItem.ParentPlacedItem))
+                .HasForeignKey(nameof(PlacedItem.ParentPlacedItemId));
         }
     }
 }
