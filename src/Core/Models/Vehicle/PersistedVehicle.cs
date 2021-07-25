@@ -9,12 +9,18 @@ namespace BlazorMUD.Core.Models.Vehicle
 {
     public class PersistedVehicle : IVehicle
     {
+        #region Relationship Properties
+
         [Key]
         public long Id { get; set; }
 
         [ForeignKey(nameof(Owner))]
         public int OwnerId { get; set; }
         public ApplicationUser Owner { get; set; }
+
+        [ForeignKey(nameof(Owner))]
+        public long TemplateId { get; set; }
+        public VehicleTemplate Template { get; set; }
 
         [ForeignKey(nameof(ParentArea))]
         public long? ParentAreaId { get; set; } = null;
@@ -23,6 +29,8 @@ namespace BlazorMUD.Core.Models.Vehicle
         [ForeignKey(nameof(ParentPersistedVehicle))]
         public long? ParentPersistedVehicleId { get; set; } = null;
         public PersistedVehicle ParentPersistedVehicle { get; set; } = null;
+
+        #endregion Relationship Properties
 
         public VehicleStaticFlags StaticFlags { get; set; } = VehicleStaticFlags.None;
         public VehicleDynamicFlags DynamicFlags { get; set; } = VehicleDynamicFlags.None;

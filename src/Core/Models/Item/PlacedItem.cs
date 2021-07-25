@@ -11,6 +11,8 @@ namespace BlazorMUD.Core.Models.Item
 {
     public class PlacedItem
     {
+        #region Relationship Properties
+
         [Key]
         public long Id { get; set; }
 
@@ -37,6 +39,8 @@ namespace BlazorMUD.Core.Models.Item
         [ForeignKey(nameof(ParentPlacedItem))]
         public long? ParentPlacedItemId { get; set; } = null;
         public PlacedItem ParentPlacedItem { get; set; } = null;
+
+        #endregion Relationship Properties
 
         public ItemDynamicFlags DynamicFlags { get; set; } = ItemDynamicFlags.None;
 

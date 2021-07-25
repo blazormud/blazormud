@@ -7,6 +7,8 @@ namespace BlazorMUD.Core.Models.Link
 {
     public class InstancedLink : ILink
     {
+        #region Relationship Properties
+
         [Key]
         public long Id { get; set; }
 
@@ -25,6 +27,8 @@ namespace BlazorMUD.Core.Models.Link
         [ForeignKey(nameof(DestinationArea))]
         public long DestinationAreaId { get; set; }
         public AreaTemplate DestinationArea { get; set; }
+
+        #endregion Relationship Properties
 
         public LinkStaticFlags StaticFlags { get; set; } = LinkStaticFlags.None;
         public LinkDynamicFlags DynamicFlags { get; set; } = LinkDynamicFlags.None;

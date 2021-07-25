@@ -7,10 +7,14 @@ namespace BlazorMUD.Core.Models.Region
 {
     public class RegionTemplate
     {
+        #region Relationship Properties
+
         [Key]
         public long Id { get; set; }
 
         [InverseProperty(nameof(ActorTemplate.Region))]
         public IQueryable<ActorTemplate> ActorTemplates { get; set; }
+
+        #endregion Relationship Properties
     }
 }

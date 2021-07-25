@@ -10,6 +10,8 @@ namespace BlazorMUD.Core.Models.Actor
 {
     public class PlacedActor
     {
+        #region Relationship Properties
+
         [Key]
         public long Id { get; set; }
 
@@ -28,6 +30,8 @@ namespace BlazorMUD.Core.Models.Actor
         [ForeignKey(nameof(ParentPlacedVehicle))]
         public long? ParentPlacedVehicleId { get; set; } = null;
         public VehiclePlacement ParentPlacedVehicle { get; set; } = null;
+
+        #endregion Relationship Properties
 
         public ActorDynamicFlags DynamicFlags { get; set; }
 

@@ -9,6 +9,8 @@ namespace BlazorMUD.Core.Models.Vehicle
 {
     public class InstancedVehicle : IVehicle
     {
+        #region Relationship Properties
+
         [Key]
         public long Id { get; set; }
 
@@ -27,6 +29,8 @@ namespace BlazorMUD.Core.Models.Vehicle
         [ForeignKey(nameof(ParentInstancedVehicle))]
         public long? ParentInstancedVehicleId { get; set; } = null;
         public InstancedVehicle ParentInstancedVehicle { get; set; } = null;
+
+        #endregion Relationship Properties
 
         public VehicleStaticFlags StaticFlags { get; set; } = VehicleStaticFlags.None;
         public VehicleDynamicFlags DynamicFlags { get; set; } = VehicleDynamicFlags.None;
