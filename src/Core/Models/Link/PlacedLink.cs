@@ -5,24 +5,24 @@ using BlazorMUD.Core.Models.Region;
 
 namespace BlazorMUD.Core.Models.Link
 {
-    public class LinkPlacement
+    public class PlacedLink
     {
         [Key]
         public long Id { get; set; }
 
-        [ForeignKey("Region")]
+        [ForeignKey(nameof(Region))]
         public long RegionId { get; set; }
         public RegionTemplate Region { get; set; }
 
-        [ForeignKey("Template")]
+        [ForeignKey(nameof(Template))]
         public long TemplateId { get; set; }
         public LinkTemplate Template { get; set; }
 
-        [ForeignKey("ParentArea")]
+        [ForeignKey(nameof(ParentArea))]
         public long ParentAreaId { get; set; }
         public AreaTemplate ParentArea { get; set; }
 
-        [ForeignKey("DestinationArea")]
+        [ForeignKey(nameof(DestinationArea))]
         public long DestinationAreaId { get; set; }
         public AreaTemplate DestinationArea { get; set; }
     }

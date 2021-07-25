@@ -9,11 +9,11 @@ namespace BlazorMUD.Core.Models.Vehicle
         [Key]
         public long Id { get; set; }
 
-        [ForeignKey("Region")]
+        [ForeignKey(nameof(Region))]
         public long RegionId { get; set; }
         public RegionTemplate Region { get; set; }
 
-        public VehicleStaticFlags StaticFlags { get; set; }
-        public VehicleDynamicFlags DynamicFlags { get; set; }
+        public VehicleStaticFlags StaticFlags { get; set; } = VehicleStaticFlags.None;
+        public VehicleDynamicFlags DynamicFlags { get; set; } = VehicleDynamicFlags.None;
     }
 }

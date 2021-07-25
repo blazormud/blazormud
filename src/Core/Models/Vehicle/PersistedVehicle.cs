@@ -7,6 +7,27 @@ using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
 namespace BlazorMUD.Core.Models.Vehicle
 {
+    public class PersistedVehicle : IVehicle
+    {
+        [Key]
+        public long Id { get; set; }
+
+        [ForeignKey(nameof(Owner))]
+        public int OwnerId { get; set; }
+        public ApplicationUser Owner { get; set; }
+
+        [ForeignKey(nameof(ParentArea))]
+        public long? ParentAreaId { get; set; } = null;
+        public AreaTemplate ParentArea { get; set; } = null;
+
+        [ForeignKey(nameof(ParentPersistedVehicle))]
+        public long? ParentPersistedVehicleId { get; set; } = null;
+        public PersistedVehicle ParentPersistedVehicle { get; set; } = null;
+
+        public VehicleStaticFlags StaticFlags { get; set; } = VehicleStaticFlags.None;
+        public VehicleDynamicFlags DynamicFlags { get; set; } = VehicleDynamicFlags.None;
+    }
+
     public class PersistedVehicleEntityTypeConfiguration : IEntityTypeConfiguration<PersistedVehicle>
     {
         public void Configure(EntityTypeBuilder<PersistedVehicle> builder)
@@ -23,26 +44,5 @@ namespace BlazorMUD.Core.Models.Vehicle
                 .HasForeignKey(nameof(PersistedVehicle.ParentPersistedVehicleId))
                 .OnDelete(DeleteBehavior.Cascade);
         }
-    }
-
-    public class PersistedVehicle : IVehicle
-    {
-        [Key]
-        public long Id { get; set; }
-
-        [ForeignKey("Owner")]
-        public int OwnerId { get; set; }
-        public ApplicationUser Owner { get; set; }
-
-        [ForeignKey("ParentArea")]
-        public long? ParentAreaId { get; set; }
-        public AreaTemplate ParentArea { get; set; }
-
-        [ForeignKey("ParentPersistedVehicle")]
-        public long? ParentPersistedVehicleId { get; set; }
-        public PersistedVehicle ParentPersistedVehicle { get; set; }
-
-        public VehicleStaticFlags StaticFlags { get; set; }
-        public VehicleDynamicFlags DynamicFlags { get; set; }
     }
 }

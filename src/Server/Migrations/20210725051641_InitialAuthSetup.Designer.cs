@@ -9,8 +9,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace BlazorMUD.Server.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20210724182748_InitialAuth")]
-    partial class InitialAuth
+    [Migration("20210725051641_InitialAuthSetup")]
+    partial class InitialAuthSetup
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {

@@ -8,6 +8,36 @@ using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
 namespace BlazorMUD.Core.Models.Item
 {
+    public class PersistedItem : IItem
+    {
+        [Key]
+        public long Id { get; set; }
+
+        [ForeignKey(nameof(Template))]
+        public long TemplateId { get; set; }
+        public ItemTemplate Template { get; set; }
+
+        [ForeignKey(nameof(ParentArea))]
+        public long? ParentAreaId { get; set; } = null;
+        public AreaTemplate ParentArea { get; set; } = null;
+
+        [ForeignKey(nameof(ParentPersistedVehicle))]
+        public long? ParentPersistedVehicleId { get; set; } = null;
+        public PersistedVehicle ParentPersistedVehicle { get; set; } = null;
+
+        [ForeignKey(nameof(ParentPersistedActor))]
+        public long? ParentPersistedActorId { get; set; } = null;
+        public PersistedActor ParentPersistedActor { get; set; } = null;
+
+        [ForeignKey(nameof(ParentPersistedItem))]
+        public long? ParentPersistedItemId { get; set; } = null;
+        public PersistedItem ParentPersistedItem { get; set; } = null;
+
+        public ItemStaticFlags StaticFlags { get; set; } = ItemStaticFlags.None;
+        public ItemDynamicFlags DynamicFlags { get; set; } = ItemDynamicFlags.None;
+        public ItemWearFlags WearFlags { get; set; } = ItemWearFlags.None;
+    }
+
     public class PersistedItemEntityTypeConfiguration : IEntityTypeConfiguration<PersistedItem>
     {
         public void Configure(EntityTypeBuilder<PersistedItem> builder)
@@ -36,35 +66,5 @@ namespace BlazorMUD.Core.Models.Item
                 .HasForeignKey(nameof(PersistedItem.ParentPersistedItemId))
                 .OnDelete(DeleteBehavior.Cascade);
         }
-    }
-
-    public class PersistedItem : IItem
-    {
-        [Key]
-        public long Id { get; set; }
-
-        [ForeignKey("Template")]
-        public long TemplateId { get; set; }
-        public ItemTemplate Template { get; set; }
-
-        [ForeignKey("ParentArea")]
-        public long? ParentAreaId { get; set; }
-        public AreaTemplate ParentArea { get; set; }
-
-        [ForeignKey("ParentPersistedVehicle")]
-        public long? ParentPersistedVehicleId { get; set; }
-        public PersistedVehicle ParentPersistedVehicle { get; set; }
-
-        [ForeignKey("ParentPersistedActor")]
-        public long? ParentPersistedActorId { get; set; }
-        public PersistedActor ParentPersistedActor { get; set; }
-
-        [ForeignKey("ParentPersistedItem")]
-        public long? ParentPersistedItemId { get; set; }
-        public PersistedItem ParentPersistedItem { get; set; }
-
-        public ItemStaticFlags StaticFlags { get; set; } = ItemStaticFlags.None;
-        public ItemDynamicFlags DynamicFlags { get; set; } = ItemDynamicFlags.None;
-        public ItemWearFlags WearFlags { get; set; } = ItemWearFlags.None;
     }
 }

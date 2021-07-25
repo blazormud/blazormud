@@ -45,7 +45,8 @@ namespace BlazorMUD.Server.Migrations
                 {
                     Id = table.Column<long>(type: "INTEGER", nullable: false)
                         .Annotation("Sqlite:Autoincrement", true),
-                    RegionId = table.Column<long>(type: "INTEGER", nullable: false)
+                    RegionId = table.Column<long>(type: "INTEGER", nullable: false),
+                    Flags = table.Column<ulong>(type: "INTEGER", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -142,7 +143,7 @@ namespace BlazorMUD.Server.Migrations
                         column: x => x.ParentAreaId,
                         principalTable: "Areas",
                         principalColumn: "Id",
-                        onDelete: ReferentialAction.Restrict);
+                        onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
                         name: "FK_PersistedVehicles_AspNetUsers_OwnerId",
                         column: x => x.OwnerId,
@@ -154,11 +155,11 @@ namespace BlazorMUD.Server.Migrations
                         column: x => x.ParentPersistedVehicleId,
                         principalTable: "PersistedVehicles",
                         principalColumn: "Id",
-                        onDelete: ReferentialAction.Restrict);
+                        onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.CreateTable(
-                name: "LinkInstances",
+                name: "InstancedLinks",
                 columns: table => new
                 {
                     Id = table.Column<long>(type: "INTEGER", nullable: false)
@@ -172,67 +173,27 @@ namespace BlazorMUD.Server.Migrations
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_LinkInstances", x => x.Id);
+                    table.PrimaryKey("PK_InstancedLinks", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_LinkInstances_Areas_DestinationAreaId",
+                        name: "FK_InstancedLinks_Areas_DestinationAreaId",
                         column: x => x.DestinationAreaId,
                         principalTable: "Areas",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
-                        name: "FK_LinkInstances_Areas_ParentAreaId",
+                        name: "FK_InstancedLinks_Areas_ParentAreaId",
                         column: x => x.ParentAreaId,
                         principalTable: "Areas",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
-                        name: "FK_LinkInstances_LinkTemplates_TemplateId",
+                        name: "FK_InstancedLinks_LinkTemplates_TemplateId",
                         column: x => x.TemplateId,
                         principalTable: "LinkTemplates",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
-                        name: "FK_LinkInstances_Regions_RegionId",
-                        column: x => x.RegionId,
-                        principalTable: "Regions",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
-                });
-
-            migrationBuilder.CreateTable(
-                name: "LinkPlacements",
-                columns: table => new
-                {
-                    Id = table.Column<long>(type: "INTEGER", nullable: false)
-                        .Annotation("Sqlite:Autoincrement", true),
-                    RegionId = table.Column<long>(type: "INTEGER", nullable: false),
-                    TemplateId = table.Column<long>(type: "INTEGER", nullable: false),
-                    ParentAreaId = table.Column<long>(type: "INTEGER", nullable: false),
-                    DestinationAreaId = table.Column<long>(type: "INTEGER", nullable: false)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_LinkPlacements", x => x.Id);
-                    table.ForeignKey(
-                        name: "FK_LinkPlacements_Areas_DestinationAreaId",
-                        column: x => x.DestinationAreaId,
-                        principalTable: "Areas",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
-                    table.ForeignKey(
-                        name: "FK_LinkPlacements_Areas_ParentAreaId",
-                        column: x => x.ParentAreaId,
-                        principalTable: "Areas",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
-                    table.ForeignKey(
-                        name: "FK_LinkPlacements_LinkTemplates_TemplateId",
-                        column: x => x.TemplateId,
-                        principalTable: "LinkTemplates",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
-                    table.ForeignKey(
-                        name: "FK_LinkPlacements_Regions_RegionId",
+                        name: "FK_InstancedLinks_Regions_RegionId",
                         column: x => x.RegionId,
                         principalTable: "Regions",
                         principalColumn: "Id",
@@ -275,7 +236,47 @@ namespace BlazorMUD.Server.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "VehicleInstances",
+                name: "PlacedLinks",
+                columns: table => new
+                {
+                    Id = table.Column<long>(type: "INTEGER", nullable: false)
+                        .Annotation("Sqlite:Autoincrement", true),
+                    RegionId = table.Column<long>(type: "INTEGER", nullable: false),
+                    TemplateId = table.Column<long>(type: "INTEGER", nullable: false),
+                    ParentAreaId = table.Column<long>(type: "INTEGER", nullable: false),
+                    DestinationAreaId = table.Column<long>(type: "INTEGER", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_PlacedLinks", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_PlacedLinks_Areas_DestinationAreaId",
+                        column: x => x.DestinationAreaId,
+                        principalTable: "Areas",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                    table.ForeignKey(
+                        name: "FK_PlacedLinks_Areas_ParentAreaId",
+                        column: x => x.ParentAreaId,
+                        principalTable: "Areas",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                    table.ForeignKey(
+                        name: "FK_PlacedLinks_LinkTemplates_TemplateId",
+                        column: x => x.TemplateId,
+                        principalTable: "LinkTemplates",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                    table.ForeignKey(
+                        name: "FK_PlacedLinks_Regions_RegionId",
+                        column: x => x.RegionId,
+                        principalTable: "Regions",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "InstancedVehicles",
                 columns: table => new
                 {
                     Id = table.Column<long>(type: "INTEGER", nullable: false)
@@ -283,33 +284,33 @@ namespace BlazorMUD.Server.Migrations
                     RegionId = table.Column<long>(type: "INTEGER", nullable: false),
                     TemplateId = table.Column<long>(type: "INTEGER", nullable: false),
                     ParentAreaId = table.Column<long>(type: "INTEGER", nullable: true),
-                    ParentVehicleInstanceId = table.Column<long>(type: "INTEGER", nullable: true),
+                    ParentInstancedVehicleId = table.Column<long>(type: "INTEGER", nullable: true),
                     StaticFlags = table.Column<ulong>(type: "INTEGER", nullable: false),
                     DynamicFlags = table.Column<ulong>(type: "INTEGER", nullable: false)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_VehicleInstances", x => x.Id);
+                    table.PrimaryKey("PK_InstancedVehicles", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_VehicleInstances_Areas_ParentAreaId",
+                        name: "FK_InstancedVehicles_Areas_ParentAreaId",
                         column: x => x.ParentAreaId,
                         principalTable: "Areas",
                         principalColumn: "Id",
-                        onDelete: ReferentialAction.Restrict);
+                        onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
-                        name: "FK_VehicleInstances_Regions_RegionId",
+                        name: "FK_InstancedVehicles_InstancedVehicles_ParentInstancedVehicleId",
+                        column: x => x.ParentInstancedVehicleId,
+                        principalTable: "InstancedVehicles",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                    table.ForeignKey(
+                        name: "FK_InstancedVehicles_Regions_RegionId",
                         column: x => x.RegionId,
                         principalTable: "Regions",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
-                        name: "FK_VehicleInstances_VehicleInstances_ParentVehicleInstanceId",
-                        column: x => x.ParentVehicleInstanceId,
-                        principalTable: "VehicleInstances",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Restrict);
-                    table.ForeignKey(
-                        name: "FK_VehicleInstances_VehicleTemplates_TemplateId",
+                        name: "FK_InstancedVehicles_VehicleTemplates_TemplateId",
                         column: x => x.TemplateId,
                         principalTable: "VehicleTemplates",
                         principalColumn: "Id",
@@ -317,7 +318,7 @@ namespace BlazorMUD.Server.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "VehiclePlacements",
+                name: "PlacedVehicles",
                 columns: table => new
                 {
                     Id = table.Column<long>(type: "INTEGER", nullable: false)
@@ -325,31 +326,31 @@ namespace BlazorMUD.Server.Migrations
                     RegionId = table.Column<long>(type: "INTEGER", nullable: false),
                     TemplateId = table.Column<long>(type: "INTEGER", nullable: false),
                     ParentAreaId = table.Column<long>(type: "INTEGER", nullable: true),
-                    ParentVehiclePlacementId = table.Column<long>(type: "INTEGER", nullable: true)
+                    ParentPlacedVehicleId = table.Column<long>(type: "INTEGER", nullable: true)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_VehiclePlacements", x => x.Id);
+                    table.PrimaryKey("PK_PlacedVehicles", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_VehiclePlacements_Areas_ParentAreaId",
+                        name: "FK_PlacedVehicles_Areas_ParentAreaId",
                         column: x => x.ParentAreaId,
                         principalTable: "Areas",
                         principalColumn: "Id",
-                        onDelete: ReferentialAction.Restrict);
+                        onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
-                        name: "FK_VehiclePlacements_Regions_RegionId",
+                        name: "FK_PlacedVehicles_PlacedVehicles_ParentPlacedVehicleId",
+                        column: x => x.ParentPlacedVehicleId,
+                        principalTable: "PlacedVehicles",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                    table.ForeignKey(
+                        name: "FK_PlacedVehicles_Regions_RegionId",
                         column: x => x.RegionId,
                         principalTable: "Regions",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
-                        name: "FK_VehiclePlacements_VehiclePlacements_ParentVehiclePlacementId",
-                        column: x => x.ParentVehiclePlacementId,
-                        principalTable: "VehiclePlacements",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Restrict);
-                    table.ForeignKey(
-                        name: "FK_VehiclePlacements_VehicleTemplates_TemplateId",
+                        name: "FK_PlacedVehicles_VehicleTemplates_TemplateId",
                         column: x => x.TemplateId,
                         principalTable: "VehicleTemplates",
                         principalColumn: "Id",
@@ -357,7 +358,7 @@ namespace BlazorMUD.Server.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "ActorInstances",
+                name: "InstancedActors",
                 columns: table => new
                 {
                     Id = table.Column<long>(type: "INTEGER", nullable: false)
@@ -365,44 +366,44 @@ namespace BlazorMUD.Server.Migrations
                     RegionId = table.Column<long>(type: "INTEGER", nullable: false),
                     TemplateId = table.Column<long>(type: "INTEGER", nullable: false),
                     ParentAreaId = table.Column<long>(type: "INTEGER", nullable: true),
-                    ParentVehicleInstanceId = table.Column<long>(type: "INTEGER", nullable: true),
+                    ParentInstancedVehicleId = table.Column<long>(type: "INTEGER", nullable: true),
                     ParentPersistedVehicleId = table.Column<long>(type: "INTEGER", nullable: true),
                     StaticFlags = table.Column<ulong>(type: "INTEGER", nullable: false),
                     DynamicFlags = table.Column<ulong>(type: "INTEGER", nullable: false)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_ActorInstances", x => x.Id);
+                    table.PrimaryKey("PK_InstancedActors", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_ActorInstances_ActorTemplates_TemplateId",
+                        name: "FK_InstancedActors_ActorTemplates_TemplateId",
                         column: x => x.TemplateId,
                         principalTable: "ActorTemplates",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
-                        name: "FK_ActorInstances_Areas_ParentAreaId",
+                        name: "FK_InstancedActors_Areas_ParentAreaId",
                         column: x => x.ParentAreaId,
                         principalTable: "Areas",
                         principalColumn: "Id",
-                        onDelete: ReferentialAction.Restrict);
+                        onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
-                        name: "FK_ActorInstances_PersistedVehicles_ParentPersistedVehicleId",
+                        name: "FK_InstancedActors_InstancedVehicles_ParentInstancedVehicleId",
+                        column: x => x.ParentInstancedVehicleId,
+                        principalTable: "InstancedVehicles",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                    table.ForeignKey(
+                        name: "FK_InstancedActors_PersistedVehicles_ParentPersistedVehicleId",
                         column: x => x.ParentPersistedVehicleId,
                         principalTable: "PersistedVehicles",
                         principalColumn: "Id",
-                        onDelete: ReferentialAction.Restrict);
+                        onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
-                        name: "FK_ActorInstances_Regions_RegionId",
+                        name: "FK_InstancedActors_Regions_RegionId",
                         column: x => x.RegionId,
                         principalTable: "Regions",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
-                    table.ForeignKey(
-                        name: "FK_ActorInstances_VehicleInstances_ParentVehicleInstanceId",
-                        column: x => x.ParentVehicleInstanceId,
-                        principalTable: "VehicleInstances",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Restrict);
                 });
 
             migrationBuilder.CreateTable(
@@ -413,7 +414,7 @@ namespace BlazorMUD.Server.Migrations
                         .Annotation("Sqlite:Autoincrement", true),
                     OwnerId = table.Column<int>(type: "INTEGER", nullable: false),
                     ParentAreaId = table.Column<long>(type: "INTEGER", nullable: true),
-                    ParentVehicleInstanceId = table.Column<long>(type: "INTEGER", nullable: true),
+                    ParentInstancedVehicleId = table.Column<long>(type: "INTEGER", nullable: true),
                     ParentPersistedVehicleId = table.Column<long>(type: "INTEGER", nullable: true),
                     StaticFlags = table.Column<ulong>(type: "INTEGER", nullable: false),
                     DynamicFlags = table.Column<ulong>(type: "INTEGER", nullable: false)
@@ -426,7 +427,7 @@ namespace BlazorMUD.Server.Migrations
                         column: x => x.ParentAreaId,
                         principalTable: "Areas",
                         principalColumn: "Id",
-                        onDelete: ReferentialAction.Restrict);
+                        onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
                         name: "FK_PersistedActors_AspNetUsers_OwnerId",
                         column: x => x.OwnerId,
@@ -434,21 +435,21 @@ namespace BlazorMUD.Server.Migrations
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
+                        name: "FK_PersistedActors_InstancedVehicles_ParentInstancedVehicleId",
+                        column: x => x.ParentInstancedVehicleId,
+                        principalTable: "InstancedVehicles",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                    table.ForeignKey(
                         name: "FK_PersistedActors_PersistedVehicles_ParentPersistedVehicleId",
                         column: x => x.ParentPersistedVehicleId,
                         principalTable: "PersistedVehicles",
                         principalColumn: "Id",
-                        onDelete: ReferentialAction.Restrict);
-                    table.ForeignKey(
-                        name: "FK_PersistedActors_VehicleInstances_ParentVehicleInstanceId",
-                        column: x => x.ParentVehicleInstanceId,
-                        principalTable: "VehicleInstances",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Restrict);
+                        onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.CreateTable(
-                name: "ActorPlacements",
+                name: "PlacedActors",
                 columns: table => new
                 {
                     Id = table.Column<long>(type: "INTEGER", nullable: false)
@@ -456,39 +457,39 @@ namespace BlazorMUD.Server.Migrations
                     RegionId = table.Column<long>(type: "INTEGER", nullable: false),
                     TemplateId = table.Column<long>(type: "INTEGER", nullable: false),
                     ParentAreaId = table.Column<long>(type: "INTEGER", nullable: true),
-                    ParentVehiclePlacementId = table.Column<long>(type: "INTEGER", nullable: true)
+                    ParentPlacedVehicleId = table.Column<long>(type: "INTEGER", nullable: true)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_ActorPlacements", x => x.Id);
+                    table.PrimaryKey("PK_PlacedActors", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_ActorPlacements_ActorTemplates_TemplateId",
+                        name: "FK_PlacedActors_ActorTemplates_TemplateId",
                         column: x => x.TemplateId,
                         principalTable: "ActorTemplates",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
-                        name: "FK_ActorPlacements_Areas_ParentAreaId",
+                        name: "FK_PlacedActors_Areas_ParentAreaId",
                         column: x => x.ParentAreaId,
                         principalTable: "Areas",
                         principalColumn: "Id",
-                        onDelete: ReferentialAction.Restrict);
+                        onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
-                        name: "FK_ActorPlacements_Regions_RegionId",
+                        name: "FK_PlacedActors_PlacedVehicles_ParentPlacedVehicleId",
+                        column: x => x.ParentPlacedVehicleId,
+                        principalTable: "PlacedVehicles",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                    table.ForeignKey(
+                        name: "FK_PlacedActors_Regions_RegionId",
                         column: x => x.RegionId,
                         principalTable: "Regions",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
-                    table.ForeignKey(
-                        name: "FK_ActorPlacements_VehiclePlacements_ParentVehiclePlacementId",
-                        column: x => x.ParentVehiclePlacementId,
-                        principalTable: "VehiclePlacements",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Restrict);
                 });
 
             migrationBuilder.CreateTable(
-                name: "ItemInstances",
+                name: "InstancedItems",
                 columns: table => new
                 {
                     Id = table.Column<long>(type: "INTEGER", nullable: false)
@@ -496,52 +497,52 @@ namespace BlazorMUD.Server.Migrations
                     RegionId = table.Column<long>(type: "INTEGER", nullable: false),
                     TemplateId = table.Column<long>(type: "INTEGER", nullable: false),
                     ParentAreaId = table.Column<long>(type: "INTEGER", nullable: true),
-                    ParentVehicleInstanceId = table.Column<long>(type: "INTEGER", nullable: true),
-                    ParentActorInstanceId = table.Column<long>(type: "INTEGER", nullable: true),
-                    ParentItemInstanceId = table.Column<long>(type: "INTEGER", nullable: true),
+                    ParentInstancedVehicleId = table.Column<long>(type: "INTEGER", nullable: true),
+                    ParentInstancedActorId = table.Column<long>(type: "INTEGER", nullable: true),
+                    ParentInstancedItemId = table.Column<long>(type: "INTEGER", nullable: true),
                     StaticFlags = table.Column<ulong>(type: "INTEGER", nullable: false),
                     DynamicFlags = table.Column<ulong>(type: "INTEGER", nullable: false),
                     WearFlags = table.Column<ulong>(type: "INTEGER", nullable: false)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_ItemInstances", x => x.Id);
+                    table.PrimaryKey("PK_InstancedItems", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_ItemInstances_ActorInstances_ParentActorInstanceId",
-                        column: x => x.ParentActorInstanceId,
-                        principalTable: "ActorInstances",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Restrict);
-                    table.ForeignKey(
-                        name: "FK_ItemInstances_Areas_ParentAreaId",
+                        name: "FK_InstancedItems_Areas_ParentAreaId",
                         column: x => x.ParentAreaId,
                         principalTable: "Areas",
                         principalColumn: "Id",
-                        onDelete: ReferentialAction.Restrict);
+                        onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
-                        name: "FK_ItemInstances_ItemInstances_ParentItemInstanceId",
-                        column: x => x.ParentItemInstanceId,
-                        principalTable: "ItemInstances",
+                        name: "FK_InstancedItems_InstancedActors_ParentInstancedActorId",
+                        column: x => x.ParentInstancedActorId,
+                        principalTable: "InstancedActors",
                         principalColumn: "Id",
-                        onDelete: ReferentialAction.Restrict);
+                        onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
-                        name: "FK_ItemInstances_ItemTemplates_TemplateId",
+                        name: "FK_InstancedItems_InstancedItems_ParentInstancedItemId",
+                        column: x => x.ParentInstancedItemId,
+                        principalTable: "InstancedItems",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                    table.ForeignKey(
+                        name: "FK_InstancedItems_InstancedVehicles_ParentInstancedVehicleId",
+                        column: x => x.ParentInstancedVehicleId,
+                        principalTable: "InstancedVehicles",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                    table.ForeignKey(
+                        name: "FK_InstancedItems_ItemTemplates_TemplateId",
                         column: x => x.TemplateId,
                         principalTable: "ItemTemplates",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
-                        name: "FK_ItemInstances_Regions_RegionId",
+                        name: "FK_InstancedItems_Regions_RegionId",
                         column: x => x.RegionId,
                         principalTable: "Regions",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
-                    table.ForeignKey(
-                        name: "FK_ItemInstances_VehicleInstances_ParentVehicleInstanceId",
-                        column: x => x.ParentVehicleInstanceId,
-                        principalTable: "VehicleInstances",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Restrict);
                 });
 
             migrationBuilder.CreateTable(
@@ -567,7 +568,7 @@ namespace BlazorMUD.Server.Migrations
                         column: x => x.ParentAreaId,
                         principalTable: "Areas",
                         principalColumn: "Id",
-                        onDelete: ReferentialAction.Restrict);
+                        onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
                         name: "FK_PersistedItems_ItemTemplates_TemplateId",
                         column: x => x.TemplateId,
@@ -579,23 +580,23 @@ namespace BlazorMUD.Server.Migrations
                         column: x => x.ParentPersistedActorId,
                         principalTable: "PersistedActors",
                         principalColumn: "Id",
-                        onDelete: ReferentialAction.Restrict);
+                        onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
                         name: "FK_PersistedItems_PersistedItems_ParentPersistedItemId",
                         column: x => x.ParentPersistedItemId,
                         principalTable: "PersistedItems",
                         principalColumn: "Id",
-                        onDelete: ReferentialAction.Restrict);
+                        onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
                         name: "FK_PersistedItems_PersistedVehicles_ParentPersistedVehicleId",
                         column: x => x.ParentPersistedVehicleId,
                         principalTable: "PersistedVehicles",
                         principalColumn: "Id",
-                        onDelete: ReferentialAction.Restrict);
+                        onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.CreateTable(
-                name: "ItemPlacements",
+                name: "PlacedItems",
                 columns: table => new
                 {
                     Id = table.Column<long>(type: "INTEGER", nullable: false)
@@ -603,95 +604,50 @@ namespace BlazorMUD.Server.Migrations
                     RegionId = table.Column<long>(type: "INTEGER", nullable: false),
                     TemplateId = table.Column<long>(type: "INTEGER", nullable: false),
                     ParentAreaId = table.Column<long>(type: "INTEGER", nullable: true),
-                    ParentVehiclePlacementId = table.Column<long>(type: "INTEGER", nullable: true),
-                    ParentActorPlacementId = table.Column<long>(type: "INTEGER", nullable: true),
-                    ParentItemPlacementId = table.Column<long>(type: "INTEGER", nullable: true)
+                    ParentPlacedVehicleId = table.Column<long>(type: "INTEGER", nullable: true),
+                    ParentPlacedActorId = table.Column<long>(type: "INTEGER", nullable: true),
+                    ParentPlacedItemId = table.Column<long>(type: "INTEGER", nullable: true)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_ItemPlacements", x => x.Id);
+                    table.PrimaryKey("PK_PlacedItems", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_ItemPlacements_ActorPlacements_ParentActorPlacementId",
-                        column: x => x.ParentActorPlacementId,
-                        principalTable: "ActorPlacements",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Restrict);
-                    table.ForeignKey(
-                        name: "FK_ItemPlacements_Areas_ParentAreaId",
+                        name: "FK_PlacedItems_Areas_ParentAreaId",
                         column: x => x.ParentAreaId,
                         principalTable: "Areas",
                         principalColumn: "Id",
-                        onDelete: ReferentialAction.Restrict);
+                        onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
-                        name: "FK_ItemPlacements_ItemPlacements_ParentItemPlacementId",
-                        column: x => x.ParentItemPlacementId,
-                        principalTable: "ItemPlacements",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Restrict);
-                    table.ForeignKey(
-                        name: "FK_ItemPlacements_ItemTemplates_TemplateId",
+                        name: "FK_PlacedItems_ItemTemplates_TemplateId",
                         column: x => x.TemplateId,
                         principalTable: "ItemTemplates",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
-                        name: "FK_ItemPlacements_Regions_RegionId",
+                        name: "FK_PlacedItems_PlacedActors_ParentPlacedActorId",
+                        column: x => x.ParentPlacedActorId,
+                        principalTable: "PlacedActors",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                    table.ForeignKey(
+                        name: "FK_PlacedItems_PlacedItems_ParentPlacedItemId",
+                        column: x => x.ParentPlacedItemId,
+                        principalTable: "PlacedItems",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                    table.ForeignKey(
+                        name: "FK_PlacedItems_PlacedVehicles_ParentPlacedVehicleId",
+                        column: x => x.ParentPlacedVehicleId,
+                        principalTable: "PlacedVehicles",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                    table.ForeignKey(
+                        name: "FK_PlacedItems_Regions_RegionId",
                         column: x => x.RegionId,
                         principalTable: "Regions",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
-                    table.ForeignKey(
-                        name: "FK_ItemPlacements_VehiclePlacements_ParentVehiclePlacementId",
-                        column: x => x.ParentVehiclePlacementId,
-                        principalTable: "VehiclePlacements",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Restrict);
                 });
-
-            migrationBuilder.CreateIndex(
-                name: "IX_ActorInstances_ParentAreaId",
-                table: "ActorInstances",
-                column: "ParentAreaId");
-
-            migrationBuilder.CreateIndex(
-                name: "IX_ActorInstances_ParentPersistedVehicleId",
-                table: "ActorInstances",
-                column: "ParentPersistedVehicleId");
-
-            migrationBuilder.CreateIndex(
-                name: "IX_ActorInstances_ParentVehicleInstanceId",
-                table: "ActorInstances",
-                column: "ParentVehicleInstanceId");
-
-            migrationBuilder.CreateIndex(
-                name: "IX_ActorInstances_RegionId",
-                table: "ActorInstances",
-                column: "RegionId");
-
-            migrationBuilder.CreateIndex(
-                name: "IX_ActorInstances_TemplateId",
-                table: "ActorInstances",
-                column: "TemplateId");
-
-            migrationBuilder.CreateIndex(
-                name: "IX_ActorPlacements_ParentAreaId",
-                table: "ActorPlacements",
-                column: "ParentAreaId");
-
-            migrationBuilder.CreateIndex(
-                name: "IX_ActorPlacements_ParentVehiclePlacementId",
-                table: "ActorPlacements",
-                column: "ParentVehiclePlacementId");
-
-            migrationBuilder.CreateIndex(
-                name: "IX_ActorPlacements_RegionId",
-                table: "ActorPlacements",
-                column: "RegionId");
-
-            migrationBuilder.CreateIndex(
-                name: "IX_ActorPlacements_TemplateId",
-                table: "ActorPlacements",
-                column: "TemplateId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_ActorTemplates_RegionId",
@@ -704,109 +660,104 @@ namespace BlazorMUD.Server.Migrations
                 column: "RegionId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_ItemInstances_ParentActorInstanceId",
-                table: "ItemInstances",
-                column: "ParentActorInstanceId");
-
-            migrationBuilder.CreateIndex(
-                name: "IX_ItemInstances_ParentAreaId",
-                table: "ItemInstances",
+                name: "IX_InstancedActors_ParentAreaId",
+                table: "InstancedActors",
                 column: "ParentAreaId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_ItemInstances_ParentItemInstanceId",
-                table: "ItemInstances",
-                column: "ParentItemInstanceId");
+                name: "IX_InstancedActors_ParentInstancedVehicleId",
+                table: "InstancedActors",
+                column: "ParentInstancedVehicleId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_ItemInstances_ParentVehicleInstanceId",
-                table: "ItemInstances",
-                column: "ParentVehicleInstanceId");
+                name: "IX_InstancedActors_ParentPersistedVehicleId",
+                table: "InstancedActors",
+                column: "ParentPersistedVehicleId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_ItemInstances_RegionId",
-                table: "ItemInstances",
+                name: "IX_InstancedActors_RegionId",
+                table: "InstancedActors",
                 column: "RegionId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_ItemInstances_TemplateId",
-                table: "ItemInstances",
+                name: "IX_InstancedActors_TemplateId",
+                table: "InstancedActors",
                 column: "TemplateId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_ItemPlacements_ParentActorPlacementId",
-                table: "ItemPlacements",
-                column: "ParentActorPlacementId");
-
-            migrationBuilder.CreateIndex(
-                name: "IX_ItemPlacements_ParentAreaId",
-                table: "ItemPlacements",
+                name: "IX_InstancedItems_ParentAreaId",
+                table: "InstancedItems",
                 column: "ParentAreaId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_ItemPlacements_ParentItemPlacementId",
-                table: "ItemPlacements",
-                column: "ParentItemPlacementId");
+                name: "IX_InstancedItems_ParentInstancedActorId",
+                table: "InstancedItems",
+                column: "ParentInstancedActorId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_ItemPlacements_ParentVehiclePlacementId",
-                table: "ItemPlacements",
-                column: "ParentVehiclePlacementId");
+                name: "IX_InstancedItems_ParentInstancedItemId",
+                table: "InstancedItems",
+                column: "ParentInstancedItemId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_ItemPlacements_RegionId",
-                table: "ItemPlacements",
+                name: "IX_InstancedItems_ParentInstancedVehicleId",
+                table: "InstancedItems",
+                column: "ParentInstancedVehicleId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_InstancedItems_RegionId",
+                table: "InstancedItems",
                 column: "RegionId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_ItemPlacements_TemplateId",
-                table: "ItemPlacements",
+                name: "IX_InstancedItems_TemplateId",
+                table: "InstancedItems",
+                column: "TemplateId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_InstancedLinks_DestinationAreaId",
+                table: "InstancedLinks",
+                column: "DestinationAreaId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_InstancedLinks_ParentAreaId",
+                table: "InstancedLinks",
+                column: "ParentAreaId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_InstancedLinks_RegionId",
+                table: "InstancedLinks",
+                column: "RegionId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_InstancedLinks_TemplateId",
+                table: "InstancedLinks",
+                column: "TemplateId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_InstancedVehicles_ParentAreaId",
+                table: "InstancedVehicles",
+                column: "ParentAreaId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_InstancedVehicles_ParentInstancedVehicleId",
+                table: "InstancedVehicles",
+                column: "ParentInstancedVehicleId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_InstancedVehicles_RegionId",
+                table: "InstancedVehicles",
+                column: "RegionId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_InstancedVehicles_TemplateId",
+                table: "InstancedVehicles",
                 column: "TemplateId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_ItemTemplates_RegionId",
                 table: "ItemTemplates",
                 column: "RegionId");
-
-            migrationBuilder.CreateIndex(
-                name: "IX_LinkInstances_DestinationAreaId",
-                table: "LinkInstances",
-                column: "DestinationAreaId");
-
-            migrationBuilder.CreateIndex(
-                name: "IX_LinkInstances_ParentAreaId",
-                table: "LinkInstances",
-                column: "ParentAreaId");
-
-            migrationBuilder.CreateIndex(
-                name: "IX_LinkInstances_RegionId",
-                table: "LinkInstances",
-                column: "RegionId");
-
-            migrationBuilder.CreateIndex(
-                name: "IX_LinkInstances_TemplateId",
-                table: "LinkInstances",
-                column: "TemplateId");
-
-            migrationBuilder.CreateIndex(
-                name: "IX_LinkPlacements_DestinationAreaId",
-                table: "LinkPlacements",
-                column: "DestinationAreaId");
-
-            migrationBuilder.CreateIndex(
-                name: "IX_LinkPlacements_ParentAreaId",
-                table: "LinkPlacements",
-                column: "ParentAreaId");
-
-            migrationBuilder.CreateIndex(
-                name: "IX_LinkPlacements_RegionId",
-                table: "LinkPlacements",
-                column: "RegionId");
-
-            migrationBuilder.CreateIndex(
-                name: "IX_LinkPlacements_TemplateId",
-                table: "LinkPlacements",
-                column: "TemplateId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_LinkTemplates_RegionId",
@@ -824,14 +775,14 @@ namespace BlazorMUD.Server.Migrations
                 column: "ParentAreaId");
 
             migrationBuilder.CreateIndex(
+                name: "IX_PersistedActors_ParentInstancedVehicleId",
+                table: "PersistedActors",
+                column: "ParentInstancedVehicleId");
+
+            migrationBuilder.CreateIndex(
                 name: "IX_PersistedActors_ParentPersistedVehicleId",
                 table: "PersistedActors",
                 column: "ParentPersistedVehicleId");
-
-            migrationBuilder.CreateIndex(
-                name: "IX_PersistedActors_ParentVehicleInstanceId",
-                table: "PersistedActors",
-                column: "ParentVehicleInstanceId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_PersistedItems_ParentAreaId",
@@ -889,43 +840,93 @@ namespace BlazorMUD.Server.Migrations
                 column: "ParentPersistedVehicleId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_VehicleInstances_ParentAreaId",
-                table: "VehicleInstances",
+                name: "IX_PlacedActors_ParentAreaId",
+                table: "PlacedActors",
                 column: "ParentAreaId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_VehicleInstances_ParentVehicleInstanceId",
-                table: "VehicleInstances",
-                column: "ParentVehicleInstanceId");
+                name: "IX_PlacedActors_ParentPlacedVehicleId",
+                table: "PlacedActors",
+                column: "ParentPlacedVehicleId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_VehicleInstances_RegionId",
-                table: "VehicleInstances",
+                name: "IX_PlacedActors_RegionId",
+                table: "PlacedActors",
                 column: "RegionId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_VehicleInstances_TemplateId",
-                table: "VehicleInstances",
+                name: "IX_PlacedActors_TemplateId",
+                table: "PlacedActors",
                 column: "TemplateId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_VehiclePlacements_ParentAreaId",
-                table: "VehiclePlacements",
+                name: "IX_PlacedItems_ParentAreaId",
+                table: "PlacedItems",
                 column: "ParentAreaId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_VehiclePlacements_ParentVehiclePlacementId",
-                table: "VehiclePlacements",
-                column: "ParentVehiclePlacementId");
+                name: "IX_PlacedItems_ParentPlacedActorId",
+                table: "PlacedItems",
+                column: "ParentPlacedActorId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_VehiclePlacements_RegionId",
-                table: "VehiclePlacements",
+                name: "IX_PlacedItems_ParentPlacedItemId",
+                table: "PlacedItems",
+                column: "ParentPlacedItemId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_PlacedItems_ParentPlacedVehicleId",
+                table: "PlacedItems",
+                column: "ParentPlacedVehicleId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_PlacedItems_RegionId",
+                table: "PlacedItems",
                 column: "RegionId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_VehiclePlacements_TemplateId",
-                table: "VehiclePlacements",
+                name: "IX_PlacedItems_TemplateId",
+                table: "PlacedItems",
+                column: "TemplateId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_PlacedLinks_DestinationAreaId",
+                table: "PlacedLinks",
+                column: "DestinationAreaId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_PlacedLinks_ParentAreaId",
+                table: "PlacedLinks",
+                column: "ParentAreaId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_PlacedLinks_RegionId",
+                table: "PlacedLinks",
+                column: "RegionId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_PlacedLinks_TemplateId",
+                table: "PlacedLinks",
+                column: "TemplateId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_PlacedVehicles_ParentAreaId",
+                table: "PlacedVehicles",
+                column: "ParentAreaId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_PlacedVehicles_ParentPlacedVehicleId",
+                table: "PlacedVehicles",
+                column: "ParentPlacedVehicleId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_PlacedVehicles_RegionId",
+                table: "PlacedVehicles",
+                column: "RegionId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_PlacedVehicles_TemplateId",
+                table: "PlacedVehicles",
                 column: "TemplateId");
 
             migrationBuilder.CreateIndex(
@@ -937,16 +938,10 @@ namespace BlazorMUD.Server.Migrations
         protected override void Down(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.DropTable(
-                name: "ItemInstances");
+                name: "InstancedItems");
 
             migrationBuilder.DropTable(
-                name: "ItemPlacements");
-
-            migrationBuilder.DropTable(
-                name: "LinkInstances");
-
-            migrationBuilder.DropTable(
-                name: "LinkPlacements");
+                name: "InstancedLinks");
 
             migrationBuilder.DropTable(
                 name: "PersistedItems");
@@ -955,31 +950,37 @@ namespace BlazorMUD.Server.Migrations
                 name: "PersistedLinks");
 
             migrationBuilder.DropTable(
-                name: "ActorInstances");
+                name: "PlacedItems");
 
             migrationBuilder.DropTable(
-                name: "ActorPlacements");
+                name: "PlacedLinks");
 
             migrationBuilder.DropTable(
-                name: "ItemTemplates");
+                name: "InstancedActors");
 
             migrationBuilder.DropTable(
                 name: "PersistedActors");
 
             migrationBuilder.DropTable(
+                name: "ItemTemplates");
+
+            migrationBuilder.DropTable(
+                name: "PlacedActors");
+
+            migrationBuilder.DropTable(
                 name: "LinkTemplates");
 
             migrationBuilder.DropTable(
-                name: "ActorTemplates");
-
-            migrationBuilder.DropTable(
-                name: "VehiclePlacements");
+                name: "InstancedVehicles");
 
             migrationBuilder.DropTable(
                 name: "PersistedVehicles");
 
             migrationBuilder.DropTable(
-                name: "VehicleInstances");
+                name: "ActorTemplates");
+
+            migrationBuilder.DropTable(
+                name: "PlacedVehicles");
 
             migrationBuilder.DropTable(
                 name: "Areas");

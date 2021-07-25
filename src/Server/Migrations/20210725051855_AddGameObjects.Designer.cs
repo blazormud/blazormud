@@ -9,7 +9,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace BlazorMUD.Server.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20210724200234_AddGameObjects")]
+    [Migration("20210725051855_AddGameObjects")]
     partial class AddGameObjects
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -17,79 +17,6 @@ namespace BlazorMUD.Server.Migrations
 #pragma warning disable 612, 618
             modelBuilder
                 .HasAnnotation("ProductVersion", "5.0.7");
-
-            modelBuilder.Entity("BlazorMUD.Core.Models.Actor.ActorInstance", b =>
-                {
-                    b.Property<long>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("INTEGER");
-
-                    b.Property<ulong>("DynamicFlags")
-                        .HasColumnType("INTEGER");
-
-                    b.Property<long?>("ParentAreaId")
-                        .HasColumnType("INTEGER");
-
-                    b.Property<long?>("ParentPersistedVehicleId")
-                        .HasColumnType("INTEGER");
-
-                    b.Property<long?>("ParentVehicleInstanceId")
-                        .HasColumnType("INTEGER");
-
-                    b.Property<long>("RegionId")
-                        .HasColumnType("INTEGER");
-
-                    b.Property<ulong>("StaticFlags")
-                        .HasColumnType("INTEGER");
-
-                    b.Property<long>("TemplateId")
-                        .HasColumnType("INTEGER");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("ParentAreaId");
-
-                    b.HasIndex("ParentPersistedVehicleId");
-
-                    b.HasIndex("ParentVehicleInstanceId");
-
-                    b.HasIndex("RegionId");
-
-                    b.HasIndex("TemplateId");
-
-                    b.ToTable("ActorInstances");
-                });
-
-            modelBuilder.Entity("BlazorMUD.Core.Models.Actor.ActorPlacement", b =>
-                {
-                    b.Property<long>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("INTEGER");
-
-                    b.Property<long?>("ParentAreaId")
-                        .HasColumnType("INTEGER");
-
-                    b.Property<long?>("ParentVehiclePlacementId")
-                        .HasColumnType("INTEGER");
-
-                    b.Property<long>("RegionId")
-                        .HasColumnType("INTEGER");
-
-                    b.Property<long>("TemplateId")
-                        .HasColumnType("INTEGER");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("ParentAreaId");
-
-                    b.HasIndex("ParentVehiclePlacementId");
-
-                    b.HasIndex("RegionId");
-
-                    b.HasIndex("TemplateId");
-
-                    b.ToTable("ActorPlacements");
-                });
 
             modelBuilder.Entity("BlazorMUD.Core.Models.Actor.ActorTemplate", b =>
                 {
@@ -113,6 +40,48 @@ namespace BlazorMUD.Server.Migrations
                     b.ToTable("ActorTemplates");
                 });
 
+            modelBuilder.Entity("BlazorMUD.Core.Models.Actor.InstancedActor", b =>
+                {
+                    b.Property<long>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("INTEGER");
+
+                    b.Property<ulong>("DynamicFlags")
+                        .HasColumnType("INTEGER");
+
+                    b.Property<long?>("ParentAreaId")
+                        .HasColumnType("INTEGER");
+
+                    b.Property<long?>("ParentInstancedVehicleId")
+                        .HasColumnType("INTEGER");
+
+                    b.Property<long?>("ParentPersistedVehicleId")
+                        .HasColumnType("INTEGER");
+
+                    b.Property<long>("RegionId")
+                        .HasColumnType("INTEGER");
+
+                    b.Property<ulong>("StaticFlags")
+                        .HasColumnType("INTEGER");
+
+                    b.Property<long>("TemplateId")
+                        .HasColumnType("INTEGER");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("ParentAreaId");
+
+                    b.HasIndex("ParentInstancedVehicleId");
+
+                    b.HasIndex("ParentPersistedVehicleId");
+
+                    b.HasIndex("RegionId");
+
+                    b.HasIndex("TemplateId");
+
+                    b.ToTable("InstancedActors");
+                });
+
             modelBuilder.Entity("BlazorMUD.Core.Models.Actor.PersistedActor", b =>
                 {
                     b.Property<long>("Id")
@@ -128,10 +97,10 @@ namespace BlazorMUD.Server.Migrations
                     b.Property<long?>("ParentAreaId")
                         .HasColumnType("INTEGER");
 
-                    b.Property<long?>("ParentPersistedVehicleId")
+                    b.Property<long?>("ParentInstancedVehicleId")
                         .HasColumnType("INTEGER");
 
-                    b.Property<long?>("ParentVehicleInstanceId")
+                    b.Property<long?>("ParentPersistedVehicleId")
                         .HasColumnType("INTEGER");
 
                     b.Property<ulong>("StaticFlags")
@@ -143,17 +112,51 @@ namespace BlazorMUD.Server.Migrations
 
                     b.HasIndex("ParentAreaId");
 
+                    b.HasIndex("ParentInstancedVehicleId");
+
                     b.HasIndex("ParentPersistedVehicleId");
 
-                    b.HasIndex("ParentVehicleInstanceId");
-
                     b.ToTable("PersistedActors");
+                });
+
+            modelBuilder.Entity("BlazorMUD.Core.Models.Actor.PlacedActor", b =>
+                {
+                    b.Property<long>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("INTEGER");
+
+                    b.Property<long?>("ParentAreaId")
+                        .HasColumnType("INTEGER");
+
+                    b.Property<long?>("ParentPlacedVehicleId")
+                        .HasColumnType("INTEGER");
+
+                    b.Property<long>("RegionId")
+                        .HasColumnType("INTEGER");
+
+                    b.Property<long>("TemplateId")
+                        .HasColumnType("INTEGER");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("ParentAreaId");
+
+                    b.HasIndex("ParentPlacedVehicleId");
+
+                    b.HasIndex("RegionId");
+
+                    b.HasIndex("TemplateId");
+
+                    b.ToTable("PlacedActors");
                 });
 
             modelBuilder.Entity("BlazorMUD.Core.Models.Area.AreaTemplate", b =>
                 {
                     b.Property<long>("Id")
                         .ValueGeneratedOnAdd()
+                        .HasColumnType("INTEGER");
+
+                    b.Property<ulong>("Flags")
                         .HasColumnType("INTEGER");
 
                     b.Property<long>("RegionId")
@@ -258,7 +261,7 @@ namespace BlazorMUD.Server.Migrations
                     b.ToTable("AspNetUsers");
                 });
 
-            modelBuilder.Entity("BlazorMUD.Core.Models.Item.ItemInstance", b =>
+            modelBuilder.Entity("BlazorMUD.Core.Models.Item.InstancedItem", b =>
                 {
                     b.Property<long>("Id")
                         .ValueGeneratedOnAdd()
@@ -267,16 +270,16 @@ namespace BlazorMUD.Server.Migrations
                     b.Property<ulong>("DynamicFlags")
                         .HasColumnType("INTEGER");
 
-                    b.Property<long?>("ParentActorInstanceId")
-                        .HasColumnType("INTEGER");
-
                     b.Property<long?>("ParentAreaId")
                         .HasColumnType("INTEGER");
 
-                    b.Property<long?>("ParentItemInstanceId")
+                    b.Property<long?>("ParentInstancedActorId")
                         .HasColumnType("INTEGER");
 
-                    b.Property<long?>("ParentVehicleInstanceId")
+                    b.Property<long?>("ParentInstancedItemId")
+                        .HasColumnType("INTEGER");
+
+                    b.Property<long?>("ParentInstancedVehicleId")
                         .HasColumnType("INTEGER");
 
                     b.Property<long>("RegionId")
@@ -293,60 +296,19 @@ namespace BlazorMUD.Server.Migrations
 
                     b.HasKey("Id");
 
-                    b.HasIndex("ParentActorInstanceId");
-
                     b.HasIndex("ParentAreaId");
 
-                    b.HasIndex("ParentItemInstanceId");
+                    b.HasIndex("ParentInstancedActorId");
 
-                    b.HasIndex("ParentVehicleInstanceId");
+                    b.HasIndex("ParentInstancedItemId");
+
+                    b.HasIndex("ParentInstancedVehicleId");
 
                     b.HasIndex("RegionId");
 
                     b.HasIndex("TemplateId");
 
-                    b.ToTable("ItemInstances");
-                });
-
-            modelBuilder.Entity("BlazorMUD.Core.Models.Item.ItemPlacement", b =>
-                {
-                    b.Property<long>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("INTEGER");
-
-                    b.Property<long?>("ParentActorPlacementId")
-                        .HasColumnType("INTEGER");
-
-                    b.Property<long?>("ParentAreaId")
-                        .HasColumnType("INTEGER");
-
-                    b.Property<long?>("ParentItemPlacementId")
-                        .HasColumnType("INTEGER");
-
-                    b.Property<long?>("ParentVehiclePlacementId")
-                        .HasColumnType("INTEGER");
-
-                    b.Property<long>("RegionId")
-                        .HasColumnType("INTEGER");
-
-                    b.Property<long>("TemplateId")
-                        .HasColumnType("INTEGER");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("ParentActorPlacementId");
-
-                    b.HasIndex("ParentAreaId");
-
-                    b.HasIndex("ParentItemPlacementId");
-
-                    b.HasIndex("ParentVehiclePlacementId");
-
-                    b.HasIndex("RegionId");
-
-                    b.HasIndex("TemplateId");
-
-                    b.ToTable("ItemPlacements");
+                    b.ToTable("InstancedItems");
                 });
 
             modelBuilder.Entity("BlazorMUD.Core.Models.Item.ItemTemplate", b =>
@@ -419,7 +381,48 @@ namespace BlazorMUD.Server.Migrations
                     b.ToTable("PersistedItems");
                 });
 
-            modelBuilder.Entity("BlazorMUD.Core.Models.Link.LinkInstance", b =>
+            modelBuilder.Entity("BlazorMUD.Core.Models.Item.PlacedItem", b =>
+                {
+                    b.Property<long>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("INTEGER");
+
+                    b.Property<long?>("ParentAreaId")
+                        .HasColumnType("INTEGER");
+
+                    b.Property<long?>("ParentPlacedActorId")
+                        .HasColumnType("INTEGER");
+
+                    b.Property<long?>("ParentPlacedItemId")
+                        .HasColumnType("INTEGER");
+
+                    b.Property<long?>("ParentPlacedVehicleId")
+                        .HasColumnType("INTEGER");
+
+                    b.Property<long>("RegionId")
+                        .HasColumnType("INTEGER");
+
+                    b.Property<long>("TemplateId")
+                        .HasColumnType("INTEGER");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("ParentAreaId");
+
+                    b.HasIndex("ParentPlacedActorId");
+
+                    b.HasIndex("ParentPlacedItemId");
+
+                    b.HasIndex("ParentPlacedVehicleId");
+
+                    b.HasIndex("RegionId");
+
+                    b.HasIndex("TemplateId");
+
+                    b.ToTable("PlacedItems");
+                });
+
+            modelBuilder.Entity("BlazorMUD.Core.Models.Link.InstancedLink", b =>
                 {
                     b.Property<long>("Id")
                         .ValueGeneratedOnAdd()
@@ -453,38 +456,7 @@ namespace BlazorMUD.Server.Migrations
 
                     b.HasIndex("TemplateId");
 
-                    b.ToTable("LinkInstances");
-                });
-
-            modelBuilder.Entity("BlazorMUD.Core.Models.Link.LinkPlacement", b =>
-                {
-                    b.Property<long>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("INTEGER");
-
-                    b.Property<long>("DestinationAreaId")
-                        .HasColumnType("INTEGER");
-
-                    b.Property<long>("ParentAreaId")
-                        .HasColumnType("INTEGER");
-
-                    b.Property<long>("RegionId")
-                        .HasColumnType("INTEGER");
-
-                    b.Property<long>("TemplateId")
-                        .HasColumnType("INTEGER");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("DestinationAreaId");
-
-                    b.HasIndex("ParentAreaId");
-
-                    b.HasIndex("RegionId");
-
-                    b.HasIndex("TemplateId");
-
-                    b.ToTable("LinkPlacements");
+                    b.ToTable("InstancedLinks");
                 });
 
             modelBuilder.Entity("BlazorMUD.Core.Models.Link.LinkTemplate", b =>
@@ -541,6 +513,37 @@ namespace BlazorMUD.Server.Migrations
                     b.ToTable("PersistedLinks");
                 });
 
+            modelBuilder.Entity("BlazorMUD.Core.Models.Link.PlacedLink", b =>
+                {
+                    b.Property<long>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("INTEGER");
+
+                    b.Property<long>("DestinationAreaId")
+                        .HasColumnType("INTEGER");
+
+                    b.Property<long>("ParentAreaId")
+                        .HasColumnType("INTEGER");
+
+                    b.Property<long>("RegionId")
+                        .HasColumnType("INTEGER");
+
+                    b.Property<long>("TemplateId")
+                        .HasColumnType("INTEGER");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("DestinationAreaId");
+
+                    b.HasIndex("ParentAreaId");
+
+                    b.HasIndex("RegionId");
+
+                    b.HasIndex("TemplateId");
+
+                    b.ToTable("PlacedLinks");
+                });
+
             modelBuilder.Entity("BlazorMUD.Core.Models.Region.RegionTemplate", b =>
                 {
                     b.Property<long>("Id")
@@ -550,6 +553,43 @@ namespace BlazorMUD.Server.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("Regions");
+                });
+
+            modelBuilder.Entity("BlazorMUD.Core.Models.Vehicle.InstancedVehicle", b =>
+                {
+                    b.Property<long>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("INTEGER");
+
+                    b.Property<ulong>("DynamicFlags")
+                        .HasColumnType("INTEGER");
+
+                    b.Property<long?>("ParentAreaId")
+                        .HasColumnType("INTEGER");
+
+                    b.Property<long?>("ParentInstancedVehicleId")
+                        .HasColumnType("INTEGER");
+
+                    b.Property<long>("RegionId")
+                        .HasColumnType("INTEGER");
+
+                    b.Property<ulong>("StaticFlags")
+                        .HasColumnType("INTEGER");
+
+                    b.Property<long>("TemplateId")
+                        .HasColumnType("INTEGER");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("ParentAreaId");
+
+                    b.HasIndex("ParentInstancedVehicleId");
+
+                    b.HasIndex("RegionId");
+
+                    b.HasIndex("TemplateId");
+
+                    b.ToTable("InstancedVehicles");
                 });
 
             modelBuilder.Entity("BlazorMUD.Core.Models.Vehicle.PersistedVehicle", b =>
@@ -584,43 +624,6 @@ namespace BlazorMUD.Server.Migrations
                     b.ToTable("PersistedVehicles");
                 });
 
-            modelBuilder.Entity("BlazorMUD.Core.Models.Vehicle.VehicleInstance", b =>
-                {
-                    b.Property<long>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("INTEGER");
-
-                    b.Property<ulong>("DynamicFlags")
-                        .HasColumnType("INTEGER");
-
-                    b.Property<long?>("ParentAreaId")
-                        .HasColumnType("INTEGER");
-
-                    b.Property<long?>("ParentVehicleInstanceId")
-                        .HasColumnType("INTEGER");
-
-                    b.Property<long>("RegionId")
-                        .HasColumnType("INTEGER");
-
-                    b.Property<ulong>("StaticFlags")
-                        .HasColumnType("INTEGER");
-
-                    b.Property<long>("TemplateId")
-                        .HasColumnType("INTEGER");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("ParentAreaId");
-
-                    b.HasIndex("ParentVehicleInstanceId");
-
-                    b.HasIndex("RegionId");
-
-                    b.HasIndex("TemplateId");
-
-                    b.ToTable("VehicleInstances");
-                });
-
             modelBuilder.Entity("BlazorMUD.Core.Models.Vehicle.VehiclePlacement", b =>
                 {
                     b.Property<long>("Id")
@@ -630,7 +633,7 @@ namespace BlazorMUD.Server.Migrations
                     b.Property<long?>("ParentAreaId")
                         .HasColumnType("INTEGER");
 
-                    b.Property<long?>("ParentVehiclePlacementId")
+                    b.Property<long?>("ParentPlacedVehicleId")
                         .HasColumnType("INTEGER");
 
                     b.Property<long>("RegionId")
@@ -643,13 +646,13 @@ namespace BlazorMUD.Server.Migrations
 
                     b.HasIndex("ParentAreaId");
 
-                    b.HasIndex("ParentVehiclePlacementId");
+                    b.HasIndex("ParentPlacedVehicleId");
 
                     b.HasIndex("RegionId");
 
                     b.HasIndex("TemplateId");
 
-                    b.ToTable("VehiclePlacements");
+                    b.ToTable("PlacedVehicles");
                 });
 
             modelBuilder.Entity("BlazorMUD.Core.Models.Vehicle.VehicleTemplate", b =>
@@ -880,74 +883,6 @@ namespace BlazorMUD.Server.Migrations
                     b.ToTable("AspNetUserTokens");
                 });
 
-            modelBuilder.Entity("BlazorMUD.Core.Models.Actor.ActorInstance", b =>
-                {
-                    b.HasOne("BlazorMUD.Core.Models.Area.AreaTemplate", "ParentArea")
-                        .WithMany()
-                        .HasForeignKey("ParentAreaId");
-
-                    b.HasOne("BlazorMUD.Core.Models.Vehicle.PersistedVehicle", "ParentPersistedVehicle")
-                        .WithMany()
-                        .HasForeignKey("ParentPersistedVehicleId");
-
-                    b.HasOne("BlazorMUD.Core.Models.Vehicle.VehicleInstance", "ParentVehicleInstance")
-                        .WithMany()
-                        .HasForeignKey("ParentVehicleInstanceId");
-
-                    b.HasOne("BlazorMUD.Core.Models.Region.RegionTemplate", "Region")
-                        .WithMany()
-                        .HasForeignKey("RegionId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.HasOne("BlazorMUD.Core.Models.Actor.ActorTemplate", "Template")
-                        .WithMany()
-                        .HasForeignKey("TemplateId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("ParentArea");
-
-                    b.Navigation("ParentPersistedVehicle");
-
-                    b.Navigation("ParentVehicleInstance");
-
-                    b.Navigation("Region");
-
-                    b.Navigation("Template");
-                });
-
-            modelBuilder.Entity("BlazorMUD.Core.Models.Actor.ActorPlacement", b =>
-                {
-                    b.HasOne("BlazorMUD.Core.Models.Area.AreaTemplate", "ParentArea")
-                        .WithMany()
-                        .HasForeignKey("ParentAreaId");
-
-                    b.HasOne("BlazorMUD.Core.Models.Vehicle.VehiclePlacement", "ParentVehiclePlacement")
-                        .WithMany()
-                        .HasForeignKey("ParentVehiclePlacementId");
-
-                    b.HasOne("BlazorMUD.Core.Models.Region.RegionTemplate", "Region")
-                        .WithMany()
-                        .HasForeignKey("RegionId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.HasOne("BlazorMUD.Core.Models.Actor.ActorTemplate", "Template")
-                        .WithMany()
-                        .HasForeignKey("TemplateId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("ParentArea");
-
-                    b.Navigation("ParentVehiclePlacement");
-
-                    b.Navigation("Region");
-
-                    b.Navigation("Template");
-                });
-
             modelBuilder.Entity("BlazorMUD.Core.Models.Actor.ActorTemplate", b =>
                 {
                     b.HasOne("BlazorMUD.Core.Models.Region.RegionTemplate", "Region")
@@ -957,6 +892,46 @@ namespace BlazorMUD.Server.Migrations
                         .IsRequired();
 
                     b.Navigation("Region");
+                });
+
+            modelBuilder.Entity("BlazorMUD.Core.Models.Actor.InstancedActor", b =>
+                {
+                    b.HasOne("BlazorMUD.Core.Models.Area.AreaTemplate", "ParentArea")
+                        .WithMany()
+                        .HasForeignKey("ParentAreaId")
+                        .OnDelete(DeleteBehavior.Cascade);
+
+                    b.HasOne("BlazorMUD.Core.Models.Vehicle.InstancedVehicle", "ParentInstancedVehicle")
+                        .WithMany()
+                        .HasForeignKey("ParentInstancedVehicleId")
+                        .OnDelete(DeleteBehavior.Cascade);
+
+                    b.HasOne("BlazorMUD.Core.Models.Vehicle.PersistedVehicle", "ParentPersistedVehicle")
+                        .WithMany()
+                        .HasForeignKey("ParentPersistedVehicleId")
+                        .OnDelete(DeleteBehavior.Cascade);
+
+                    b.HasOne("BlazorMUD.Core.Models.Region.RegionTemplate", "Region")
+                        .WithMany()
+                        .HasForeignKey("RegionId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("BlazorMUD.Core.Models.Actor.ActorTemplate", "Template")
+                        .WithMany()
+                        .HasForeignKey("TemplateId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("ParentArea");
+
+                    b.Navigation("ParentInstancedVehicle");
+
+                    b.Navigation("ParentPersistedVehicle");
+
+                    b.Navigation("Region");
+
+                    b.Navigation("Template");
                 });
 
             modelBuilder.Entity("BlazorMUD.Core.Models.Actor.PersistedActor", b =>
@@ -969,23 +944,59 @@ namespace BlazorMUD.Server.Migrations
 
                     b.HasOne("BlazorMUD.Core.Models.Area.AreaTemplate", "ParentArea")
                         .WithMany()
-                        .HasForeignKey("ParentAreaId");
+                        .HasForeignKey("ParentAreaId")
+                        .OnDelete(DeleteBehavior.Cascade);
+
+                    b.HasOne("BlazorMUD.Core.Models.Vehicle.InstancedVehicle", "ParentInstancedVehicle")
+                        .WithMany()
+                        .HasForeignKey("ParentInstancedVehicleId")
+                        .OnDelete(DeleteBehavior.Cascade);
 
                     b.HasOne("BlazorMUD.Core.Models.Vehicle.PersistedVehicle", "ParentPersistedVehicle")
                         .WithMany()
-                        .HasForeignKey("ParentPersistedVehicleId");
-
-                    b.HasOne("BlazorMUD.Core.Models.Vehicle.VehicleInstance", "ParentVehicleInstance")
-                        .WithMany()
-                        .HasForeignKey("ParentVehicleInstanceId");
+                        .HasForeignKey("ParentPersistedVehicleId")
+                        .OnDelete(DeleteBehavior.Cascade);
 
                     b.Navigation("Owner");
 
                     b.Navigation("ParentArea");
 
-                    b.Navigation("ParentPersistedVehicle");
+                    b.Navigation("ParentInstancedVehicle");
 
-                    b.Navigation("ParentVehicleInstance");
+                    b.Navigation("ParentPersistedVehicle");
+                });
+
+            modelBuilder.Entity("BlazorMUD.Core.Models.Actor.PlacedActor", b =>
+                {
+                    b.HasOne("BlazorMUD.Core.Models.Area.AreaTemplate", "ParentArea")
+                        .WithMany()
+                        .HasForeignKey("ParentAreaId")
+                        .OnDelete(DeleteBehavior.Cascade);
+
+                    b.HasOne("BlazorMUD.Core.Models.Vehicle.VehiclePlacement", "ParentPlacedVehicle")
+                        .WithMany()
+                        .HasForeignKey("ParentPlacedVehicleId")
+                        .OnDelete(DeleteBehavior.Cascade);
+
+                    b.HasOne("BlazorMUD.Core.Models.Region.RegionTemplate", "Region")
+                        .WithMany()
+                        .HasForeignKey("RegionId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("BlazorMUD.Core.Models.Actor.ActorTemplate", "Template")
+                        .WithMany()
+                        .HasForeignKey("TemplateId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("ParentArea");
+
+                    b.Navigation("ParentPlacedVehicle");
+
+                    b.Navigation("Region");
+
+                    b.Navigation("Template");
                 });
 
             modelBuilder.Entity("BlazorMUD.Core.Models.Area.AreaTemplate", b =>
@@ -999,23 +1010,27 @@ namespace BlazorMUD.Server.Migrations
                     b.Navigation("Region");
                 });
 
-            modelBuilder.Entity("BlazorMUD.Core.Models.Item.ItemInstance", b =>
+            modelBuilder.Entity("BlazorMUD.Core.Models.Item.InstancedItem", b =>
                 {
-                    b.HasOne("BlazorMUD.Core.Models.Actor.ActorInstance", "ParentActorInstance")
-                        .WithMany()
-                        .HasForeignKey("ParentActorInstanceId");
-
                     b.HasOne("BlazorMUD.Core.Models.Area.AreaTemplate", "ParentArea")
                         .WithMany()
-                        .HasForeignKey("ParentAreaId");
+                        .HasForeignKey("ParentAreaId")
+                        .OnDelete(DeleteBehavior.Cascade);
 
-                    b.HasOne("BlazorMUD.Core.Models.Item.ItemInstance", "ParentItemInstance")
+                    b.HasOne("BlazorMUD.Core.Models.Actor.InstancedActor", "ParentInstancedActor")
                         .WithMany()
-                        .HasForeignKey("ParentItemInstanceId");
+                        .HasForeignKey("ParentInstancedActorId")
+                        .OnDelete(DeleteBehavior.Cascade);
 
-                    b.HasOne("BlazorMUD.Core.Models.Vehicle.VehicleInstance", "ParentVehicleInstance")
+                    b.HasOne("BlazorMUD.Core.Models.Item.InstancedItem", "ParentInstancedItem")
                         .WithMany()
-                        .HasForeignKey("ParentVehicleInstanceId");
+                        .HasForeignKey("ParentInstancedItemId")
+                        .OnDelete(DeleteBehavior.Cascade);
+
+                    b.HasOne("BlazorMUD.Core.Models.Vehicle.InstancedVehicle", "ParentInstancedVehicle")
+                        .WithMany()
+                        .HasForeignKey("ParentInstancedVehicleId")
+                        .OnDelete(DeleteBehavior.Cascade);
 
                     b.HasOne("BlazorMUD.Core.Models.Region.RegionTemplate", "Region")
                         .WithMany()
@@ -1029,56 +1044,13 @@ namespace BlazorMUD.Server.Migrations
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.Navigation("ParentActorInstance");
-
                     b.Navigation("ParentArea");
 
-                    b.Navigation("ParentItemInstance");
+                    b.Navigation("ParentInstancedActor");
 
-                    b.Navigation("ParentVehicleInstance");
+                    b.Navigation("ParentInstancedItem");
 
-                    b.Navigation("Region");
-
-                    b.Navigation("Template");
-                });
-
-            modelBuilder.Entity("BlazorMUD.Core.Models.Item.ItemPlacement", b =>
-                {
-                    b.HasOne("BlazorMUD.Core.Models.Actor.ActorPlacement", "ParentActorPlacement")
-                        .WithMany()
-                        .HasForeignKey("ParentActorPlacementId");
-
-                    b.HasOne("BlazorMUD.Core.Models.Area.AreaTemplate", "ParentArea")
-                        .WithMany()
-                        .HasForeignKey("ParentAreaId");
-
-                    b.HasOne("BlazorMUD.Core.Models.Item.ItemPlacement", "ParentItemPlacement")
-                        .WithMany()
-                        .HasForeignKey("ParentItemPlacementId");
-
-                    b.HasOne("BlazorMUD.Core.Models.Vehicle.VehiclePlacement", "ParentVehiclePlacement")
-                        .WithMany()
-                        .HasForeignKey("ParentVehiclePlacementId");
-
-                    b.HasOne("BlazorMUD.Core.Models.Region.RegionTemplate", "Region")
-                        .WithMany()
-                        .HasForeignKey("RegionId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.HasOne("BlazorMUD.Core.Models.Item.ItemTemplate", "Template")
-                        .WithMany()
-                        .HasForeignKey("TemplateId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("ParentActorPlacement");
-
-                    b.Navigation("ParentArea");
-
-                    b.Navigation("ParentItemPlacement");
-
-                    b.Navigation("ParentVehiclePlacement");
+                    b.Navigation("ParentInstancedVehicle");
 
                     b.Navigation("Region");
 
@@ -1100,19 +1072,23 @@ namespace BlazorMUD.Server.Migrations
                 {
                     b.HasOne("BlazorMUD.Core.Models.Area.AreaTemplate", "ParentArea")
                         .WithMany()
-                        .HasForeignKey("ParentAreaId");
+                        .HasForeignKey("ParentAreaId")
+                        .OnDelete(DeleteBehavior.Cascade);
 
                     b.HasOne("BlazorMUD.Core.Models.Actor.PersistedActor", "ParentPersistedActor")
                         .WithMany()
-                        .HasForeignKey("ParentPersistedActorId");
+                        .HasForeignKey("ParentPersistedActorId")
+                        .OnDelete(DeleteBehavior.Cascade);
 
                     b.HasOne("BlazorMUD.Core.Models.Item.PersistedItem", "ParentPersistedItem")
                         .WithMany()
-                        .HasForeignKey("ParentPersistedItemId");
+                        .HasForeignKey("ParentPersistedItemId")
+                        .OnDelete(DeleteBehavior.Cascade);
 
                     b.HasOne("BlazorMUD.Core.Models.Vehicle.PersistedVehicle", "ParentPersistedVehicle")
                         .WithMany()
-                        .HasForeignKey("ParentPersistedVehicleId");
+                        .HasForeignKey("ParentPersistedVehicleId")
+                        .OnDelete(DeleteBehavior.Cascade);
 
                     b.HasOne("BlazorMUD.Core.Models.Item.ItemTemplate", "Template")
                         .WithMany()
@@ -1131,19 +1107,27 @@ namespace BlazorMUD.Server.Migrations
                     b.Navigation("Template");
                 });
 
-            modelBuilder.Entity("BlazorMUD.Core.Models.Link.LinkInstance", b =>
+            modelBuilder.Entity("BlazorMUD.Core.Models.Item.PlacedItem", b =>
                 {
-                    b.HasOne("BlazorMUD.Core.Models.Area.AreaTemplate", "DestinationArea")
-                        .WithMany()
-                        .HasForeignKey("DestinationAreaId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
                     b.HasOne("BlazorMUD.Core.Models.Area.AreaTemplate", "ParentArea")
                         .WithMany()
                         .HasForeignKey("ParentAreaId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                        .OnDelete(DeleteBehavior.Cascade);
+
+                    b.HasOne("BlazorMUD.Core.Models.Actor.PlacedActor", "ParentPlacedActor")
+                        .WithMany()
+                        .HasForeignKey("ParentPlacedActorId")
+                        .OnDelete(DeleteBehavior.Cascade);
+
+                    b.HasOne("BlazorMUD.Core.Models.Item.PlacedItem", "ParentPlacedItem")
+                        .WithMany()
+                        .HasForeignKey("ParentPlacedItemId")
+                        .OnDelete(DeleteBehavior.Cascade);
+
+                    b.HasOne("BlazorMUD.Core.Models.Vehicle.VehiclePlacement", "ParentPlacedVehicle")
+                        .WithMany()
+                        .HasForeignKey("ParentPlacedVehicleId")
+                        .OnDelete(DeleteBehavior.Cascade);
 
                     b.HasOne("BlazorMUD.Core.Models.Region.RegionTemplate", "Region")
                         .WithMany()
@@ -1151,22 +1135,26 @@ namespace BlazorMUD.Server.Migrations
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("BlazorMUD.Core.Models.Link.LinkTemplate", "Template")
+                    b.HasOne("BlazorMUD.Core.Models.Item.ItemTemplate", "Template")
                         .WithMany()
                         .HasForeignKey("TemplateId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.Navigation("DestinationArea");
-
                     b.Navigation("ParentArea");
+
+                    b.Navigation("ParentPlacedActor");
+
+                    b.Navigation("ParentPlacedItem");
+
+                    b.Navigation("ParentPlacedVehicle");
 
                     b.Navigation("Region");
 
                     b.Navigation("Template");
                 });
 
-            modelBuilder.Entity("BlazorMUD.Core.Models.Link.LinkPlacement", b =>
+            modelBuilder.Entity("BlazorMUD.Core.Models.Link.InstancedLink", b =>
                 {
                     b.HasOne("BlazorMUD.Core.Models.Area.AreaTemplate", "DestinationArea")
                         .WithMany()
@@ -1239,6 +1227,74 @@ namespace BlazorMUD.Server.Migrations
                     b.Navigation("Template");
                 });
 
+            modelBuilder.Entity("BlazorMUD.Core.Models.Link.PlacedLink", b =>
+                {
+                    b.HasOne("BlazorMUD.Core.Models.Area.AreaTemplate", "DestinationArea")
+                        .WithMany()
+                        .HasForeignKey("DestinationAreaId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("BlazorMUD.Core.Models.Area.AreaTemplate", "ParentArea")
+                        .WithMany()
+                        .HasForeignKey("ParentAreaId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("BlazorMUD.Core.Models.Region.RegionTemplate", "Region")
+                        .WithMany()
+                        .HasForeignKey("RegionId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("BlazorMUD.Core.Models.Link.LinkTemplate", "Template")
+                        .WithMany()
+                        .HasForeignKey("TemplateId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("DestinationArea");
+
+                    b.Navigation("ParentArea");
+
+                    b.Navigation("Region");
+
+                    b.Navigation("Template");
+                });
+
+            modelBuilder.Entity("BlazorMUD.Core.Models.Vehicle.InstancedVehicle", b =>
+                {
+                    b.HasOne("BlazorMUD.Core.Models.Area.AreaTemplate", "ParentArea")
+                        .WithMany()
+                        .HasForeignKey("ParentAreaId")
+                        .OnDelete(DeleteBehavior.Cascade);
+
+                    b.HasOne("BlazorMUD.Core.Models.Vehicle.InstancedVehicle", "ParentInstancedVehicle")
+                        .WithMany()
+                        .HasForeignKey("ParentInstancedVehicleId")
+                        .OnDelete(DeleteBehavior.Cascade);
+
+                    b.HasOne("BlazorMUD.Core.Models.Region.RegionTemplate", "Region")
+                        .WithMany()
+                        .HasForeignKey("RegionId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("BlazorMUD.Core.Models.Vehicle.VehicleTemplate", "Template")
+                        .WithMany()
+                        .HasForeignKey("TemplateId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("ParentArea");
+
+                    b.Navigation("ParentInstancedVehicle");
+
+                    b.Navigation("Region");
+
+                    b.Navigation("Template");
+                });
+
             modelBuilder.Entity("BlazorMUD.Core.Models.Vehicle.PersistedVehicle", b =>
                 {
                     b.HasOne("BlazorMUD.Core.Models.Auth.ApplicationUser", "Owner")
@@ -1249,11 +1305,13 @@ namespace BlazorMUD.Server.Migrations
 
                     b.HasOne("BlazorMUD.Core.Models.Area.AreaTemplate", "ParentArea")
                         .WithMany()
-                        .HasForeignKey("ParentAreaId");
+                        .HasForeignKey("ParentAreaId")
+                        .OnDelete(DeleteBehavior.Cascade);
 
                     b.HasOne("BlazorMUD.Core.Models.Vehicle.PersistedVehicle", "ParentPersistedVehicle")
                         .WithMany()
-                        .HasForeignKey("ParentPersistedVehicleId");
+                        .HasForeignKey("ParentPersistedVehicleId")
+                        .OnDelete(DeleteBehavior.Cascade);
 
                     b.Navigation("Owner");
 
@@ -1262,46 +1320,17 @@ namespace BlazorMUD.Server.Migrations
                     b.Navigation("ParentPersistedVehicle");
                 });
 
-            modelBuilder.Entity("BlazorMUD.Core.Models.Vehicle.VehicleInstance", b =>
-                {
-                    b.HasOne("BlazorMUD.Core.Models.Area.AreaTemplate", "ParentArea")
-                        .WithMany()
-                        .HasForeignKey("ParentAreaId");
-
-                    b.HasOne("BlazorMUD.Core.Models.Vehicle.VehicleInstance", "ParentVehicleInstance")
-                        .WithMany()
-                        .HasForeignKey("ParentVehicleInstanceId");
-
-                    b.HasOne("BlazorMUD.Core.Models.Region.RegionTemplate", "Region")
-                        .WithMany()
-                        .HasForeignKey("RegionId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.HasOne("BlazorMUD.Core.Models.Vehicle.VehicleTemplate", "Template")
-                        .WithMany()
-                        .HasForeignKey("TemplateId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("ParentArea");
-
-                    b.Navigation("ParentVehicleInstance");
-
-                    b.Navigation("Region");
-
-                    b.Navigation("Template");
-                });
-
             modelBuilder.Entity("BlazorMUD.Core.Models.Vehicle.VehiclePlacement", b =>
                 {
                     b.HasOne("BlazorMUD.Core.Models.Area.AreaTemplate", "ParentArea")
                         .WithMany()
-                        .HasForeignKey("ParentAreaId");
+                        .HasForeignKey("ParentAreaId")
+                        .OnDelete(DeleteBehavior.Cascade);
 
-                    b.HasOne("BlazorMUD.Core.Models.Vehicle.VehiclePlacement", "ParentVehiclePlacement")
+                    b.HasOne("BlazorMUD.Core.Models.Vehicle.VehiclePlacement", "ParentPlacedVehicle")
                         .WithMany()
-                        .HasForeignKey("ParentVehiclePlacementId");
+                        .HasForeignKey("ParentPlacedVehicleId")
+                        .OnDelete(DeleteBehavior.Cascade);
 
                     b.HasOne("BlazorMUD.Core.Models.Region.RegionTemplate", "Region")
                         .WithMany()
@@ -1317,7 +1346,7 @@ namespace BlazorMUD.Server.Migrations
 
                     b.Navigation("ParentArea");
 
-                    b.Navigation("ParentVehiclePlacement");
+                    b.Navigation("ParentPlacedVehicle");
 
                     b.Navigation("Region");
 

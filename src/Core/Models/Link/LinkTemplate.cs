@@ -9,11 +9,11 @@ namespace BlazorMUD.Core.Models.Link
         [Key]
         public long Id { get; set; }
 
-        [ForeignKey("Region")]
+        [ForeignKey(nameof(Region))]
         public long RegionId { get; set; }
         public RegionTemplate Region { get; set; }
 
-        public LinkStaticFlags StaticFlags { get; set; }
-        public LinkDynamicFlags DynamicFlags { get; set; }
+        public LinkStaticFlags StaticFlags { get; set; } = LinkStaticFlags.None;
+        public LinkDynamicFlags DynamicFlags { get; set; } = LinkDynamicFlags.None;
     }
 }

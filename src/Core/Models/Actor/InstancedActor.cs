@@ -1,25 +1,29 @@
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 using BlazorMUD.Core.Models.Area;
-using BlazorMUD.Core.Models.Auth;
+using BlazorMUD.Core.Models.Region;
 using BlazorMUD.Core.Models.Vehicle;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
 namespace BlazorMUD.Core.Models.Actor
 {
-    public class PersistedActor : IActor
+    public class InstancedActor : IActor
     {
         [Key]
         public long Id { get; set; }
 
-        [ForeignKey(nameof(Owner))]
-        public int OwnerId { get; set; }
-        public ApplicationUser Owner { get; set; }
+        [ForeignKey(nameof(Region))]
+        public long RegionId { get; set; }
+        public RegionTemplate Region { get; set; }
+
+        [ForeignKey(nameof(Template))]
+        public long TemplateId { get; set; }
+        public ActorTemplate Template { get; set; }
 
         [ForeignKey(nameof(ParentArea))]
-        public long? ParentAreaId { get; set; }
-        public AreaTemplate ParentArea { get; set; }
+        public long? ParentAreaId { get; set; } = null;
+        public AreaTemplate ParentArea { get; set; } = null;
 
         [ForeignKey(nameof(ParentInstancedVehicle))]
         public long? ParentInstancedVehicleId { get; set; } = null;
@@ -33,26 +37,26 @@ namespace BlazorMUD.Core.Models.Actor
         public ActorDynamicFlags DynamicFlags { get; set; } = ActorDynamicFlags.None;
     }
 
-    public class PersistedActorEntityTypeConfiguration : IEntityTypeConfiguration<PersistedActor>
+    public class InstancedActorEntityTypeConfiguration : IEntityTypeConfiguration<InstancedActor>
     {
-        public void Configure(EntityTypeBuilder<PersistedActor> builder)
+        public void Configure(EntityTypeBuilder<InstancedActor> builder)
         {
             builder
-                .HasOne(nameof(PersistedActor.ParentArea))
+                .HasOne(nameof(InstancedActor.ParentArea))
                 .WithMany()
-                .HasForeignKey(nameof(PersistedActor.ParentAreaId))
+                .HasForeignKey(nameof(InstancedActor.ParentAreaId))
                 .OnDelete(DeleteBehavior.Cascade);
 
             builder
-                .HasOne(nameof(PersistedActor.ParentPersistedVehicle))
+                .HasOne(nameof(InstancedActor.ParentPersistedVehicle))
                 .WithMany()
-                .HasForeignKey(nameof(PersistedActor.ParentPersistedVehicleId))
+                .HasForeignKey(nameof(InstancedActor.ParentPersistedVehicleId))
                 .OnDelete(DeleteBehavior.Cascade);
 
             builder
-                .HasOne(nameof(PersistedActor.ParentInstancedVehicle))
+                .HasOne(nameof(InstancedActor.ParentInstancedVehicle))
                 .WithMany()
-                .HasForeignKey(nameof(PersistedActor.ParentInstancedVehicleId))
+                .HasForeignKey(nameof(InstancedActor.ParentInstancedVehicleId))
                 .OnDelete(DeleteBehavior.Cascade);
         }
     }

@@ -3,7 +3,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace BlazorMUD.Server.Migrations
 {
-    public partial class InitialAuth : Migration
+    public partial class InitialAuthSetup : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {

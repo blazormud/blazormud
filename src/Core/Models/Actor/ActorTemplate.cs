@@ -9,7 +9,7 @@ namespace BlazorMUD.Core.Models.Actor
         [Key]
         public long Id { get; set; }
 
-        [ForeignKey("Region")]
+        [ForeignKey(nameof(Region))]
         public long RegionId { get; set; }
         public RegionTemplate Region { get; set; }
 

@@ -9,8 +9,10 @@ namespace BlazorMUD.Core.Models.Area
         [Key]
         public long Id { get; set; }
 
-        [ForeignKey("Region")]
+        [ForeignKey(nameof(Region))]
         public long RegionId { get; set; }
         public RegionTemplate Region { get; set; }
+
+        public AreaFlags Flags { get; set; } = AreaFlags.None;
     }
 }

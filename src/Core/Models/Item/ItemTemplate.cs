@@ -9,12 +9,12 @@ namespace BlazorMUD.Core.Models.Item
         [Key]
         public long Id { get; set; }
 
-        [ForeignKey("Region")]
+        [ForeignKey(nameof(Region))]
         public long RegionId { get; set; }
         public RegionTemplate Region { get; set; }
 
-        public ItemStaticFlags StaticFlags { get; set; }
-        public ItemDynamicFlags DynamicFlags { get; set; }
-        public ItemWearFlags WearFlags { get; set; }
+        public ItemStaticFlags StaticFlags { get; set; } = ItemStaticFlags.None;
+        public ItemDynamicFlags DynamicFlags { get; set; } = ItemDynamicFlags.None;
+        public ItemWearFlags WearFlags { get; set; } = ItemWearFlags.None;
     }
 }

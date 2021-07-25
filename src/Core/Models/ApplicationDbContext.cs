@@ -11,32 +11,35 @@ using Microsoft.Extensions.Options;
 
 namespace BlazorMUD.Core.Models
 {
-    public class ApplicationDbContext : KeyApiAuthorizationDbContext<ApplicationUser, ApplicationRole, int>
+    public class ApplicationDbContext
+        : AuthorizationDbContext<ApplicationUser, ApplicationRole, int>
     {
-        public ApplicationDbContext(DbContextOptions options, IOptions<OperationalStoreOptions> operationalStoreOptions)
+        public ApplicationDbContext(
+            DbContextOptions options,
+            IOptions<OperationalStoreOptions> operationalStoreOptions)
             : base(options, operationalStoreOptions) { }
 
         public DbSet<RegionTemplate> Regions { get; set; }
         public DbSet<AreaTemplate> Areas { get; set; }
 
         public DbSet<LinkTemplate> LinkTemplates { get; set; }
-        public DbSet<LinkPlacement> LinkPlacements { get; set; }
-        public DbSet<LinkInstance> LinkInstances { get; set; }
+        public DbSet<PlacedLink> PlacedLinks { get; set; }
+        public DbSet<InstancedLink> InstancedLinks { get; set; }
         public DbSet<PersistedLink> PersistedLinks { get; set; }
 
         public DbSet<VehicleTemplate> VehicleTemplates { get; set; }
-        public DbSet<VehiclePlacement> VehiclePlacements { get; set; }
-        public DbSet<VehicleInstance> VehicleInstances { get; set; }
+        public DbSet<VehiclePlacement> PlacedVehicles { get; set; }
+        public DbSet<InstancedVehicle> InstancedVehicles { get; set; }
         public DbSet<PersistedVehicle> PersistedVehicles { get; set; }
 
         public DbSet<ActorTemplate> ActorTemplates { get; set; }
-        public DbSet<ActorPlacement> ActorPlacements { get; set; }
-        public DbSet<ActorInstance> ActorInstances { get; set; }
+        public DbSet<PlacedActor> PlacedActors { get; set; }
+        public DbSet<InstancedActor> InstancedActors { get; set; }
         public DbSet<PersistedActor> PersistedActors { get; set; }
 
         public DbSet<ItemTemplate> ItemTemplates { get; set; }
-        public DbSet<ItemPlacement> ItemPlacements { get; set; }
-        public DbSet<ItemInstance> ItemInstances { get; set; }
+        public DbSet<PlacedItem> PlacedItems { get; set; }
+        public DbSet<InstancedItem> InstancedItems { get; set; }
         public DbSet<PersistedItem> PersistedItems { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
