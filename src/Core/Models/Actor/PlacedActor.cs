@@ -28,6 +28,10 @@ namespace BlazorMUD.Core.Models.Actor
         [ForeignKey(nameof(ParentPlacedVehicle))]
         public long? ParentPlacedVehicleId { get; set; } = null;
         public VehiclePlacement ParentPlacedVehicle { get; set; } = null;
+
+        public ActorDynamicFlags DynamicFlags { get; set; }
+
+        public int Count { get; set; }
     }
 
     public class PlacedActorEntityTypeConfiguration : IEntityTypeConfiguration<PlacedActor>

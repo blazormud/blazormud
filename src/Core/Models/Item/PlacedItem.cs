@@ -37,6 +37,10 @@ namespace BlazorMUD.Core.Models.Item
         [ForeignKey(nameof(ParentPlacedItem))]
         public long? ParentPlacedItemId { get; set; } = null;
         public PlacedItem ParentPlacedItem { get; set; } = null;
+
+        public ItemDynamicFlags DynamicFlags { get; set; } = ItemDynamicFlags.None;
+
+        public int Count { get; set; }
     }
 
     public class PlacedItemEntityTypeConfiguration : IEntityTypeConfiguration<PlacedItem>

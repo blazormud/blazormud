@@ -25,5 +25,7 @@ namespace BlazorMUD.Core.Models.Link
         [ForeignKey(nameof(DestinationArea))]
         public long DestinationAreaId { get; set; }
         public AreaTemplate DestinationArea { get; set; }
+
+        public LinkDynamicFlags DynamicFlags { get; set; } = LinkDynamicFlags.None;
     }
 }

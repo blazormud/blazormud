@@ -27,6 +27,10 @@ namespace BlazorMUD.Core.Models.Vehicle
         [ForeignKey(nameof(ParentPlacedVehicle))]
         public long? ParentPlacedVehicleId { get; set; } = null;
         public VehiclePlacement ParentPlacedVehicle { get; set; } = null;
+
+        public VehicleDynamicFlags DynamicFlags { get; set; } = VehicleDynamicFlags.None;
+
+        public int Count { get; set; }
     }
 
     public class VehiclePlacementEntityTypeConfiguration : IEntityTypeConfiguration<VehiclePlacement>
