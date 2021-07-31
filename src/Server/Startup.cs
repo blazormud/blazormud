@@ -1,10 +1,10 @@
 using System.IdentityModel.Tokens.Jwt;
 using System.Linq;
+using BlazorMUD.Core;
 using BlazorMUD.Core.Models;
 using BlazorMUD.Core.Models.Auth;
 using BlazorMUD.Server.Data;
 using BlazorMUD.Server.Hubs;
-using BlazorMUD.Server.Services;
 using BlazorMUD.Shared;
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Builder;
@@ -76,7 +76,8 @@ namespace BlazorMUD.Server
                 opts.MimeTypes = ResponseCompressionDefaults.MimeTypes.Concat(
                     new[] { "application/octet-stream" });
             });
-            services.AddDependencies();
+
+            services.AddBlazorMudServices();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -120,19 +121,8 @@ namespace BlazorMUD.Server
                 endpoints.MapFallbackToFile("index.html");
             });
 
+            // TODO: Move this to Core
             DatabaseInitializer.Initialize(context, roleManager, userManager);
-        }
-    }
-
-    public static class ServiceCollectionExtensions
-    {
-        public static IServiceCollection AddDependencies(this IServiceCollection services)
-        {
-            return services;
-            // return services
-            //     .AddScoped<IAreaService, AreaService>()
-            //     .AddScoped<ILinkService, LinkService>()
-            //     .AddScoped<AreaFactory>();
         }
     }
 }

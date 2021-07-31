@@ -33,6 +33,8 @@ namespace BlazorMUD.Core.Models.Area
 
         #endregion Relationship Properties
 
+        public string Name { get; set; }
+        public string Notes { get; set; }
         public AreaFlags Flags { get; set; } = AreaFlags.None;
 
         #region OnModelCreating

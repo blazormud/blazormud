@@ -12,6 +12,9 @@ namespace BlazorMUD.Core.Models.Region
     {
         #region Relationship Properties
 
+        /// <summary>
+        /// Unique identifier for the region.
+        /// </summary>
         public long Id { get; set; }
         public IQueryable<AreaTemplate> Areas { get; set; } = null;
         public IQueryable<LinkTemplate> LinkTemplates { get; set; } = null;
@@ -28,6 +31,13 @@ namespace BlazorMUD.Core.Models.Region
         public IQueryable<InstancedItem> InstancedItems { get; set; } = null;
 
         #endregion Relationship Properties
+
+        public string Name { get; set; }
+        public string Notes { get; set; }
+        public RegionFlags Flags { get; set; } = RegionFlags.None;
+        public RegionType Type { get; set; } = RegionType.Normal;
+
+        // TODO: Timezone - Allows multiple regions to shared the same day night cycle.
 
         #region OnModelCreating
 
